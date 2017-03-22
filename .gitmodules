@@ -1,0 +1,3 @@
+[submodule "androidlibrary"]
+	path = androidlibrary
+	url = ssh://git@acsbitbucket.honeywell.com:7999/hplus/androidlibrary.git

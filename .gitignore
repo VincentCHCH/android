@@ -1,2 +1,7 @@
 build/
 *.iml
+*idea
+*gradle
+gradlew
+gradlew.*
+*.properties
