@@ -58,6 +58,7 @@ dependencies {
 
     debugCompile(project(path: ":Library", configuration: "debug"))
     releaseCompile(project(path: ":Library", configuration: "release"))
+
 //    debugCompile(project(path: "androidlibrary", configuration: "debug"))
 //    releaseCompile(project(path: "androidlibrary", configuration: "release"))
     compile 'com.android.support:appcompat-v7:23.1.1'
