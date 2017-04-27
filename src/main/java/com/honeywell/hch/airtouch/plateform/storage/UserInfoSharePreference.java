@@ -73,6 +73,8 @@ public class UserInfoSharePreference {
     private final static String MESSAGE_UPDATE_TIME_DATA_KEY = "message_update_time_data_key";
 
     private final static String DEVICE_CONFIG_CACHE_KEY = "device_config_cache_key";
+    private static String mSession="";
+
 
     public static void saveUserInfoInSp(String nickname, String mobilePhone, String password,
                                         String userId, String countryCode) {
@@ -84,7 +86,8 @@ public class UserInfoSharePreference {
     }
 
     public static void saveLoginSession(String sessionId) {
-        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_SESSION_ID_KEY, sessionId);
+//        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_SESSION_ID_KEY, sessionId);
+        mSession = sessionId;
     }
 
     public static void saveUserTokenFromBaiduPush(String token) {
@@ -151,7 +154,8 @@ public class UserInfoSharePreference {
     }
 
     public static String getSessionId() {
-        return SharePreferenceUtil.getPrefString(USER_INFO_SHAREPREFERENCE, USER_SESSION_ID_KEY, DEFAULT_STRING_VALUE);
+//        return SharePreferenceUtil.getPrefString(USER_INFO_SHAREPREFERENCE, USER_SESSION_ID_KEY, DEFAULT_STRING_VALUE);
+        return mSession;
     }
 
     public static String getTokenFromBaiduPush() {

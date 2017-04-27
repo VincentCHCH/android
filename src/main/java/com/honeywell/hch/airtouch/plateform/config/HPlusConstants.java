@@ -299,12 +299,17 @@ public class HPlusConstants {
     public final static int PM25_MEDIUMER_LIMIT = 115;
     public final static int PM25_HIGH_LIMIT = 150;
     public final static int PM25_MAX_VALUE = 999;
-    public final static String MAX_TVOC_VALUE = "0.99";
+    public final static String MAX_TVOC_VALUE = "1.50";
+    public final static String MIN_TVOC_VALUE = "0.13";
     public final static double TVOC_LOW_LIMIT_FOR_450 = 200;
     public final static double TVOC_HIGH_LIMIT_FOR_450 = 600;
     public final static double TVOC_LOW_LIMIT_FOR_PREMIUM = 0.35;
     public final static double TVOC_HIGH_LIMIT_FOR_PREMIUM = 0.45;
 
+    public final static float TVOC_HIGH_LIMIT_FOR_PREMIUM_Level = 0.85f;
+    public final static float TVOC_LOW_LIMIT_FOR_PREMIUM_Level = 0.6f;
+    public final static double TVOC_MAX_FOR_PREMIUM_Level = 1500;
+    public final static double TVOC_MIN_FOR_PREMIUM_Level = 130;
     public final static int ERROR_VALUE = -1;
     public final static int ERROR_MAX_VALUE = 65535;
 

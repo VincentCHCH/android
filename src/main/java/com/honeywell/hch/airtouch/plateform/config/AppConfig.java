@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-
+import com.honeywell.hch.airtouch.plateform.R;
 import com.honeywell.hch.airtouch.library.util.SharePreferenceUtil;
 import com.honeywell.hch.airtouch.library.util.StringUtil;
 import com.honeywell.hch.airtouch.plateform.appmanager.AppManager;
@@ -277,6 +277,10 @@ public class AppConfig {
         } else {
             return HPlusConstants.BASE_PURCHASE_URL;
         }
+    }
+
+    public String getDevicePurchaseUrl(String version,String model,String product){
+        return getBasePurchaseUrl() + mContext.getString(R.string.purchase_url_suffix,version,model,product);
     }
 
     public String getIntroductionURL() {
