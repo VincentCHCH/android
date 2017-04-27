@@ -12,7 +12,8 @@ import com.honeywell.hch.airtouch.library.http.model.ResponseResult;
 import com.honeywell.hch.airtouch.library.util.ByteUtil;
 import com.honeywell.hch.airtouch.library.util.LogUtil;
 import com.honeywell.hch.airtouch.library.util.NetWorkUtil;
-import com.honeywell.hch.airtouch.plateform.http.task.ShortTimerRefreshTask;
+import com.honeywell.hch.airtouch.plateform.eventbus.EventBusConstant;
+import com.honeywell.hch.airtouch.plateform.eventbus.EventBusUtil;
 import com.honeywell.hch.airtouch.plateform.smartlink.udpmode.UDPContentData;
 import com.honeywell.hch.airtouch.plateform.umeng.UmengUtil;
 
@@ -124,7 +125,8 @@ public class ConnectAndFindDeviceManager {
                     break;
                 case PROCESS_END:
                     endAllThread();
-                    getAllLocationAndAllDevice();
+
+                    EventBusUtil.post(EventBusConstant.END_AP_FIND_DEVICE,null);
                     break;
                 case WIFI_CONNECTED_CHECK_END:
                      Bundle bundle = msg.getData();
@@ -535,22 +537,6 @@ public class ConnectAndFindDeviceManager {
         mCheckWifiConnectThread.start();
     }
 
-    private void getAllLocationAndAllDevice() {
-        IActivityReceive getAllDeviceResponse = new IActivityReceive() {
-            @Override
-            public void onReceive(ResponseResult responseResult) {
-                switch (responseResult.getRequestId()) {
-                    case SHORT_TIMER_REFRESH:
-                        if (mFinishCallback != null)
-                            mFinishCallback.onFinish();
-                        break;
-                }
-            }
-        };
-
-        ShortTimerRefreshTask shortTimerRefreshTask = new ShortTimerRefreshTask(getAllDeviceResponse);
-        AsyncTaskExecutorUtil.executeAsyncTask(shortTimerRefreshTask);
-    }
 
 
 }

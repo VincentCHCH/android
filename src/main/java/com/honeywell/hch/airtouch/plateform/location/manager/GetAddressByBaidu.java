@@ -7,7 +7,7 @@ import com.honeywell.hch.airtouch.library.http.model.HTTPRequestResponse;
 import com.honeywell.hch.airtouch.library.http.model.IReceiveResponse;
 import com.honeywell.hch.airtouch.library.util.LogUtil;
 import com.honeywell.hch.airtouch.library.util.StringUtil;
-import com.honeywell.hch.airtouch.plateform.http.GPSClient;
+import com.honeywell.hch.airtouch.plateform.location.GPSClient;
 import com.honeywell.hch.airtouch.plateform.location.model.CityInfo;
 
 import org.json.JSONException;
