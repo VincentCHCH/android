@@ -34,10 +34,12 @@
     <string name="speed_medium">Medium speed</string>
     <string name="speed_high">High speed</string>
 
-    <string name="pre_filter">Pre-filter</string>
-    <string name="pm25_filter">HEPA filter</string>
-    <string name="hisiv_filter">HiSiv filter</string>
-    <string name="hisiv_450_filter">HiSivTM composite filter</string>
+
+    <string name="pre_filter">Pre-Filter</string>
+    <string name="pm25_filter">HEPA Filter</string>
+    <string name="hisiv_filter">HiSiv Filter</string>
+    <string name="hisiv_composite_filter">HiSiv Composite Filter</string>
+
 
     <string name="pre_filter_instruction">It can filter hair and large particles. It\'s helpful to extend the life of
         other filters.</string>
@@ -45,11 +47,14 @@
     <string name="hisiv_filter_instruction">It can filter multiple harmful gases (e.g., Formaldehyde). It keeps high effiency even in humid environment.</string>
     <string name="hisiv_450_filter_instruction">HiSivTM composite filter can effectively filter particulate matter and formaldehyde.</string>
 
+    <string name="hisiv_composite_filter_instruction">HiSiv composite filter can effectively filter particulate matter and formaldehyde.</string>
+
+
     <string name="airtouch_s_str">Air Touch-S</string>
 
 
     <string name="airpremium_filter_des">It can effectively filter PM2.5 particles and formaldehyde.</string>
-    <string name="airpremium_filter_title">PolyTech filter</string>
+    <string name="airpremium_filter_title">PolyTech Filter</string>
 
     <string name="composite_filter">Composite Filter Cartridge</string>
     <string name="aqua_600_membrane_filter">600G RO Filter Cartridge</string>
@@ -142,4 +147,7 @@
         <item quantity="one">Last update: 1 day ago</item>
         <item quantity="other">Last update: %1$s days ago</item>
     </plurals>
+
+
+    <string name="purchase_url_suffix">version=%1$s&amp;model=%2$s&amp;product=%3$s&amp;country=China</string>
 </resources>

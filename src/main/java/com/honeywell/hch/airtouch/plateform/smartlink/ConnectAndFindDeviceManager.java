@@ -6,9 +6,6 @@ import android.os.Message;
 import android.util.Log;
 
 import com.broadcom.cooee.Cooee;
-import com.honeywell.hch.airtouch.library.http.AsyncTaskExecutorUtil;
-import com.honeywell.hch.airtouch.library.http.model.IActivityReceive;
-import com.honeywell.hch.airtouch.library.http.model.ResponseResult;
 import com.honeywell.hch.airtouch.library.util.ByteUtil;
 import com.honeywell.hch.airtouch.library.util.LogUtil;
 import com.honeywell.hch.airtouch.library.util.NetWorkUtil;
@@ -56,7 +53,6 @@ public class ConnectAndFindDeviceManager {
     private static final int MAX_COUNT_TIME = 80;
 
 
-
     private DatagramSocket udpSocket;
 
 
@@ -64,16 +60,16 @@ public class ConnectAndFindDeviceManager {
 
     private DatagramPacket receiveudpPacket = null;
 
-    private byte[] contentBytes ;
+    private byte[] contentBytes;
 
 
-    private static final String  PRODUCT_UUID_S = "KSN95Y";
-    private static final String  PRODUCT_UUID_450S = "KHN6YM";
-    private static final  String PRODUCT_UUID_STR = "productuuid";
-    private static final  String MAC_STR_KEY = "mac";
-    private static final  String CODE_STR_KEY = "code";
+    private static final String PRODUCT_UUID_S = "KSN95Y";
+    private static final String PRODUCT_UUID_450S = "KHN6YM";
+    private static final String PRODUCT_UUID_STR = "productuuid";
+    private static final String MAC_STR_KEY = "mac";
+    private static final String CODE_STR_KEY = "code";
 
-    private static String mDeviceMacWithcolon ; //这个mac是扫二维码后得到的
+    private static String mDeviceMacWithcolon; //这个mac是扫二维码后得到的
 
     private static String mDeviceMacWithNocolon;
 
@@ -103,7 +99,7 @@ public class ConnectAndFindDeviceManager {
         mFinishCallback = finishCallback;
     }
 
-    public ConnectAndFindDeviceManager(Handler handler, String deviceMacwithcolon,String deviceNocolon){
+    public ConnectAndFindDeviceManager(Handler handler, String deviceMacwithcolon, String deviceNocolon) {
 
         mDeviceMacWithcolon = deviceMacwithcolon;
         mDeviceMacWithNocolon = deviceNocolon;
@@ -111,7 +107,7 @@ public class ConnectAndFindDeviceManager {
     }
 
 
-    Handler mHandler = new Handler(){
+    Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
 
@@ -121,17 +117,17 @@ public class ConnectAndFindDeviceManager {
                 case THREAD_ERROR:
                     endAllThread();
 
-                    UmengUtil.enrollEvent(mDeviceMacWithNocolon,UmengUtil.EnrollEventType.SMARTLINK_TIMEOUT,"");
+                    UmengUtil.enrollEvent(mDeviceMacWithNocolon, UmengUtil.EnrollEventType.SMARTLINK_TIMEOUT, "");
                     break;
                 case PROCESS_END:
                     endAllThread();
 
-                    EventBusUtil.post(EventBusConstant.END_AP_FIND_DEVICE,null);
+                    EventBusUtil.post(EventBusConstant.END_AP_FIND_DEVICE, null);
                     break;
                 case WIFI_CONNECTED_CHECK_END:
-                     Bundle bundle = msg.getData();
+                    Bundle bundle = msg.getData();
                     boolean isConnecting = bundle.getBoolean(IS_CONNECT);
-                    if (isConnecting){
+                    if (isConnecting) {
                         restAllThread();
                     }
                     mCheckWifiConnectThread = null;
@@ -147,7 +143,7 @@ public class ConnectAndFindDeviceManager {
         }
     };
 
-    private void startCountThread(){
+    private void startCountThread() {
 
         if (mCountThread == null) {
             mCountThread = new Thread() {
@@ -160,8 +156,8 @@ public class ConnectAndFindDeviceManager {
 
                         }
                         mConnectingCount++;
-                        if(mConnectingCount >= MAX_COUNT_TIME){
-                            if (!mCountThredThreadDone){
+                        if (mConnectingCount >= MAX_COUNT_TIME) {
+                            if (!mCountThredThreadDone) {
                                 Message message = Message.obtain();
                                 message.what = CONNECTING_TIMEOUT;
                                 mHandler.sendMessage(message);
@@ -171,7 +167,7 @@ public class ConnectAndFindDeviceManager {
                 }
             };
         }
-        if (!mCountThredThreadDone){
+        if (!mCountThredThreadDone) {
             mCountThread.start();
         }
 
@@ -179,25 +175,24 @@ public class ConnectAndFindDeviceManager {
     }
 
     /**
-     *
-     * @param ssid  ssid
-     * @param password  route's password
+     * @param ssid     ssid
+     * @param password route's password
      * @param mLocalIp ip
      */
-    public void startConnectingAndFinding(final String ssid,final String password,final int mLocalIp){
+    public void startConnectingAndFinding(final String ssid, final String password, final int mLocalIp) {
 
 
-            startSendCooeeThread(ssid,password,mLocalIp);
+        startSendCooeeThread(ssid, password, mLocalIp);
 
-            startCountThread();
+        startCountThread();
 
-            // 发现设备 udp
-            constructUDPContentData(1);
-            sendUdp();
-            receivUdp();
+        // 发现设备 udp
+        constructUDPContentData(1);
+        sendUdp();
+        receivUdp();
     }
 
-    private void startSendCooeeThread(final String ssid,final String password,final int mLocalIp){
+    private void startSendCooeeThread(final String ssid, final String password, final int mLocalIp) {
         if (mSendCooeeThread == null) {
             mSendCooeeThread = new Thread() {
                 public void run() {
@@ -215,31 +210,28 @@ public class ConnectAndFindDeviceManager {
                 }
             };
         }
-        if (!mSendCooeeThreadDone){
+        if (!mSendCooeeThreadDone) {
             mSendCooeeThread.start();
         }
     }
 
     /**
-     *
      * @param type 1 和 3 两种情况
      */
-    private void constructUDPContentData(int type){
+    private void constructUDPContentData(int type) {
         int index = 0;
         UDPContentData udpContentData = new UDPContentData();
 
         byte[] udpdataBytes = null;
-        if (type == 1){
-            Log.e("Main","constructUDPContentData first udp data");
+        if (type == 1) {
+            Log.e("Main", "constructUDPContentData first udp data");
             udpdataBytes = ByteUtil.getDataBytes(udpContentData.getUdpFirstData());
-        }
-        else {
-            Log.e("Main","constructUDPContentData third udp data");
+        } else {
+            Log.e("Main", "constructUDPContentData third udp data");
 
             udpContentData.getUdpData().setMac(mDeviceMacWithcolon);
             udpdataBytes = ByteUtil.getDataBytes(udpContentData.getUdpData());
         }
-
 
 
         udpContentData.getUdpcmdHeaderData().setType(type);
@@ -252,21 +244,21 @@ public class ConnectAndFindDeviceManager {
 
 
         int checkSum = 0;
-        for (int i  = 0; i < udpdataBytes.length; i++){
+        for (int i = 0; i < udpdataBytes.length; i++) {
             checkSum += udpdataBytes[i];
         }
 
-        for (int i  = 0; i < typeBytes.length; i++){
+        for (int i = 0; i < typeBytes.length; i++) {
             checkSum += typeBytes[i];
         }
 
-        for (int i  = 0; i < cmdBytes.length; i++){
+        for (int i = 0; i < cmdBytes.length; i++) {
             checkSum += cmdBytes[i];
         }
 
-        udpContentData.getUdpCommonHeaderData().setChecksum((byte)(checkSum % 256));
+        udpContentData.getUdpCommonHeaderData().setChecksum((byte) (checkSum % 256));
 
-        byte[] lenBytes =  udpContentData.getUdpCommonHeaderData().getLenByte();
+        byte[] lenBytes = udpContentData.getUdpCommonHeaderData().getLenByte();
         byte[] enctypeByte = udpContentData.getUdpCommonHeaderData().getmEnctypeByte();
         byte[] magicByte = udpContentData.getUdpCommonHeaderData().getMagaicByte();
         byte[] checkByte = udpContentData.getUdpCommonHeaderData().getChecksumByte();
@@ -274,42 +266,42 @@ public class ConnectAndFindDeviceManager {
         int totalLen = magicByte.length + lenBytes.length + enctypeByte.length + checkByte.length
                 + typeBytes.length + cmdBytes.length + udpdataBytes.length;
 
-        synchronized(mLockobj){
+        synchronized (mLockobj) {
             contentBytes = null;
             contentBytes = new byte[totalLen];
 
-            for (int i = 0; i < magicByte.length; i++){
-                contentBytes[index]= magicByte[i];
+            for (int i = 0; i < magicByte.length; i++) {
+                contentBytes[index] = magicByte[i];
                 index++;
             }
 
-            for (int i = 0; i < lenBytes.length; i++){
-                contentBytes[index]= lenBytes[i];
+            for (int i = 0; i < lenBytes.length; i++) {
+                contentBytes[index] = lenBytes[i];
                 index++;
             }
 
-            for (int i = 0; i < enctypeByte.length; i++){
-                contentBytes[index]= enctypeByte[i];
+            for (int i = 0; i < enctypeByte.length; i++) {
+                contentBytes[index] = enctypeByte[i];
                 index++;
             }
 
-            for (int i = 0; i < checkByte.length; i++){
-                contentBytes[index]= checkByte[i];
+            for (int i = 0; i < checkByte.length; i++) {
+                contentBytes[index] = checkByte[i];
                 index++;
             }
 
-            for (int i = 0; i < typeBytes.length; i++){
-                contentBytes[index]= typeBytes[i];
+            for (int i = 0; i < typeBytes.length; i++) {
+                contentBytes[index] = typeBytes[i];
                 index++;
             }
 
-            for (int i = 0; i < cmdBytes.length; i++){
-                contentBytes[index]= cmdBytes[i];
+            for (int i = 0; i < cmdBytes.length; i++) {
+                contentBytes[index] = cmdBytes[i];
                 index++;
             }
 
-            for (int i = 0; i < udpdataBytes.length; i++){
-                contentBytes[index]= udpdataBytes[i];
+            for (int i = 0; i < udpdataBytes.length; i++) {
+                contentBytes[index] = udpdataBytes[i];
                 index++;
             }
         }
@@ -317,18 +309,18 @@ public class ConnectAndFindDeviceManager {
     }
 
 
-    private void sendUdp(){
-        if (mSendThread == null || !mSendThread.isAlive()){
+    private void sendUdp() {
+        if (mSendThread == null || !mSendThread.isAlive()) {
             mSendThread =
                     new Thread(new Runnable() {
 
                         @Override
                         public void run() {
-                            while(mSendThreadRun){
+                            while (mSendThreadRun) {
                                 DatagramPacket dataPacket = null;
 
                                 try {
-                                    if(udpSocket == null){
+                                    if (udpSocket == null) {
                                         udpSocket = new DatagramSocket(null);
                                         udpSocket.setReuseAddress(true);
                                         udpSocket.bind(new InetSocketAddress(SOURCE_DEFAULT_PORT));
@@ -341,7 +333,7 @@ public class ConnectAndFindDeviceManager {
                                     dataPacket.setPort(DEST_DEFAULT_PORT);
                                     dataPacket.setAddress(broadcastAddr);
                                 } catch (Exception e) {
-                                    LogUtil.log(LogUtil.LogLevel.ERROR,TAG, "==1 =" + e.toString());
+                                    LogUtil.log(LogUtil.LogLevel.ERROR, TAG, "==1 =" + e.toString());
                                 }
                                 // while( start ){
                                 try {
@@ -351,7 +343,7 @@ public class ConnectAndFindDeviceManager {
                                 }
                                 // }
 
-                                if (udpSocket != null){
+                                if (udpSocket != null) {
                                     udpSocket.close();
                                     udpSocket = null;
                                 }
@@ -374,9 +366,8 @@ public class ConnectAndFindDeviceManager {
     }
 
 
-
-    private void receivUdp(){
-        if (mReceiveThread == null){
+    private void receivUdp() {
+        if (mReceiveThread == null) {
             mReceiveThread =
                     new Thread(new Runnable() {
 
@@ -384,7 +375,7 @@ public class ConnectAndFindDeviceManager {
                         public void run() {
                             byte[] data = new byte[512];
                             try {
-                                if(receiveudpSocket == null){
+                                if (receiveudpSocket == null) {
                                     receiveudpSocket = new DatagramSocket(null);
                                     receiveudpSocket.setReuseAddress(true);
                                     receiveudpSocket.bind(new InetSocketAddress(SOURCE_DEFAULT_PORT));
@@ -401,17 +392,16 @@ public class ConnectAndFindDeviceManager {
                                     if (null != receiveudpPacket.getAddress()) {
                                         //解析数据
                                         String thisUdpIp = receiveudpPacket.getAddress().toString();
-                                        Log.e("WebViewMainActivity","thisUdpIp = " + thisUdpIp);
-                                        if (receiveTime == 0){
-                                            if(pareseDeviceFirstUdpBytes(data,thisUdpIp)){
+                                        Log.e("WebViewMainActivity", "thisUdpIp = " + thisUdpIp);
+                                        if (receiveTime == 0) {
+                                            if (pareseDeviceFirstUdpBytes(data, thisUdpIp)) {
                                                 Log.e("WebViewMainActivity", "receive second upd package success");
                                                 //send the third udp to device
                                                 constructUDPContentData(3);
 
                                             }
-                                        }
-                                        else if(receiveTime == 1){
-                                            if(pareseDeviceLastUdpBytes(data,thisUdpIp)){
+                                        } else if (receiveTime == 1) {
+                                            if (pareseDeviceLastUdpBytes(data, thisUdpIp)) {
                                                 Log.e("WebViewMainActivity", "receive last upd package success");
                                                 Message message = Message.obtain();
                                                 message.what = PROCESS_END;
@@ -430,63 +420,62 @@ public class ConnectAndFindDeviceManager {
                         }
                     });
         }
-        if (mReceiveThread != null){
+        if (mReceiveThread != null) {
             mReceiveThread.start();
         }
 
     }
 
 
-
-    private boolean pareseDeviceFirstUdpBytes(byte[] deviceBytes,String ipAddress){
-        try{
+    private boolean pareseDeviceFirstUdpBytes(byte[] deviceBytes, String ipAddress) {
+        try {
             String deviceUdpStr = new String(deviceBytes);
-            Log.e("WebViewMainActivity","deviceUdpStr = " + deviceUdpStr);
+            Log.e("WebViewMainActivity", "deviceUdpStr = " + deviceUdpStr);
 
             int left = deviceUdpStr.indexOf(PRODUCT_UUID_STR);
-            if (left >= 0){
+            if (left >= 0) {
 
                 int macleft = deviceUdpStr.indexOf(MAC_STR_KEY);
-                if (macleft >= 0){
+                if (macleft >= 0) {
                     String massageStr = deviceUdpStr.substring(macleft).toLowerCase();
                     String lowMac = mDeviceMacWithcolon.toLowerCase();
-                    if (massageStr.contains(lowMac)){
+                    if (massageStr.contains(lowMac)) {
                         mSendCooeeThreadDone = true;
                         deviceIdAddress = ipAddress;
                         receiveTime++;
-                        Log.e("WebViewMainActivity","return true" );
+                        Log.e("WebViewMainActivity", "return true");
                         return true;
                     }
 
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
-            Log.e("WebViewMainActivity","pareseDeviceFirstUdpBytes Exception = " + e.toString());
+            Log.e("WebViewMainActivity", "pareseDeviceFirstUdpBytes Exception = " + e.toString());
         }
         return false;
     }
 
-    private boolean pareseDeviceLastUdpBytes(byte[] deviceBytes,String ipAddress){
-        try{
-            if (!"".equals(deviceIdAddress) && deviceIdAddress.equalsIgnoreCase(ipAddress)){
+    private boolean pareseDeviceLastUdpBytes(byte[] deviceBytes, String ipAddress) {
+        try {
+            if (!"".equals(deviceIdAddress) && deviceIdAddress.equalsIgnoreCase(ipAddress)) {
                 String deviceUdpStr = new String(deviceBytes);
                 int left = deviceUdpStr.indexOf(CODE_STR_KEY);
-                if (left >=0){
+                if (left >= 0) {
                     mSendThreadRun = false;
                     return true;
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
         return false;
     }
 
 
-    private void endAllThread(){
+    private void endAllThread() {
 
-        if (receiveudpSocket != null && !receiveudpSocket.isClosed()){
+        if (receiveudpSocket != null && !receiveudpSocket.isClosed()) {
             receiveudpSocket.close();
         }
         receiveudpSocket = null;
@@ -504,7 +493,7 @@ public class ConnectAndFindDeviceManager {
         mReceiveThread = null;
     }
 
-    private void restAllThread(){
+    private void restAllThread() {
         mSendThreadRun = true;
         mReceiveThreadRun = true;
         mSendCooeeThreadDone = false;
@@ -519,15 +508,15 @@ public class ConnectAndFindDeviceManager {
         mCheckWifiConnectThread = null;
     }
 
-    public void startCheckNetworkConnectingThread(){
+    public void startCheckNetworkConnectingThread() {
         if (mCheckWifiConnectThread == null) {
             mCheckWifiConnectThread = new Thread() {
                 public void run() {
-                   boolean isCanAccessNetwork = NetWorkUtil.isNetworkCanAccessInternet();
+                    boolean isCanAccessNetwork = NetWorkUtil.isNetworkCanAccessInternet();
                     Message message = Message.obtain();
                     message.what = WIFI_CONNECTED_CHECK_END;
                     Bundle bundle = new Bundle();
-                    bundle.putBoolean(IS_CONNECT,isCanAccessNetwork);
+                    bundle.putBoolean(IS_CONNECT, isCanAccessNetwork);
                     message.setData(bundle);
                     mHandler.sendMessage(message);
 
@@ -536,7 +525,6 @@ public class ConnectAndFindDeviceManager {
         }
         mCheckWifiConnectThread.start();
     }
-
 
 
 }
