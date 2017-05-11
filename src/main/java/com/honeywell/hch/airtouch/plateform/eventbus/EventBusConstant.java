@@ -30,5 +30,6 @@ public class EventBusConstant {
     public static final String JS_CMD_EVENT_ACTION = "js_cmd_event";
 
 
+    public static final String PUSH_H5_PAGE = "push_h5_page";
 
 }
