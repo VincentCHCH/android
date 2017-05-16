@@ -39,7 +39,7 @@ public class BleScanManager {
     }
 
     public interface ScanListener {
-        void onScan(BluetoothDevice device);
+        void onScan(BluetoothDevice device, byte[] scanRecord);
     }
 
     public interface ScanTimeoutListener {
@@ -78,7 +78,7 @@ public class BleScanManager {
             LogUtil.log(LogUtil.LogLevel.INFO, TAG, "===" + device.getName());
 
             if (mScanListener != null)
-                mScanListener.onScan(device);
+                mScanListener.onScan(device, scanRecord);
         }
     };
 
@@ -94,6 +94,11 @@ public class BleScanManager {
                 final Intent intent = new Intent(BluetoothLeService.ACTION_DEVICE_PAIRED);
                 intent.putExtra(BluetoothLeService.DEVICE_ADDRESS, device.getAddress());
                 intent.putExtra(BluetoothLeService.DEVICE_NAME, device.getName());
+
+                // Authentication process
+                if (scanRecord != null && scanRecord.length > 25)
+                    intent.putExtra(BluetoothLeService.DEVICE_TYPE, scanRecord[25]);
+
                 AppManager.getInstance().getApplication().sendBroadcast(intent);
 
                 LogUtil.log(LogUtil.LogLevel.INFO, TAG, "--> connect device " + device.getName());
