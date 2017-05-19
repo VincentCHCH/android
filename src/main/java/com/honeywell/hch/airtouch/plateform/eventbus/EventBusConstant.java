@@ -32,4 +32,10 @@ public class EventBusConstant {
 
     public static final String PUSH_H5_PAGE = "push_h5_page";
 
+    public static final String POP_H5_PAGE = "pop_h5_page";
+
+
+    public static final String START_ACTIVITY = "start_activity_event";
+
+    public static final String FINISH_ACTIVITY = "finish_activity_event";
 }
