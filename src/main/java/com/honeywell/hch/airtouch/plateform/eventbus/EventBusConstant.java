@@ -30,12 +30,15 @@ public class EventBusConstant {
     public static final String JS_CMD_EVENT_ACTION = "js_cmd_event";
 
 
-    public static final String PUSH_H5_PAGE = "push_h5_page";
-
-    public static final String POP_H5_PAGE = "pop_h5_page";
-
 
     public static final String START_ACTIVITY = "start_activity_event";
 
     public static final String FINISH_ACTIVITY = "finish_activity_event";
+
+    public static final String PLUGIN_EVENT_BUS_PARAM = "plugin_event_bus_value";
+
+    public static final String PLUGIN_EVENT_BUS = "plugin_event_bus";
+
+    public static final String PLUGIN_MSG_KEY = "plugin_msg_key";
+
 }
