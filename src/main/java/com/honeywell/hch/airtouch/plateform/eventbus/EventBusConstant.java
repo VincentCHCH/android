@@ -23,7 +23,7 @@ public class EventBusConstant {
 
     public static final String HTTP_JS_RESPONSE_RESULT = "request_js_response";
 
-    public static final String REQUEST_RESULT = "request_result";
+    public static final String SEND_CMD_RESULT = "send_cmmd_result";
 
     public static final String HTTP_ACTION = "http_action";
 
@@ -40,5 +40,7 @@ public class EventBusConstant {
     public static final String PLUGIN_EVENT_BUS = "plugin_event_bus";
 
     public static final String PLUGIN_MSG_KEY = "plugin_msg_key";
+
+    public static final String CALLBACK_ID = "callback_id";
 
 }
