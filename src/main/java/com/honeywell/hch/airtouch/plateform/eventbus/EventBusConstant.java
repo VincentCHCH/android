@@ -41,6 +41,8 @@ public class EventBusConstant {
 
     public static final String PLUGIN_MSG_KEY = "plugin_msg_key";
 
-    public static final String CALLBACK_ID = "callback_id";
+    public static final String CALLBACK_RESULT = "callback_result";
+
+    public static final String CALLBACK_ID= "callback_id";
 
 }
