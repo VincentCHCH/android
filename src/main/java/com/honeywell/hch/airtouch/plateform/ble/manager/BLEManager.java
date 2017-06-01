@@ -13,9 +13,6 @@ import android.os.IBinder;
 import com.honeywell.hch.airtouch.library.util.LogUtil;
 import com.honeywell.hch.airtouch.plateform.appmanager.AppManager;
 import com.honeywell.hch.airtouch.plateform.ble.service.BluetoothLeService;
-import com.honeywell.hch.airtouch.plateform.devices.madair.model.MadAirDeviceModel;
-import com.honeywell.hch.airtouch.plateform.devices.madair.model.MadAirDeviceModelSharedPreference;
-import com.honeywell.hch.airtouch.plateform.devices.madair.model.MadAirDeviceStatus;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -139,28 +136,6 @@ public class BLEManager {
             mBluetoothLeService.bondDevice(device);
         }
     }
-
-
-    /**
-     * disconnect ble service
-     */
-
-    public void disconnectAllDevices() {
-        for (MadAirDeviceModel device : MadAirDeviceModelSharedPreference.getDeviceList()) {
-            if (!device.getDeviceName().equals(""))
-                disconnectBle(device.getMacAddress());
-        }
-    }
-
-    public void disconnectBle(String address) {
-        if (mBluetoothLeService != null) {
-            mBluetoothLeService.disconnect(address);
-
-            MadAirDeviceModelSharedPreference.saveStatus(address, MadAirDeviceStatus.DISCONNECT);
-//            removeBond(getBondDevice(address));
-        }
-    }
-
 
     private void removeBond(BluetoothDevice device) {
         if (device == null) {
