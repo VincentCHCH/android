@@ -76,6 +76,9 @@ public class HPlusConstants {
     public static final int WATER_SMART_RO_50_TYPE = 1114117;
 
     public static final int MAD_AIR_TYPE = 1000000;
+    public static final int MAD_AIR_AUTH = 1000001;
+
+
     /**
      * broadcast
      */

@@ -74,6 +74,7 @@ public class BluetoothLeService extends Service {
     public final static String EXTRA_DATA = "com.honeywell.hch.airtouch.plateform.ble.DATA_READ_DEVICE_SERVER";
     public final static String DEVICE_ADDRESS = "com.honeywell.hch.airtouch.plateform.ble.DEVICE_ADDRESS";
     public final static String DEVICE_NAME = "com.honeywell.hch.airtouch.plateform.ble.DEVICE_NAME";
+    public final static String DEVICE_TYPE = "com.honeywell.hch.airtouch.plateform.ble.DEVICE_TYPE";
     public final static String DATA_UUID = "com.honeywell.hch.airtouch.plateform.ble.DATA_UUID";
 
     private boolean mIsCreateBond = false;
@@ -463,7 +464,7 @@ public class BluetoothLeService extends Service {
     public void setCharacteristicNotification(BluetoothGattCharacteristic characteristic,
                                               String descriptorUuid, String address, boolean enabled) {
         if (mBluetoothAdapter == null || mBluetoothGattHashMap == null
-                || mBluetoothGattHashMap.get(address) == null) {
+                || mBluetoothGattHashMap.get(address) == null || characteristic == null) {
             LogUtil.log(LogUtil.LogLevel.WARN, TAG, "BluetoothAdapter not initialized");
             return;
         }

@@ -15,6 +15,7 @@ import com.honeywell.hch.airtouch.plateform.appmanager.AppManager;
 import com.honeywell.hch.airtouch.plateform.ble.service.BluetoothLeService;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -135,9 +136,6 @@ public class BLEManager {
             mBluetoothLeService.bondDevice(device);
         }
     }
-
-
-
 
     private void removeBond(BluetoothDevice device) {
         if (device == null) {
