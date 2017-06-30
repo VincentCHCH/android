@@ -163,4 +163,5 @@
     <color name="list_select_grey">#ebebeb</color>
 
     <color name="action_bar_bg">#f2f2f2</color>
+    <color name="safety_bg">#f7f7f7</color>
 </resources>
