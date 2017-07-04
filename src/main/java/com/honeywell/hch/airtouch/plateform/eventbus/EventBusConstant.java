@@ -29,6 +29,7 @@ public class EventBusConstant {
 
     public static final String JS_CMD_EVENT_ACTION = "js_cmd_event";
 
+    public static final String UPDATE_LOCATIONS_ACTION = "update_locations_action";
 
 
     public static final String START_ACTIVITY = "start_activity_event";
@@ -44,5 +45,9 @@ public class EventBusConstant {
     public static final String CALLBACK_RESULT = "callback_result";
 
     public static final String CALLBACK_ID= "callback_id";
+
+    public static final String DATA_RESPONSE_KEY = "response_data";
+
+
 
 }
