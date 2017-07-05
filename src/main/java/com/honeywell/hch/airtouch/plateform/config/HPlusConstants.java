@@ -464,4 +464,6 @@ public class HPlusConstants {
 
     public static final int FROM_GROUP_SCENARIO_CONTROL = 1;
     public static final int FROM_HOME_SCENARIO_CONTROL = 2;
+
+    public static final int MIN_USER_PASSWORD_UPDATE = 8;
 }

@@ -14,7 +14,7 @@ public class DIYInstallationState implements Serializable {
     private static WAPIKeyResponse mWAPIKeyResponse;
     private static WAPIDeviceResponse mWAPIDeviceResponse;
     private static WAPIRouter mWAPIRouter;
-    private static String mDeviceName;
+    private static String mDeviceName = "";
     private static String mHomeName;
     private static String mCityCode;
     private static int errorCode;
@@ -125,11 +125,11 @@ public class DIYInstallationState implements Serializable {
     /**
      * 在每次进入enroll的开始界面，都进行reset操作，保证这个对象里的所有状态为初始状态
      */
-    public static void reset(){
+    public static void reset() {
         mWAPIKeyResponse = null;
         mWAPIDeviceResponse = null;
         mWAPIRouter = null;
-        mDeviceName = null;
+        mDeviceName = "";
         mHomeName = null;
         mCityCode = null;
         errorCode = 0;
