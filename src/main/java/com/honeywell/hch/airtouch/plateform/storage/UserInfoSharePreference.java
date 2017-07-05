@@ -60,6 +60,8 @@ public class UserInfoSharePreference {
     private final static String USER_DEVICE_RUNSTATUS_CACH_DATA_KEY = "user_device_runstatus_data_key";
     private final static String DASH_BOARD_LAST_UPATETIME_DATA_KEY = "dashboard_last_updatetime_data_key";
 
+    private final static String USER_DEVICE_INFO_CACH_DATA_KEY = "user_device_info_key";
+
     /**
      * Devices tab相关数据缓存
      */
@@ -188,6 +190,14 @@ public class UserInfoSharePreference {
             return true;
         }
         return false;
+    }
+
+    public static void saveDeviceInfoCachesData(String deviceInfoData) {
+        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_DEVICE_INFO_CACH_DATA_KEY, deviceInfoData);
+    }
+
+    public static String getDeviceInfoFromCaches(){
+        return SharePreferenceUtil.getPrefString(USER_INFO_SHAREPREFERENCE, USER_DEVICE_INFO_CACH_DATA_KEY, DEFAULT_STRING_VALUE);
     }
 
 
