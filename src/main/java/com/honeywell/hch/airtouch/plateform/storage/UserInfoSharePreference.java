@@ -194,7 +194,7 @@ public class UserInfoSharePreference {
      * 通过判断这个sharePreference的是否有账号相关的值来判断用户是否登录
      */
     public static boolean isUserAccountHasData() {
-        if (!StringUtil.isEmpty(getSessionId())) {
+        if (!StringUtil.isEmpty(getPassword())) {
             return true;
         }
         return false;
