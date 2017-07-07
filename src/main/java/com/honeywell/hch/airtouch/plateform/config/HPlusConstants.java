@@ -49,34 +49,34 @@ public class HPlusConstants {
      */
     public static final String INIT_STR_VALUE = "0.00";
 
-    public static final int AIRTOUCH_S_TYPE = 1048577;
+    public static final String AIRTOUCH_S_TYPE = "1048577";
 
-    public static final int AIRTOUCH_X_TYPE = 1048592;
+    public static final String AIRTOUCH_X_TYPE = "1048592";
 
-    public static final int AIRTOUCH_JD_TYPE = 1048578;
+    public static final String AIRTOUCH_JD_TYPE = "1048578";
 
-    public static final int AIRTOUCH_450_TYPE = 1048579;
+    public static final String AIRTOUCH_450_TYPE = "1048579";
 
-    public static final int AIRTOUCH_FFAC_TYPE = 1048580;
+    public static final String AIRTOUCH_FFAC_TYPE = "1048580";
 
-    public static final int WATER_SMART_RO_600_TYPE = 1048608;
+    public static final String WATER_SMART_RO_600_TYPE = "1048608";
 
-    public static final int WATER_SMART_RO_400_TYPE = 1114114;
+    public static final String WATER_SMART_RO_400_TYPE = "1114114";
 
-    public static final int AIRTOUCH_XCOMPACT_TYPE = 1048581;
+    public static final String AIRTOUCH_XCOMPACT_TYPE = "1048581";
 
-    public static final int AIRTOUCH_X3COMPACT_TYPE = 1048582;
-    public static final int AIRTOUCH_X3COMPACT_UPDATE_TYPE = 1048584;
+    public static final String AIRTOUCH_X3COMPACT_TYPE = "1048582";
+    public static final String AIRTOUCH_X3COMPACT_UPDATE_TYPE = "1048584";
 
-    public static final int AIRTOUCH_S_UPDATE_TYPE = 1048585;
-    public static final int AIRTOUCH_450_UPDATE_TYPE = 1048586;
+    public static final String AIRTOUCH_S_UPDATE_TYPE = "1048585";
+    public static final String AIRTOUCH_450_UPDATE_TYPE = "1048586";
 
-    public static final int WATER_SMART_RO_100_TYPE = 1114115;
-    public static final int WATER_SMART_RO_75_TYPE = 1114116;
-    public static final int WATER_SMART_RO_50_TYPE = 1114117;
+    public static final String WATER_SMART_RO_100_TYPE = "1114115";
+    public static final String WATER_SMART_RO_75_TYPE = "1114116";
+    public static final String WATER_SMART_RO_50_TYPE = "1114117";
 
-    public static final int MAD_AIR_TYPE = 1000000;
-    public static final int MAD_AIR_AUTH = 1000001;
+    public static final String MAD_AIR_TYPE = "1000000";
+    public static final String MAD_AIR_AUTH = "1000001";
 
 
     /**
