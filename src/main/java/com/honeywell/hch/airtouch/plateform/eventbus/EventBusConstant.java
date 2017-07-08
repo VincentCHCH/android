@@ -31,6 +31,8 @@ public class EventBusConstant {
 
     public static final String UPDATE_LOCATIONS_ACTION = "update_locations_action";
 
+    public static final String FORCE_LOGOUT_ACTION = "force_logout_action";
+
 
     public static final String START_ACTIVITY = "start_activity_event";
 
@@ -49,5 +51,9 @@ public class EventBusConstant {
     public static final String DATA_RESPONSE_KEY = "response_data";
 
 
+
+    public static final String LOGOUT_REASON = "logout_reason";
+    public static final int FORCE_LOGOUT_REASON = 1;
+    public static final int WRONG_PWD_LOGOUT_REASON = 2;
 
 }
