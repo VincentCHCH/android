@@ -6,7 +6,6 @@ package com.honeywell.hch.airtouch.plateform.eventbus;
 
 public class EventBusConstant {
 
-
     public static final String PARAM_JS_CMD = "command_param";
 
     public static final String DEVICE_CONTROL_CMD_MESSAGE = "device-control";
