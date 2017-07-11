@@ -32,6 +32,9 @@ public class EventBusConstant {
 
     public static final String FORCE_LOGOUT_ACTION = "force_logout_action";
 
+    public static final String REFRESH_WEATHER_ACTION = "refresh_weather_action";
+
+
 
     public static final String START_ACTIVITY = "start_activity_event";
 
