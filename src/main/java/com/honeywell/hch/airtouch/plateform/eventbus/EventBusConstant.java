@@ -28,6 +28,12 @@ public class EventBusConstant {
 
     public static final String JS_CMD_EVENT_ACTION = "js_cmd_event";
 
+    public static final String UPDATE_LOCATIONS_ACTION = "update_locations_action";
+
+    public static final String FORCE_LOGOUT_ACTION = "force_logout_action";
+
+    public static final String REFRESH_WEATHER_ACTION = "refresh_weather_action";
+
 
 
     public static final String START_ACTIVITY = "start_activity_event";
@@ -43,6 +49,14 @@ public class EventBusConstant {
     public static final String CALLBACK_RESULT = "callback_result";
 
     public static final String CALLBACK_ID= "callback_id";
+
+    public static final String DATA_RESPONSE_KEY = "response_data";
+
+
+
+    public static final String LOGOUT_REASON = "logout_reason";
+    public static final int FORCE_LOGOUT_REASON = 1;
+    public static final int WRONG_PWD_LOGOUT_REASON = 2;
 
     public static final String AVIDEO_RECEIVE_CALL = "avideo_receive_call"; //向APP端推送有人call的msg
     public static final String AVIDEO_RECEIVE_END = "audio_receive_end";//当其他人已经挂断时；

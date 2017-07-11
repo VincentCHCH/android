@@ -60,6 +60,8 @@ public class UserInfoSharePreference {
     private final static String USER_DEVICE_RUNSTATUS_CACH_DATA_KEY = "user_device_runstatus_data_key";
     private final static String DASH_BOARD_LAST_UPATETIME_DATA_KEY = "dashboard_last_updatetime_data_key";
 
+    private final static String USER_DEVICE_INFO_CACH_DATA_KEY = "user_device_info_key";
+
     /**
      * Devices tab相关数据缓存
      */
@@ -76,11 +78,19 @@ public class UserInfoSharePreference {
     private static String mSession="";
 
 
+    /**
+     *
+     * @param nickname
+     * @param mobilePhone
+     * @param password  bcrypt password
+     * @param userId
+     * @param countryCode
+     */
     public static void saveUserInfoInSp(String nickname, String mobilePhone, String password,
                                         String userId, String countryCode) {
         SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_NICK_NAME_KEY, nickname);
         SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_PHONE_NUMBER_KEY, mobilePhone);
-        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_PASSWORD_KEY, StringUtil.encodeStringWithTripleDES(password));
+        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_PASSWORD_KEY, password);
         SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_USER_ID_KEY, userId);
         SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_COUNTRY_CODE_KEY, countryCode);
     }
@@ -99,7 +109,7 @@ public class UserInfoSharePreference {
     }
 
     public static void savePassword(String newPassword) {
-        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_PASSWORD_KEY, StringUtil.encodeStringWithTripleDES(newPassword));
+        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_PASSWORD_KEY, newPassword);
     }
 
     public static void saveGpsCityCode(String gpsCityCode) {
@@ -142,7 +152,7 @@ public class UserInfoSharePreference {
 
     public static String getPassword() {
         String pass = SharePreferenceUtil.getPrefString(USER_INFO_SHAREPREFERENCE, USER_PASSWORD_KEY, DEFAULT_STRING_VALUE);
-        return StringUtil.decryptStringWithTripleDES(pass);
+        return pass;
     }
 
     public static String getUserId() {
@@ -184,10 +194,18 @@ public class UserInfoSharePreference {
      * 通过判断这个sharePreference的是否有账号相关的值来判断用户是否登录
      */
     public static boolean isUserAccountHasData() {
-        if (!StringUtil.isEmpty(getMobilePhone())) {
+        if (!StringUtil.isEmpty(getPassword())) {
             return true;
         }
         return false;
+    }
+
+    public static void saveDeviceInfoCachesData(String deviceInfoData) {
+        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_DEVICE_INFO_CACH_DATA_KEY, deviceInfoData);
+    }
+
+    public static String getDeviceInfoFromCaches(){
+        return SharePreferenceUtil.getPrefString(USER_INFO_SHAREPREFERENCE, USER_DEVICE_INFO_CACH_DATA_KEY, DEFAULT_STRING_VALUE);
     }
 
 
