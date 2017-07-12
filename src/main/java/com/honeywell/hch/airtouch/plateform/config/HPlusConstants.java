@@ -130,6 +130,7 @@ public class HPlusConstants {
      */
     public static final int MAX_HOME_CHAR_EDITTEXT = 14;
     public static final int MIN_USER_PASSWORD = 6;
+    public static final int MIN_VERIFICATION_CODE = 6;
 
     /**
      * HTTP response bundle data key
