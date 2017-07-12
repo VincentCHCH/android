@@ -6,7 +6,6 @@ package com.honeywell.hch.airtouch.plateform.eventbus;
 
 public class EventBusConstant {
 
-
     public static final String PARAM_JS_CMD = "command_param";
 
     public static final String DEVICE_CONTROL_CMD_MESSAGE = "device-control";
@@ -33,6 +32,9 @@ public class EventBusConstant {
 
     public static final String FORCE_LOGOUT_ACTION = "force_logout_action";
 
+    public static final String REFRESH_WEATHER_ACTION = "refresh_weather_action";
+
+
 
     public static final String START_ACTIVITY = "start_activity_event";
 
@@ -50,10 +52,17 @@ public class EventBusConstant {
 
     public static final String DATA_RESPONSE_KEY = "response_data";
 
+    public static final String BIND_EVENT_KEY="bind_device_event_key";
+
 
 
     public static final String LOGOUT_REASON = "logout_reason";
     public static final int FORCE_LOGOUT_REASON = 1;
     public static final int WRONG_PWD_LOGOUT_REASON = 2;
 
+    public static final String AVIDEO_RECEIVE_CALL = "avideo_receive_call"; //向APP端推送有人call的msg
+    public static final String AVIDEO_RECEIVE_END = "audio_receive_end";//当其他人已经挂断时；
+    public static final String AVIDEO_ACCEPT_SELF = "audio_accept_self";//自己接听
+    public static final String AVIDEO_ACCEPT_OTHER = "avideo_accept_other";//别人接听
+    public static final String AVIDEO_OPEN_DOOR = "avideo_open_door";//开门
 }
