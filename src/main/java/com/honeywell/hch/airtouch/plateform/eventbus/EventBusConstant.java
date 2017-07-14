@@ -52,7 +52,6 @@ public class EventBusConstant {
 
     public static final String DATA_RESPONSE_KEY = "response_data";
 
-    public static final String BIND_EVENT_KEY="bind_device_event_key";
 
 
 
