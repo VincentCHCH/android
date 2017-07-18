@@ -76,6 +76,7 @@ public class HPlusConstants {
     public static final String WATER_SMART_RO_75_TYPE = "1114116";
     public static final String WATER_SMART_RO_50_TYPE = "1114117";
     public static final String TUNA_TYPE = "2236962";
+    public static final String TUNA_TYPE2 = "2162690";
 
     public static final String MAD_AIR_TYPE = "1000000";
     public static final String MAD_AIR_AUTH = "1000001";
@@ -130,6 +131,7 @@ public class HPlusConstants {
      */
     public static final int MAX_HOME_CHAR_EDITTEXT = 14;
     public static final int MIN_USER_PASSWORD = 6;
+    public static final int MIN_VERIFICATION_CODE = 6;
 
     /**
      * HTTP response bundle data key

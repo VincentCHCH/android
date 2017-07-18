@@ -54,6 +54,7 @@ public class EventBusConstant {
 
 
 
+
     public static final String LOGOUT_REASON = "logout_reason";
     public static final int FORCE_LOGOUT_REASON = 1;
     public static final int WRONG_PWD_LOGOUT_REASON = 2;

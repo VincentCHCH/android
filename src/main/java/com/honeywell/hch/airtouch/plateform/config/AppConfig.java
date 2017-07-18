@@ -103,7 +103,7 @@ public class AppConfig {
         isDebugMode = isDebugEnvironment();
 
         if (isDebugMode) {
-            urlEnv = SwitchSharePreference.getDevelopEnv();
+            urlEnv = DEV_ENV;
         } else {
             urlEnv = PRODUCT_ENV;
         }
