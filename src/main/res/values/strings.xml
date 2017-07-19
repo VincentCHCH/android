@@ -29,6 +29,7 @@
     <string name="smart_ro_50_str">Aqua Touch RO 50S</string>
 
     <string name="offline">Offline</string>
+    <string name="online">Online</string>
     <string name="off">Off</string>
     <string name="speed_low">Low speed</string>
     <string name="speed_medium">Medium speed</string>
