@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 
 import com.honeywell.hch.airtouch.library.util.SharePreferenceUtil;
 import com.honeywell.hch.airtouch.library.util.StringUtil;
+import com.honeywell.hch.airtouch.plateform.R;
 import com.honeywell.hch.airtouch.plateform.appmanager.AppManager;
 import com.honeywell.hch.airtouch.plateform.database.manager.CityChinaDBService;
 import com.honeywell.hch.airtouch.plateform.database.manager.CityIndiaDBService;
@@ -301,6 +302,10 @@ public class AppConfig {
         } else {
             return HPlusConstants.WEB_URL_EULA;
         }
+    }
+
+    public String getDevicePurchaseUrl(String version,String model,String product){
+        return getBasePurchaseUrl() + mContext.getString(R.string.purchase_url_suffix,version,model,product);
     }
 
 }
