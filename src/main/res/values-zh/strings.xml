@@ -134,4 +134,6 @@
     <plurals name="update_days">
         <item quantity="other">上次更新： %1$s天前</item>
     </plurals>
+
+    <string name="tuna_product_type">中控</string>
 </resources>
