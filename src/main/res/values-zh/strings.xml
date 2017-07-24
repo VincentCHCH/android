@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">service</string>
+    <string name="app_name">H Plus</string>
 
     <string name="wapi_router_security_open">无</string>
     <string name="wapi_router_security_wep">WEP</string>
@@ -134,4 +134,6 @@
     <plurals name="update_days">
         <item quantity="other">上次更新： %1$s天前</item>
     </plurals>
+
+    <string name="tuna_product_type">中控</string>
 </resources>
