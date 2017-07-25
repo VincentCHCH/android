@@ -43,6 +43,8 @@ public class UserInfoSharePreference {
     //
     private final static String USER_SAULT_KEY = "sault_id";
     private final static String USER_BYCRYPT_PD_KEY = "bycrypt_pd_id";
+
+    private final static String XG_PUSH_TOKEN_KEY = "xg_push_token_key";
     /**
      * 登录成功之后的国家码
      */
@@ -340,6 +342,14 @@ public class UserInfoSharePreference {
 
     public static String getBycryptPd() {
         return SharePreferenceUtil.getPrefString(USER_INFO_SHAREPREFERENCE, USER_BYCRYPT_PD_KEY, "");
+    }
+
+    public static void saveXgPushToken(String pushToken){
+        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE,XG_PUSH_TOKEN_KEY,pushToken);
+    }
+
+    public static String getXgPushToken(){
+        return SharePreferenceUtil.getPrefString(USER_INFO_SHAREPREFERENCE,XG_PUSH_TOKEN_KEY,"");
     }
 
 }
