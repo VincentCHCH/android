@@ -260,6 +260,10 @@ public class UserInfoSharePreference {
         SharePreferenceUtil.setPrefLong(USER_INFO_SHAREPREFERENCE, MESSAGE_UPDATE_TIME_DATA_KEY, System.currentTimeMillis());
     }
 
+    public static void saveMessageCenterTime() {
+        SharePreferenceUtil.setPrefLong(USER_INFO_SHAREPREFERENCE, MESSAGE_UPDATE_TIME_DATA_KEY, System.currentTimeMillis());
+    }
+
     public static String getMessageCachesData() {
         return SharePreferenceUtil.getPrefString(USER_INFO_SHAREPREFERENCE, MESSAGE_CACH_DATA_KEY, DEFAULT_STRING_VALUE);
     }
