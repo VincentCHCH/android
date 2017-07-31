@@ -77,14 +77,14 @@ public class UserInfoSharePreference {
     private final static String MESSAGE_UPDATE_TIME_DATA_KEY = "message_update_time_data_key";
 
     private final static String DEVICE_CONFIG_CACHE_KEY = "device_config_cache_key";
-    private static String mSession="";
+    private static String mSession = "";
 
+    private final static String Alarm_list_DATA_KEY = "alarm_list_data_key";
 
     /**
-     *
      * @param nickname
      * @param mobilePhone
-     * @param password  bcrypt password
+     * @param password    bcrypt password
      * @param userId
      * @param countryCode
      */
@@ -206,7 +206,7 @@ public class UserInfoSharePreference {
         SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_DEVICE_INFO_CACH_DATA_KEY, deviceInfoData);
     }
 
-    public static String getDeviceInfoFromCaches(){
+    public static String getDeviceInfoFromCaches() {
         return SharePreferenceUtil.getPrefString(USER_INFO_SHAREPREFERENCE, USER_DEVICE_INFO_CACH_DATA_KEY, DEFAULT_STRING_VALUE);
     }
 
@@ -217,6 +217,14 @@ public class UserInfoSharePreference {
 
     public static String getLocationCachesData() {
         return SharePreferenceUtil.getPrefString(USER_INFO_SHAREPREFERENCE, USER_LOCATION_CACH_DATA_KEY, DEFAULT_STRING_VALUE);
+    }
+
+    public static void saveAlarmCachesData(String locationId, String alarm) {
+        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, Alarm_list_DATA_KEY + locationId, alarm);
+    }
+
+    public static String getAlarmCachesData(String locationId) {
+        return SharePreferenceUtil.getPrefString(USER_INFO_SHAREPREFERENCE, Alarm_list_DATA_KEY + locationId, DEFAULT_STRING_VALUE);
     }
 
 
@@ -348,12 +356,12 @@ public class UserInfoSharePreference {
         return SharePreferenceUtil.getPrefString(USER_INFO_SHAREPREFERENCE, USER_BYCRYPT_PD_KEY, "");
     }
 
-    public static void saveXgPushToken(String pushToken){
-        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE,XG_PUSH_TOKEN_KEY,pushToken);
+    public static void saveXgPushToken(String pushToken) {
+        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, XG_PUSH_TOKEN_KEY, pushToken);
     }
 
-    public static String getXgPushToken(){
-        return SharePreferenceUtil.getPrefString(USER_INFO_SHAREPREFERENCE,XG_PUSH_TOKEN_KEY,"");
+    public static String getXgPushToken() {
+        return SharePreferenceUtil.getPrefString(USER_INFO_SHAREPREFERENCE, XG_PUSH_TOKEN_KEY, "");
     }
 
 }
