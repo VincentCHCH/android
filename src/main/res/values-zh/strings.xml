@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">H Plus</string>
-
     <string name="wapi_router_security_open">无</string>
     <string name="wapi_router_security_wep">WEP</string>
     <string name="wapi_router_security_wpa_aes">WPA AES</string>

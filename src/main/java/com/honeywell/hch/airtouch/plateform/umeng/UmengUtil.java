@@ -357,7 +357,7 @@ public class UmengUtil {
 
 
     private static String getUserId() {
-        return UserInfoSharePreference.getUserId();
+        return String.valueOf(UserInfoSharePreference.getUserId());
     }
 
     /**

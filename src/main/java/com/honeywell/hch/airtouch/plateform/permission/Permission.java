@@ -15,6 +15,8 @@ public interface Permission {
     public static final String READ_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE;
     public static final String CALL_PHONE = Manifest.permission.CALL_PHONE;
 
+    public static final String RECORD_AUDIO = Manifest.permission.RECORD_AUDIO;
+
     interface PermissionCodes {
 
         public static final int BLUETOOTH_ADMIN_REQUEST_CODE = 1;
@@ -25,7 +27,7 @@ public interface Permission {
         public final static int CALL_PHONE_REQUEST_CODE = 6;
         public final static int STORAGE_AND_LOCATION_CODE = 7;
         public final static int STORAGE_AND_CAMERA_CODE = 8;
-
+        public final static int RECORD_AUDIO_CODE = 9;
     }
 
 
