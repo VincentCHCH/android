@@ -70,7 +70,7 @@ public class HPlusPermission implements Permission {
         }
     }
 
-    public void requestCameraPermission(Activity permissionActivity) {
+    private void requestCameraPermission(Activity permissionActivity) {
         int permission = checkPermission(permissionActivity, CAMERA);
         // we are checking it here because second condition is asynchronous call
         boolean isPermissionDialogAlreadyShown = ActivityCompat.shouldShowRequestPermissionRationale(permissionActivity, CAMERA);
@@ -101,7 +101,7 @@ public class HPlusPermission implements Permission {
         }
     }
 
-    public void requestStoragePermission(Activity permissionActivity) {
+    private void requestStoragePermission(Activity permissionActivity) {
         int writeStoragePermission = checkPermission(permissionActivity, WRITE_STORAGE);
         int readStoragePermission = checkPermission(permissionActivity, READ_STORAGE);
 
@@ -119,7 +119,7 @@ public class HPlusPermission implements Permission {
      *
      * @param permissionActivity
      */
-    public void requestLocationAndStoragePermission(Activity permissionActivity) {
+    private void requestLocationAndStoragePermission(Activity permissionActivity) {
         boolean storagePermission = isHasPermissionGranted(permissionActivity, new String[]{WRITE_STORAGE, READ_STORAGE});
         boolean locationPermission = isHasPermissionGranted(permissionActivity, new String[]{LOCATION_SERVICE_FINE, LOCATION_SERVICE_CORSE});
 
@@ -137,7 +137,7 @@ public class HPlusPermission implements Permission {
 
     }
 
-    public void requestStorageAndCameraPermission(Activity permissionActivity) {
+    private void requestStorageAndCameraPermission(Activity permissionActivity) {
         boolean storagePermission = isHasPermissionGranted(permissionActivity, new String[]{WRITE_STORAGE, READ_STORAGE});
         boolean cameraPermission = isHasPermissionGranted(permissionActivity, new String[]{CAMERA});
 
@@ -154,6 +154,18 @@ public class HPlusPermission implements Permission {
         }
 
     }
+
+    private void requestAudioRecordPermission(Activity permissionActivity) {
+        boolean recordAudioPermission = isHasPermissionGranted(permissionActivity, new String[]{RECORD_AUDIO});
+
+        if (!recordAudioPermission) {
+            mPermissionListener.onPermissionNotGranted(new String[]{RECORD_AUDIO}, PermissionCodes.RECORD_AUDIO_CODE);
+        } else {
+            mPermissionListener.onPermissionGranted(PermissionCodes.RECORD_AUDIO_CODE);
+        }
+
+    }
+
 
     // use this when you want specific events in your fragment
     // rather than generic fragment
@@ -279,6 +291,9 @@ public class HPlusPermission implements Permission {
 
             case PermissionCodes.STORAGE_AND_CAMERA_CODE:
                 requestStorageAndCameraPermission(permissionActivity);
+                break;
+            case PermissionCodes.RECORD_AUDIO_CODE:
+                requestAudioRecordPermission(permissionActivity);
                 break;
 
         }
