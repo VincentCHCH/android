@@ -220,11 +220,12 @@ public class UserInfoSharePreference {
     }
 
     public static void saveAlarmCachesData(int locationId, String alarm) {
-        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, Alarm_list_DATA_KEY + String.valueOf(locationId), alarm);
+        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, Alarm_list_DATA_KEY + locationId, alarm);
     }
 
     public static String getAlarmCachesData(int locationId) {
-        return SharePreferenceUtil.getPrefString(USER_INFO_SHAREPREFERENCE, Alarm_list_DATA_KEY + String.valueOf(locationId), DEFAULT_STRING_VALUE);
+        return SharePreferenceUtil.getPrefString(USER_INFO_SHAREPREFERENCE, Alarm_list_DATA_KEY + locationId, DEFAULT_STRING_VALUE);
+
     }
 
 
@@ -308,35 +309,35 @@ public class UserInfoSharePreference {
         return SharePreferenceUtil.getPrefBoolean(USER_INFO_SHAREPREFERENCE, IS_GPS_CODE_KEY, true);
     }
 
-    public static void saveEmotionAirCachesData(String locationId, String emotionAirData) {
+    public static void saveEmotionAirCachesData(int locationId, String emotionAirData) {
         SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, EMOTION_AIR_KEY + locationId, emotionAirData);
     }
 
-    public static void saveEmotionWaterCachesData(String locationId, String emotionWaterData) {
+    public static void saveEmotionWaterCachesData(int locationId, String emotionWaterData) {
         SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, EMOTION_WATER_KEY + locationId, emotionWaterData);
     }
 
-    public static String getEmotionAirCachesData(String locationId) {
+    public static String getEmotionAirCachesData(int locationId) {
         return SharePreferenceUtil.getPrefString(USER_INFO_SHAREPREFERENCE, EMOTION_AIR_KEY + locationId, "");
     }
 
-    public static String getEmotionWaterCachesData(String locationId) {
+    public static String getEmotionWaterCachesData(int locationId) {
         return SharePreferenceUtil.getPrefString(USER_INFO_SHAREPREFERENCE, EMOTION_WATER_KEY + locationId, "");
     }
 
-    public static void saveEmotionAirCachesTotalData(String locationId, float airTotal) {
+    public static void saveEmotionAirCachesTotalData(int locationId, float airTotal) {
         SharePreferenceUtil.setPrefFloat(USER_INFO_SHAREPREFERENCE, EMOTION_AIR_TOTAL_KEY + locationId, airTotal);
     }
 
-    public static void saveEmotionWaterCachesTotalData(String locationId, float waterTotal) {
+    public static void saveEmotionWaterCachesTotalData(int locationId, float waterTotal) {
         SharePreferenceUtil.setPrefFloat(USER_INFO_SHAREPREFERENCE, EMOTION_WATER_TOTAL_KEY + locationId, waterTotal);
     }
 
-    public static float getEmotionAirCachesTotalData(String locationId) {
+    public static float getEmotionAirCachesTotalData(int locationId) {
         return SharePreferenceUtil.getPrefFloat(USER_INFO_SHAREPREFERENCE, EMOTION_AIR_TOTAL_KEY + locationId, 0.00f);
     }
 
-    public static float getEmotionWaterCachesTotalData(String locationId) {
+    public static float getEmotionWaterCachesTotalData(int locationId) {
         return SharePreferenceUtil.getPrefFloat(USER_INFO_SHAREPREFERENCE, EMOTION_WATER_TOTAL_KEY + locationId, 0.00f);
     }
 
