@@ -225,6 +225,7 @@ public class UserInfoSharePreference {
 
     public static String getAlarmCachesData(int locationId) {
         return SharePreferenceUtil.getPrefString(USER_INFO_SHAREPREFERENCE, Alarm_list_DATA_KEY + locationId, DEFAULT_STRING_VALUE);
+
     }
 
 
