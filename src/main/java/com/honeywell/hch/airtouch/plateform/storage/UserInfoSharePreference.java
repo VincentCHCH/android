@@ -80,6 +80,8 @@ public class UserInfoSharePreference {
     private static String mSession = "";
 
     private final static String Alarm_list_DATA_KEY = "alarm_list_data_key";
+    private final static String WS_URL_KEY = "ws_url_key";
+    private final static String PHONE_UUID_KEY = "phone_uuid_key";
 
     /**
      * @param nickname
@@ -133,6 +135,22 @@ public class UserInfoSharePreference {
     public static void saveDefaultHomeId(int id) {
         SharePreferenceUtil.setPrefInt(USER_INFO_SHAREPREFERENCE_DEFAULT,
                 getUserId() + USER_DEFAULT_HOME_ID, id);
+    }
+
+    public static void saveWsUrl(String wsUrl) {
+        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, WS_URL_KEY, wsUrl);
+    }
+
+    public static String getWsUrl() {
+        return SharePreferenceUtil.getPrefString(USER_INFO_SHAREPREFERENCE, WS_URL_KEY, DEFAULT_STRING_VALUE);
+    }
+
+    public static void savePhoneUUID(String phoneUUID) {
+        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, PHONE_UUID_KEY, phoneUUID);
+    }
+
+    public static String getPhoneUUID() {
+        return SharePreferenceUtil.getPrefString(USER_INFO_SHAREPREFERENCE, PHONE_UUID_KEY, DEFAULT_STRING_VALUE);
     }
 
     public static int getDefaultHomeId() {
