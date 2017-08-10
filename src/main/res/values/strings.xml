@@ -157,4 +157,6 @@
 
 
     <string name="tuna_product_type">Hub</string>
+    <string name="elevator">Elevator</string>
+
 </resources>
