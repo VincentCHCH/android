@@ -16,6 +16,6 @@ public class SwitchSharePreference {
     }
 
     public static int getDevelopEnv() {
-        return SharePreferenceUtil.getPrefInt(DEVELOP_INFO_SHAREPREFERENCE, DEVELOP_ENV_KEY, AppConfig.DEV_ENV);
+        return SharePreferenceUtil.getPrefInt(DEVELOP_INFO_SHAREPREFERENCE, DEVELOP_ENV_KEY, AppConfig.QA_ENV);
     }
 }
