@@ -121,7 +121,7 @@
     <color name="auth_message_remind">#eb736d</color>
     <color name="auth_message_button">#8bc9f2</color>
     <color name="water_filter_color">#8c8c8e</color>
-    <color name="enroll_page_background">#f5f5f5</color>
+    <color name="enroll_page_background">#ffffff</color>
     <color name="enroll_list_item_select">#2080da</color>
 
     <color name="all_device_bottom_color">#1b74b0</color>
