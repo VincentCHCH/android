@@ -66,4 +66,7 @@ public class EventBusConstant {
     public static final String AVIDEO_ACCEPT_SELF = "audio_accept_self";//自己接听
     public static final String AVIDEO_ACCEPT_OTHER = "avideo_accept_other";//别人接听
     public static final String AVIDEO_OPEN_DOOR = "avideo_open_door";//开门
+
+
+    public static final String ENCRYPT_P2P_DATA = "encrypt_p2p_data";
 }
