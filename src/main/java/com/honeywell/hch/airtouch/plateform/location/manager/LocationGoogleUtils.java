@@ -62,6 +62,7 @@ public class LocationGoogleUtils implements LocationListener {
                     try {
                         beginRequestLocation();
                     }catch (SecurityException e){
+                        LogUtil.log(LogUtil.LogLevel.ERROR, "LocationGoogleUtils", e.toString());
                         LocationManager.getInstance().updateGPSLocation(null);
                     }
                 }
@@ -77,10 +78,10 @@ public class LocationGoogleUtils implements LocationListener {
                 AppManager.getInstance().getApplication().unregisterReceiver(conBroadcastReceiver);
                 mLocationManager.removeUpdates(this);
             }catch (SecurityException  e){
-
+                LogUtil.log(LogUtil.LogLevel.ERROR, "LocationGoogleUtils", e.toString());
             }
             catch (Exception e){
-
+                LogUtil.log(LogUtil.LogLevel.ERROR, "LocationGoogleUtils", e.toString());
             }
             conBroadcastReceiver = null;
         }
@@ -129,7 +130,7 @@ public class LocationGoogleUtils implements LocationListener {
         }
         try {
             // 设置监听器，自动更新的最小时间为间隔N秒(1秒为1*1000，这样写主要为了方便)或最小位移变化超过N米
-            mLocationManager.requestLocationUpdates(provider, 1 * 1000, 500, this);
+            mLocationManager.requestLocationUpdates(provider, 1 * 1000L, 500, this);
         } catch (Exception e) {
             LogUtil.log(LogUtil.LogLevel.ERROR, "location error ==== ", "location error!!");
         }

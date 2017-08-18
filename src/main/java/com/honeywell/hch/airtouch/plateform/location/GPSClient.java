@@ -7,6 +7,7 @@ import com.honeywell.hch.airtouch.library.http.HTTPClient;
 import com.honeywell.hch.airtouch.library.http.HTTPRequestManager;
 import com.honeywell.hch.airtouch.library.http.model.HTTPRequestParams;
 import com.honeywell.hch.airtouch.library.http.model.IReceiveResponse;
+import com.honeywell.hch.airtouch.library.util.CompareUtils;
 import com.honeywell.hch.airtouch.library.util.LogUtil;
 
 /**
@@ -50,7 +51,7 @@ public class GPSClient extends HTTPClient {
      */
     public int getCityAddressDataByBaidu(final Location location, IReceiveResponse
             receiveResponse) {
-        if (null == location || 0 == location.getLatitude() || 0 == location.getLongitude())
+        if (null == location || CompareUtils.compareIntWithDouble(0,location.getLatitude())|| CompareUtils.compareIntWithDouble(0,location.getLongitude()))
             return -1;
         String JsonURL = getAddressFromBaiduUrl(location.getLatitude() + "," + location.getLongitude());
         LogUtil.log(LogUtil.LogLevel.ERROR, TAG, "JsonURL :" + JsonURL);
@@ -68,7 +69,7 @@ public class GPSClient extends HTTPClient {
 
     public int getCityAddressDataByGoogle(final Location location, IReceiveResponse
             receiveResponse) {
-        if (null == location || 0 == location.getLatitude() || 0 == location.getLongitude())
+        if (null == location || CompareUtils.compareIntWithDouble(0,location.getLatitude())|| CompareUtils.compareIntWithDouble(0,location.getLongitude()))
             return -1;
         String JsonURL = getAddressFromGoogleUrl(location.getLatitude() + "," + location.getLongitude());
         LogUtil.log(LogUtil.LogLevel.ERROR, TAG, "JsonURL :" + JsonURL);
