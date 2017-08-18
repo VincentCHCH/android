@@ -12,7 +12,7 @@ public class AppManager {
 
     private static String TAG = AppManager.class.getSimpleName();
 
-    private static AppManager mAppManager;
+    private static AppManager mAppManager =null;
 
     private Application mHPlusApplication = null;
 
@@ -29,7 +29,7 @@ public class AppManager {
     private AppManager() {
     }
 
-    public static AppManager getInstance() {
+    public synchronized static AppManager getInstance() {
         if (mAppManager == null) {
             mAppManager = new AppManager();
         }
