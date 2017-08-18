@@ -5,6 +5,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import com.honeywell.hch.airtouch.library.util.LogUtil;
 import com.honeywell.hch.airtouch.library.util.StringUtil;
 import com.honeywell.hch.airtouch.plateform.appmanager.AppManager;
 import com.honeywell.hch.airtouch.plateform.config.DIYInstallationState;
@@ -77,7 +78,7 @@ public class UmengUtil {
                 apiKey = metaData.getString(metaKey);
             }
         } catch (PackageManager.NameNotFoundException e) {
-
+            LogUtil.log(LogUtil.LogLevel.ERROR, "UmengUtil", e.toString());
         }
         return apiKey;
     }

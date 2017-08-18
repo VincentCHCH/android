@@ -136,8 +136,8 @@ public class EnrollHTTPRequestManager {
                 connection.disconnect();
             }
             httpRequestResponse.setRequestID(mHttpRequestParams.getRequestID());
-            return httpRequestResponse;
         }
+        return httpRequestResponse;
     }
 
     private boolean isValidResponseCode(int responseCode) {

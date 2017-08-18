@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.honeywell.hch.airtouch.library.util.LogUtil;
 import com.honeywell.hch.airtouch.plateform.database.model.City;
 
 import java.util.ArrayList;
@@ -108,11 +109,10 @@ public class CityIndiaDBService extends DBService {
             }
             cursor.close();
         } catch (Exception e) {
+            LogUtil.log(LogUtil.LogLevel.ERROR,"CityIndiaBDService", e.toString());
 
         }finally {
-            if (sqLiteDatabase != null){
-                sqLiteDatabase.close();
-            }
+            sqLiteDatabase.close();
         }
 
         return city;

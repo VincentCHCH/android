@@ -123,7 +123,7 @@ public class GpsUtil {
                 try {
                     Thread.sleep(GPS_TIMEOUT);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    LogUtil.log(LogUtil.LogLevel.ERROR, TAG,e.toString());
                 }
                 if (mSelectedGPSCity == null) {
                     LocationManager.getInstance().unRegisterGPSLocationListener(mMessageHandler);

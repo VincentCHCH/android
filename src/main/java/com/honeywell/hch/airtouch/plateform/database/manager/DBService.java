@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
 
 import com.honeywell.hch.airtouch.library.LibApplication;
+import com.honeywell.hch.airtouch.library.util.LogUtil;
 import com.honeywell.hch.airtouch.plateform.R;
 import com.honeywell.hch.airtouch.plateform.appmanager.AppManager;
 
@@ -157,36 +158,48 @@ public class DBService {
 
 
     public SQLiteDatabase openDatabase(String path) {
-
+        FileOutputStream fos = null;
+        InputStream is = null;
         try {
             if (!(new File(path).exists())) {
-                InputStream is = AppManager.getInstance().getApplication().getApplicationContext().getResources().openRawResource(R.raw.airtouch);//导入数据库
-                FileOutputStream fos = new FileOutputStream(path);
+                is = AppManager.getInstance().getApplication().getApplicationContext().getResources().openRawResource(R.raw.airtouch);//导入数据库
+                fos = new FileOutputStream(path);
                 byte[] buffer = new byte[BUFFER_SIZE];
                 int count = 0;
 
                 while ((count = is.read(buffer)) > 0) {
                     fos.write(buffer, 0, count);
                 }
-                fos.close();
-                is.close();
-
             }
             SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(path, null);
             return db;
 
         } catch (Resources.NotFoundException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            LogUtil.log(LogUtil.LogLevel.ERROR,"openDatabase", e.toString());
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            LogUtil.log(LogUtil.LogLevel.ERROR,"openDatabase", e.toString());
         } catch (IOException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            LogUtil.log(LogUtil.LogLevel.ERROR,"openDatabase", e.toString());
+        } finally {
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (Exception e) {
+                    LogUtil.log(LogUtil.LogLevel.ERROR,"openDatabase", e.toString());
+                }
+            }
+
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (Exception e) {
+                    LogUtil.log(LogUtil.LogLevel.ERROR,"openDatabase", e.toString());
+                }
+            }
         }
-
-
         return null;
     }
 
