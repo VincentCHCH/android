@@ -72,7 +72,7 @@ public class LocationBaiduUtils {
 //		option.setPoiDistance(1000); // poi查询距离
 //		option.setPoiExtraInfo(true); // 是否需要POI的电话和地址等详细信息
 //		option.setPriority(LocationClientOption.GpsFirst); // 不设置，默认是gps优先
-        if (Build.VERSION.SDK_INT  >= Build.VERSION_CODES.M && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+        if (Build.VERSION.SDK_INT  >= Build.VERSION_CODES.M){
             AppManager.getInstance().getApplication().getApplicationContext().checkSelfPermission(Manifest.permission.WRITE_SETTINGS);
         }
         locationClient.setLocOption(option);

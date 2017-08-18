@@ -19,7 +19,7 @@ import java.util.TimerTask;
 
 public class BleScanManager {
 
-    public static final long SCANNING_TIMEOUT = 30 * 1000;
+    public static final long SCANNING_TIMEOUT = 30 * 1000L;
 
     private static final String TAG = "BLEScan";
 

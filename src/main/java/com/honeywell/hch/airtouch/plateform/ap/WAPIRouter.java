@@ -200,4 +200,29 @@ public class WAPIRouter implements IRequestParams, Serializable, Comparable<WAPI
         int strength = getSignalStrength().getSortOrder();
         return Integer.valueOf(strength).compareTo(otherStrength);
     }
+
+    @Override
+    public boolean equals(Object another) {
+        if (another == null) {
+            return false;
+        }
+
+        if (another instanceof WAPIRouter) {
+            RouterSignalStrength anotherSignal = ((WAPIRouter)another).getSignalStrength();
+            if (anotherSignal == null) {
+                return false;
+            }
+
+            if (getSignalStrength() == null) {
+                return false;
+            }
+
+            int otherStrength = anotherSignal.getSortOrder();
+            int strength = getSignalStrength().getSortOrder();
+            return Integer.valueOf(strength).equals(otherStrength);
+        } else {
+            return false;
+        }
+
+    }
 }

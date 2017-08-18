@@ -64,7 +64,6 @@ public class GetAddressByGoogle {
 
                     mCallback.onGetAddressDataComplete(cityLocation);
                 } catch (JSONException e) {
-                    e.printStackTrace();
                     LogUtil.log(LogUtil.LogLevel.ERROR, TAG, httpRequestResponse.getData());
                 }
             }

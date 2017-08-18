@@ -153,7 +153,7 @@ public class ConnectAndFindDeviceManager {
                         try {
                             Thread.sleep(500);
                         } catch (Exception e) {
-
+                            LogUtil.log(LogUtil.LogLevel.ERROR, TAG, e.toString());
                         }
                         mConnectingCount++;
                         if (mConnectingCount >= MAX_COUNT_TIME) {
@@ -204,7 +204,7 @@ public class ConnectAndFindDeviceManager {
                         try {
                             Thread.sleep(500);
                         } catch (Exception e) {
-
+                            LogUtil.log(LogUtil.LogLevel.ERROR, TAG, e.toString());
                         }
                     }
                 }
@@ -337,7 +337,9 @@ public class ConnectAndFindDeviceManager {
                                 }
                                 // while( start ){
                                 try {
-                                    udpSocket.send(dataPacket);
+                                    if (udpSocket != null) {
+                                        udpSocket.send(dataPacket);
+                                    }
                                 } catch (Exception e) {
                                     LogUtil.log(LogUtil.LogLevel.ERROR, TAG, "==2 =" + e.toString());
                                 }
@@ -353,7 +355,7 @@ public class ConnectAndFindDeviceManager {
                                     Thread.sleep(600);
                                 } catch (InterruptedException e) {
                                     // TODO Auto-generated catch block
-                                    e.printStackTrace();
+                                    LogUtil.log(LogUtil.LogLevel.ERROR, TAG, e.toString());
                                 }
                             }
 
@@ -381,8 +383,8 @@ public class ConnectAndFindDeviceManager {
                                     receiveudpSocket.bind(new InetSocketAddress(SOURCE_DEFAULT_PORT));
                                 }
                                 receiveudpPacket = new DatagramPacket(data, data.length);
-                            } catch (SocketException e1) {
-                                e1.printStackTrace();
+                            } catch (SocketException e) {
+                                LogUtil.log(LogUtil.LogLevel.ERROR, TAG, e.toString());
                                 return;
                             }
 
@@ -420,9 +422,7 @@ public class ConnectAndFindDeviceManager {
                         }
                     });
         }
-        if (mReceiveThread != null) {
             mReceiveThread.start();
-        }
 
     }
 
@@ -450,8 +450,7 @@ public class ConnectAndFindDeviceManager {
                 }
             }
         } catch (Exception e) {
-
-            Log.e("WebViewMainActivity", "pareseDeviceFirstUdpBytes Exception = " + e.toString());
+            LogUtil.log(LogUtil.LogLevel.ERROR, TAG,"pareseDeviceFirstUdpBytes Exception = " + e.toString());
         }
         return false;
     }
@@ -467,7 +466,7 @@ public class ConnectAndFindDeviceManager {
                 }
             }
         } catch (Exception e) {
-
+            LogUtil.log(LogUtil.LogLevel.ERROR, TAG, e.toString());
         }
         return false;
     }

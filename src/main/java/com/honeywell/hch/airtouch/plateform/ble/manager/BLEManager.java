@@ -146,9 +146,8 @@ public class BLEManager {
             Class<?> btDeviceInstance = Class.forName(BluetoothDevice.class.getCanonicalName());
             Method removeBondMethod = btDeviceInstance.getMethod("removeBond");
             removeBondMethod.invoke(device);
-        } catch (Throwable th) {
+        } catch (Exception e) {
             LogUtil.log(LogUtil.LogLevel.ERROR, "removeBond", "Exception thrown");
-            th.printStackTrace();
             return;
         }
         LogUtil.log(LogUtil.LogLevel.DEBUG, "removeBond", "Device " + device.getName() + " unpaired.");

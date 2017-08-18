@@ -5,6 +5,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 
+import com.honeywell.hch.airtouch.library.util.LogUtil;
 import com.honeywell.hch.airtouch.library.util.SharePreferenceUtil;
 import com.honeywell.hch.airtouch.library.util.StringUtil;
 import com.honeywell.hch.airtouch.plateform.R;
@@ -246,6 +247,7 @@ public class AppConfig {
             return appInfo.metaData.getString("DEV_ENVIRONMENT");
 
         } catch (Exception e) {
+            LogUtil.log(LogUtil.LogLevel.ERROR, "AppConfig", e.toString());
             return HPlusConstants.RELEASE_ENVIRONMENT;
         }
     }

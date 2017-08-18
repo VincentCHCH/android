@@ -128,7 +128,7 @@ public class HPlusPermission implements Permission {
         } else if (storagePermission && !locationPermission) {
             mPermissionListener.onPermissionNotGranted(new String[]{LOCATION_SERVICE_FINE, LOCATION_SERVICE_CORSE}, PermissionCodes.LOCATION_SERVICE_REQUEST_CODE);
             mPermissionListener.onPermissionGranted(PermissionCodes.STORAGE_REQUEST_CODE);
-        } else if (!storagePermission && locationPermission) {
+        } else if (!storagePermission) {
             mPermissionListener.onPermissionNotGranted(new String[]{WRITE_STORAGE, READ_STORAGE}, PermissionCodes.STORAGE_REQUEST_CODE);
             mPermissionListener.onPermissionGranted(PermissionCodes.STORAGE_REQUEST_CODE);
         } else {
@@ -146,7 +146,7 @@ public class HPlusPermission implements Permission {
         } else if (storagePermission && !cameraPermission) {
             mPermissionListener.onPermissionNotGranted(new String[]{CAMERA}, PermissionCodes.CAMERA_REQUEST_CODE);
             mPermissionListener.onPermissionGranted(PermissionCodes.STORAGE_REQUEST_CODE);
-        } else if (!storagePermission && cameraPermission) {
+        } else if (!storagePermission) {
             mPermissionListener.onPermissionNotGranted(new String[]{WRITE_STORAGE, READ_STORAGE}, PermissionCodes.STORAGE_REQUEST_CODE);
             mPermissionListener.onPermissionGranted(PermissionCodes.CAMERA_REQUEST_CODE);
         } else {
