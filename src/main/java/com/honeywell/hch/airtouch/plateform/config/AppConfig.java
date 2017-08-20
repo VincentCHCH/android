@@ -56,17 +56,17 @@ public class AppConfig {
     public static final int QA_ENV = 3;
     public static int urlEnv;
 
-    public static Boolean isLauchendFirstTime;
-    public static Boolean isHouseTutorial;
-    public static Boolean isControlTutorial;
-    public static Boolean isFilterTutorial;
-    public static Boolean isHomeTutorial;
-    public static Boolean isWeatherTutorial;
-    private static String language = null;
-    private static String mGpsCityCode = "";
-    private static String mLastGpsCityCode = null;
+    public static boolean isLauchendFirstTime;
+    public static boolean isHouseTutorial;
+    public static boolean isControlTutorial;
+    public static boolean isFilterTutorial;
+    public static boolean isHomeTutorial;
+    public static boolean isWeatherTutorial;
+    private static volatile String language = null;
+    private static volatile String mGpsCityCode = "";
+    private static volatile String mLastGpsCityCode = null;
 
-    public static Boolean canFilterScrollPage = false;
+    public static boolean canFilterScrollPage = false;
     private static boolean isHomePageCover = false;
 
     public static final String LANGUAGE_ZH = "zh";
@@ -77,7 +77,7 @@ public class AppConfig {
 
     public static int mInitTime = 0;
 
-    private static AppConfig appConfig = null;
+    private static volatile AppConfig appConfig = null;
 
     private boolean isFirstLogin = true;
 

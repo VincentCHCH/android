@@ -168,8 +168,8 @@ public class WAPIRouter implements IRequestParams, Serializable, Comparable<WAPI
 
     @Override
     public String getRequest(Gson gson) {
-        gson = new GsonBuilder().disableHtmlEscaping().create();
-        return gson.toJson(this);
+       Gson tempJson = new GsonBuilder().disableHtmlEscaping().create();
+        return tempJson.toJson(this);
     }
 
     @Override
@@ -224,5 +224,10 @@ public class WAPIRouter implements IRequestParams, Serializable, Comparable<WAPI
             return false;
         }
 
+    }
+
+    @Override
+    public int hashCode() {
+        return System.identityHashCode(this);
     }
 }

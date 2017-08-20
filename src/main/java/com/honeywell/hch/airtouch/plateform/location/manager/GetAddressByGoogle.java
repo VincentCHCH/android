@@ -54,7 +54,7 @@ public class GetAddressByGoogle {
                         for (LocationAddress la : locationAddresses) {
                             List<AddressComponents> addressComponents = la.getAddressComponents();
                             for (AddressComponents ac :addressComponents) {
-                                if (ac.getTypes() != null && ac.getTypes().get(0).equals("locality")) {
+                                if (ac.getTypes() != null && "locality".equals(ac.getTypes().get(0))) {
                                     cityLocation.setCity(ac.getLongName());
                                     break;
                                 }
@@ -64,7 +64,8 @@ public class GetAddressByGoogle {
 
                     mCallback.onGetAddressDataComplete(cityLocation);
                 } catch (JSONException e) {
-                    LogUtil.log(LogUtil.LogLevel.ERROR, TAG, httpRequestResponse.getData());
+                    LogUtil.error(TAG,"getLocationInfo",e);
+//                    LogUtil.log(LogUtil.LogLevel.ERROR, TAG, httpRequestResponse.getData());
                 }
             }
         };

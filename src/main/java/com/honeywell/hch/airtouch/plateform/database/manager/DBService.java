@@ -45,7 +45,7 @@ public class DBService {
 
     public void insertOrUpdate(String tableName, String[] volumn,
                                List<HashMap<String, Object>> value) {
-        StringBuffer volumnBuffer = new StringBuffer();
+        StringBuilder volumnBuffer = new StringBuilder();
         volumnBuffer.append("replace into " + tableName + " (");
         for (int i = 0; i < volumn.length; i++) {
             volumnBuffer.append(volumn[i] + ",");
@@ -78,7 +78,7 @@ public class DBService {
 
     public void insertOrUpdate(String tableName, String[] volumn,
                                Object[] value) {
-        StringBuffer volumnBuffer = new StringBuffer();
+        StringBuilder volumnBuffer = new StringBuilder();
         volumnBuffer.append("replace into " + tableName + " (");
         for (int i = 0; i < volumn.length; i++) {
             volumnBuffer.append(volumn[i] + ",");
@@ -105,7 +105,7 @@ public class DBService {
         SQLiteDatabase sqLiteDatabase = getSqliteDatabase();
 
         if (sqLiteDatabase != null) {
-            StringBuffer volumnBuffer = new StringBuffer();
+            StringBuilder volumnBuffer = new StringBuilder();
             volumnBuffer.append("insert into " + tableName + " (");
             for (int i = 0; i < volumn.length; i++) {
                 volumnBuffer.append(volumn[i] + ",");
@@ -126,7 +126,7 @@ public class DBService {
     public void delete(String tableName) {
         SQLiteDatabase sqLiteDatabase = getSqliteDatabase();
         if (sqLiteDatabase != null) {
-            StringBuffer deleteSQL = new StringBuffer();
+            StringBuilder deleteSQL = new StringBuilder();
             deleteSQL.append("delete from " + tableName + ";");
             sqLiteDatabase.execSQL(deleteSQL.toString(), new String[]{});
             sqLiteDatabase.close();
@@ -174,21 +174,16 @@ public class DBService {
             SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(path, null);
             return db;
 
-        } catch (Resources.NotFoundException e) {
-            // TODO Auto-generated catch block
-            LogUtil.log(LogUtil.LogLevel.ERROR,"openDatabase", e.toString());
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            LogUtil.log(LogUtil.LogLevel.ERROR,"openDatabase", e.toString());
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            LogUtil.log(LogUtil.LogLevel.ERROR,"openDatabase", e.toString());
+        } catch (Exception e) {
+            LogUtil.error("DBService","openDatabase",e);
+//            LogUtil.log(LogUtil.LogLevel.ERROR,"openDatabase", e.toString());
         } finally {
             if (is != null) {
                 try {
                     is.close();
                 } catch (Exception e) {
-                    LogUtil.log(LogUtil.LogLevel.ERROR,"openDatabase", e.toString());
+                    LogUtil.error("DBService","openDatabase close",e);
+//                    LogUtil.log(LogUtil.LogLevel.ERROR,"openDatabase", e.toString());
                 }
             }
 
@@ -196,7 +191,8 @@ public class DBService {
                 try {
                     fos.close();
                 } catch (Exception e) {
-                    LogUtil.log(LogUtil.LogLevel.ERROR,"openDatabase", e.toString());
+                    LogUtil.error("DBService","openDatabase close",e);
+//                    LogUtil.log(LogUtil.LogLevel.ERROR,"openDatabase", e.toString());
                 }
             }
         }

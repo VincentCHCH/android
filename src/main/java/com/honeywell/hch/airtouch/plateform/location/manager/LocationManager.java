@@ -22,7 +22,7 @@ public class LocationManager {
 
     // all receiver list
     private List<Handler> mGpsLocationListenerList = new CopyOnWriteArrayList<>();
-    private static LocationManager mLocationManager = null;
+    private static volatile LocationManager mLocationManager = null;
 
     public static LocationManager getInstance() {
         if (mLocationManager == null) {
@@ -54,12 +54,12 @@ public class LocationManager {
      */
     public void unRegisterGPSLocationListener(Handler gpsReciveListener) {
         for (int i = mGpsLocationListenerList.size() - 1; i >= 0; i--) {
-            if (gpsReciveListener == mGpsLocationListenerList.get(i)) {
+            if (gpsReciveListener.equals(mGpsLocationListenerList.get(i))) {
                 mGpsLocationListenerList.remove(i);
             }
         }
 
-        if (mGpsLocationListenerList.size() == 0) {
+        if (mGpsLocationListenerList.isEmpty()) {
             // 关闭GPS定位组件
             LocationGoogleUtils.getInstance().stopRequestLocation();
             LocationBaiduUtils.getInstance().stopRequestLocation();
@@ -68,7 +68,7 @@ public class LocationManager {
 
     public synchronized void updateGPSLocation(CityInfo cityLocation) {
 
-        if (mGpsLocationListenerList.size() > 0) {
+        if (!mGpsLocationListenerList.isEmpty()) {
             LogUtil.log(LogUtil.LogLevel.VERBOSE, "MZ", "updateGPSLocation");
             for (int i = mGpsLocationListenerList.size() - 1; i >= 0; i--) {
                 Handler handler = mGpsLocationListenerList.get(i);
@@ -119,10 +119,11 @@ public class LocationManager {
 
         // 获取区县信息
         if (!StringUtil.isEmpty(district)) {
-            district = replaceCityAndProviceText(district);
-            district = StringUtil.replace(district, "新区", "");
-            district = StringUtil.replace(district, "区", "");
-            cityInfo.setDistrict(district);
+            String tempDistrict = district;
+            tempDistrict = replaceCityAndProviceText(tempDistrict);
+            tempDistrict = StringUtil.replace(tempDistrict, "新区", "");
+            tempDistrict = StringUtil.replace(tempDistrict, "区", "");
+            cityInfo.setDistrict(tempDistrict);
         }
 
         // 获取区县信息
@@ -143,9 +144,9 @@ public class LocationManager {
      */
     private static String replaceCityAndProviceText(String name) {
         if (name.endsWith("省")) {
-            name = name.substring(0, name.indexOf("省"));
+            return name.substring(0, name.indexOf("省"));
         } else if (name.endsWith("市")) {
-            name = name.substring(0, name.indexOf("市"));
+            return name.substring(0, name.indexOf("市"));
         }
         return name;
     }

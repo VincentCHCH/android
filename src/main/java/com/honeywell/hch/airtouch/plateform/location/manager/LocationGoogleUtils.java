@@ -27,7 +27,7 @@ public class LocationGoogleUtils implements LocationListener {
 
     private BroadcastReceiver conBroadcastReceiver = null;
 
-    private static LocationGoogleUtils mLocationGoogleUtils = null;
+    private static volatile LocationGoogleUtils mLocationGoogleUtils = null;
 
     public static LocationGoogleUtils getInstance() {
         if (mLocationGoogleUtils == null) {
@@ -177,7 +177,7 @@ public class LocationGoogleUtils implements LocationListener {
 //                }
 //            }, location);
 
-            GetAddressByGoogle addressTask2 = new GetAddressByGoogle
+            new GetAddressByGoogle
                     (new GetAddressByGoogle.GetAddressDataByGoogleListener() {
                 @Override
                 public void onGetAddressDataComplete(CityInfo cityLocation) {

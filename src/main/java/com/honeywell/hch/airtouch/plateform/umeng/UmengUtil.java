@@ -85,17 +85,16 @@ public class UmengUtil {
 
     public static void onEvent(Context context, String event, String msg) {
         Map<String, String> map = new HashMap<>();
-        String macId = "";
 
         // get current time
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
         Date date = new Date(System.currentTimeMillis());
-        String time = formatter.format(date);
+//        String time = formatter.format(date);
 
         // get phone's mac id
-        if (DIYInstallationState.getWAPIDeviceResponse() != null) {
-            macId = DIYInstallationState.getWAPIDeviceResponse().getMacID();
-        }
+//        if (DIYInstallationState.getWAPIDeviceResponse() != null) {
+//            macId = DIYInstallationState.getWAPIDeviceResponse().getMacID();
+//        }
 
         map.put("userId", UserInfoSharePreference.getUserId() + "_" + msg);
 //        if (macId.equals("")) {
@@ -242,8 +241,8 @@ public class UmengUtil {
     }
 
     private static void constructedEnrollEvent(String productName, EnrollEventType enrollStep, String otherMessage) {
-        String enrollStatusStr = "";
-        String eventId = "";
+        String enrollStatusStr ;
+        String eventId  ;
         if (enrollStep == EnrollEventType.ENROLL_START) {
             enrollStatusStr = START_STATUS_STR;
             eventId = ENROLL_EVNET_START_ID;
@@ -278,8 +277,8 @@ public class UmengUtil {
 
 
     private static void constructedHomeControlEvent(int locationId, int type, HomeControlType homeControlType, String otherMessage) {
-        String homeControlStatusStr = "";
-        String eventId = "";
+        String homeControlStatusStr ;
+        String eventId ;
         if (homeControlType == HomeControlType.HOME_CONTROL_SUCCESS) {
             homeControlStatusStr = SUCCESS_STATUS_STR;
             eventId = CONTROL_HOME_SUCCESS_EVENT_ID;
@@ -299,8 +298,8 @@ public class UmengUtil {
 
 
     private static void constructedGroupControlEvent(int groupid, int type, GroupControlType groupControlType, String otherMessage) {
-        String groupControlStatusStr = "";
-        String eventId = "";
+        String groupControlStatusStr  ;
+        String eventId  ;
         if (groupControlType == GroupControlType.GROUP_CONTROL_SUCCESS) {
             groupControlStatusStr = SUCCESS_STATUS_STR;
             eventId = CONTROL_GROUP_SUCCES_EVENT_ID;
@@ -319,8 +318,8 @@ public class UmengUtil {
     }
 
     private static void constructedDeviceControlEvent(String deviceProductName, String type, DeviceControlType deviceControlType, String otherMessage) {
-        String deviceControlStatusStr = "";
-        String eventId = "";
+        String deviceControlStatusStr ;
+        String eventId  ;
         if (deviceControlType == DeviceControlType.DEVICE_CONTROL_SUCCESS) {
             deviceControlStatusStr = SUCCESS_STATUS_STR;
             eventId = CONTROL_DEVICE_SUCCES_EVENT_ID;

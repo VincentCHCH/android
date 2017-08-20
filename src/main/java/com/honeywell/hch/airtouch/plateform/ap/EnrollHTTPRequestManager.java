@@ -84,7 +84,7 @@ public class EnrollHTTPRequestManager {
                         .getOtherParams().getPrintableRequest(gson));
                 body = mHttpRequestParams.getOtherParams().getRequest(gson);
             }
-            connection.setRequestProperty("Content-Length", body.getBytes().length + "");
+            connection.setRequestProperty("Content-Length", Integer.toString(body.getBytes().length));
             connection.setRequestProperty("Accept", "application/json");
             connection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
             if (!StringUtil.isEmpty(mHttpRequestParams.getSessionID())) {

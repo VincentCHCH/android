@@ -35,10 +35,10 @@ public class ShareUtility {
     public static final String APPID = "wx390720e3d10d4b39";
     public static final String APPSECRET = "68217555d75cbf33774c59e048294045";
 
-    private static Context mContext;
+    private static volatile Context mContext;
     private UmengShareListener mUmengShareListener;
 
-    private static ShareUtility mUtility = null;
+    private static volatile ShareUtility mUtility = null;
 
     //weibo
     public static final String WB_APPID = "1764920366";
