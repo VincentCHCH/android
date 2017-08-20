@@ -87,8 +87,8 @@ public class UmengUtil {
         Map<String, String> map = new HashMap<>();
 
         // get current time
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-        Date date = new Date(System.currentTimeMillis());
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+//        Date date = new Date(System.currentTimeMillis());
 //        String time = formatter.format(date);
 
         // get phone's mac id

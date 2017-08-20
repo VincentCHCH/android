@@ -392,7 +392,7 @@ public class ConnectAndFindDeviceManager {
                                     receiveudpSocket.close();
                                 }
 
-                                LogUtil.log(LogUtil.LogLevel.ERROR, TAG, e.toString());
+                                LogUtil.error( TAG, "receivUdp",e);
                                 return;
                             }
 
@@ -422,7 +422,7 @@ public class ConnectAndFindDeviceManager {
 
                                     }
                                 } catch (Exception e) {
-                                    Log.e("Main", "Exception = " + e);
+                                    LogUtil.error("Main", "Exception = " , e);
                                 }
 
                             }
