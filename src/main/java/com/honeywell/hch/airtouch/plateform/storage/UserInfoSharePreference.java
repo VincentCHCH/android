@@ -85,18 +85,18 @@ public class UserInfoSharePreference {
 
     /**
      * @param nickname
-     * @param mobilePhone
-     * @param password    bcrypt password
-     * @param userId
      * @param countryCode
      */
-    public static void saveUserInfoInSp(String nickname, String mobilePhone, String password,
-                                        int userId, String countryCode) {
+    public static void saveUserInfoInSp(String nickname,  String countryCode) {
         SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_NICK_NAME_KEY, nickname);
+        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_COUNTRY_CODE_KEY, countryCode);
+    }
+
+    public static void saveNameAndPwdInSp(String mobilePhone, String password,
+                                        int userId) {
         SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_PHONE_NUMBER_KEY, mobilePhone);
         SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_PASSWORD_KEY, password);
         SharePreferenceUtil.setPrefInt(USER_INFO_SHAREPREFERENCE, USER_USER_ID_KEY, userId);
-        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_COUNTRY_CODE_KEY, countryCode);
     }
 
     public static void saveLoginSession(String sessionId) {
