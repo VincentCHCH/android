@@ -18,7 +18,7 @@ import com.honeywell.hch.airtouch.plateform.ap.model.PhoneNameRequest;
  */
 public class EnrollmentClient {
     private static final String TAG = "AirTouchEnrollmentClient";
-    private static EnrollmentClient mEnrollmentClient;
+    private static volatile EnrollmentClient mEnrollmentClient;
 
     private static final String REQUEST_PHONE_NAME = "phonename";
     private static final String REQUEST_WAPI_KEY = "key";

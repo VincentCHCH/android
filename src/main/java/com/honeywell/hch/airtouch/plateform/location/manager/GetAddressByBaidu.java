@@ -55,7 +55,8 @@ public class GetAddressByBaidu {
 
                     mCallback.onGetAddressDataComplete(cityLocation);
                 } catch (JSONException e) {
-                    LogUtil.log(LogUtil.LogLevel.ERROR, TAG, httpRequestResponse.getData());
+                    LogUtil.error(TAG,"getLocationInfo",e);
+//                    LogUtil.log(LogUtil.LogLevel.ERROR, TAG, httpRequestResponse.getData());
                 }
             }
         };

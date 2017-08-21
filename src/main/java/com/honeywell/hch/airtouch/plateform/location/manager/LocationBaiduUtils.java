@@ -20,7 +20,7 @@ public class LocationBaiduUtils {
 
     private LocationClient mLocationClient;
     private MyLocationListener mMyLocationListener;
-    private static LocationBaiduUtils mLocationBaiduUtils = null;
+    private static volatile LocationBaiduUtils mLocationBaiduUtils = null;
 
     public static LocationBaiduUtils getInstance() {
         if (mLocationBaiduUtils == null) {

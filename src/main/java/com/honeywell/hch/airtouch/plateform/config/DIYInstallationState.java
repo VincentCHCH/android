@@ -12,18 +12,18 @@ public class DIYInstallationState implements Serializable {
 
     private static final long serialVersionUID = -2083291746396398400L;
 
-    private static WAPIKeyResponse mWAPIKeyResponse;
-    private static WAPIDeviceResponse mWAPIDeviceResponse;
-    private static WAPIRouter mWAPIRouter;
-    private static String mDeviceName = "";
-    private static String mHomeName;
-    private static String mCityCode;
+    private static volatile WAPIKeyResponse mWAPIKeyResponse;
+    private static volatile WAPIDeviceResponse mWAPIDeviceResponse;
+    private static volatile  WAPIRouter mWAPIRouter;
+    private static volatile  String mDeviceName = "";
+    private static volatile  String mHomeName;
+    private static  volatile String mCityCode;
     private static int errorCode;
-    private static String mHomeConnectedSsid;
+    private static volatile  String mHomeConnectedSsid;
     private static boolean isDeviceAlreadyEnrolled = false;
     private static int mDeviceType;
 
-    private static String mSsid;
+    private static volatile  String mSsid;
 
     private static int mLocationId;
 

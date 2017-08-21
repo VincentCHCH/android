@@ -98,7 +98,7 @@ public class CityInfo implements Serializable {
 
     @Override
     public String toString() {
-        StringBuffer strBuffer = new StringBuffer();
+        StringBuilder strBuffer = new StringBuilder();
         strBuffer.append(mCountry);
         strBuffer.append(",");
         strBuffer.append(mProvince);

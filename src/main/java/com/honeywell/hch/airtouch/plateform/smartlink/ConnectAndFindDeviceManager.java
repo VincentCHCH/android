@@ -69,9 +69,9 @@ public class ConnectAndFindDeviceManager {
     private static final String MAC_STR_KEY = "mac";
     private static final String CODE_STR_KEY = "code";
 
-    private static String mDeviceMacWithcolon; //这个mac是扫二维码后得到的
+    private static volatile String mDeviceMacWithcolon; //这个mac是扫二维码后得到的
 
-    private static String mDeviceMacWithNocolon;
+    private static volatile String mDeviceMacWithNocolon;
 
     private static final String MAC_HAADER_COOEE = "0000";
 
@@ -153,7 +153,8 @@ public class ConnectAndFindDeviceManager {
                         try {
                             Thread.sleep(500);
                         } catch (Exception e) {
-                            LogUtil.log(LogUtil.LogLevel.ERROR, TAG, e.toString());
+                            Thread.currentThread().interrupt();
+                            LogUtil.error( TAG,"startCountThread", e);
                         }
                         mConnectingCount++;
                         if (mConnectingCount >= MAX_COUNT_TIME) {
@@ -204,7 +205,8 @@ public class ConnectAndFindDeviceManager {
                         try {
                             Thread.sleep(500);
                         } catch (Exception e) {
-                            LogUtil.log(LogUtil.LogLevel.ERROR, TAG, e.toString());
+                            Thread.currentThread().interrupt();
+                            LogUtil.error( TAG,"startCountThread", e);
                         }
                     }
                 }
@@ -222,7 +224,7 @@ public class ConnectAndFindDeviceManager {
         int index = 0;
         UDPContentData udpContentData = new UDPContentData();
 
-        byte[] udpdataBytes = null;
+        byte[] udpdataBytes;
         if (type == 1) {
             Log.e("Main", "constructUDPContentData first udp data");
             udpdataBytes = ByteUtil.getDataBytes(udpContentData.getUdpFirstData());
@@ -355,7 +357,8 @@ public class ConnectAndFindDeviceManager {
                                     Thread.sleep(600);
                                 } catch (InterruptedException e) {
                                     // TODO Auto-generated catch block
-                                    LogUtil.log(LogUtil.LogLevel.ERROR, TAG, e.toString());
+                                    Thread.currentThread().interrupt();
+                                    LogUtil.error( TAG,"startCountThread", e);
                                 }
                             }
 
@@ -384,7 +387,12 @@ public class ConnectAndFindDeviceManager {
                                 }
                                 receiveudpPacket = new DatagramPacket(data, data.length);
                             } catch (SocketException e) {
-                                LogUtil.log(LogUtil.LogLevel.ERROR, TAG, e.toString());
+
+                                if (receiveudpSocket != null){
+                                    receiveudpSocket.close();
+                                }
+
+                                LogUtil.error( TAG, "receivUdp",e);
                                 return;
                             }
 
@@ -414,7 +422,7 @@ public class ConnectAndFindDeviceManager {
 
                                     }
                                 } catch (Exception e) {
-                                    Log.e("Main", "Exception = " + e);
+                                    LogUtil.error("Main", "Exception = " , e);
                                 }
 
                             }

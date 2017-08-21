@@ -25,7 +25,7 @@ public class BLEManager {
 
     private final static String TAG = BluetoothLeService.class.getSimpleName();
 
-    private static BLEManager mBleManager;
+    private static volatile BLEManager mBleManager;
 
     /**
      * the default BLUETOOTH Adapter.
@@ -155,7 +155,7 @@ public class BLEManager {
 
     public BluetoothDevice getBondDevice(String address) {
         Set<BluetoothDevice> devices = getBluetoothAdapter().getBondedDevices();
-        if (devices != null && devices.size() > 0) {
+        if (devices != null && !devices.isEmpty()) {
             for (BluetoothDevice bluetoothDevice : devices) {
                 if (bluetoothDevice.getAddress().equals(address)) {
                     return bluetoothDevice;

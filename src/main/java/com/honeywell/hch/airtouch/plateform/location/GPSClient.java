@@ -16,7 +16,7 @@ import com.honeywell.hch.airtouch.library.util.LogUtil;
 public class GPSClient extends HTTPClient {
     private static final String TAG = "AirTouchGPSClient";
 
-    private static GPSClient mGPSClient;
+    private static volatile GPSClient mGPSClient;
 
     public static GPSClient sharedInstance() {
         if (null == mGPSClient) {

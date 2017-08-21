@@ -303,7 +303,7 @@ public class BluetoothLeService extends Service {
             return false;
         }
 
-        BluetoothGatt gatt = mBluetoothGattHashMap.get(address);
+        mBluetoothGattHashMap.get(address);
 
         final BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
         if (device == null) {
@@ -323,7 +323,7 @@ public class BluetoothLeService extends Service {
 //        }
         // We want to directly connect to the device, so we are setting the autoConnect
         // parameter to false.
-        gatt = device.connectGatt(this, false, mBluetoothGattCallback);
+         device.connectGatt(this, false, mBluetoothGattCallback);
 //        mBluetoothGattHashMap.put(address, gatt);
         LogUtil.log(LogUtil.LogLevel.ERROR, TAG, "Trying to create a new connection.");
         mBluetoothDeviceAddress = address;
@@ -380,7 +380,6 @@ public class BluetoothLeService extends Service {
     private final BroadcastReceiver mUserLogoutReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            final String action = intent.getAction();
 
             Iterator connectedIterator = mBluetoothGattHashMap.entrySet().iterator();
             while (connectedIterator.hasNext()) {

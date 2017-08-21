@@ -77,7 +77,7 @@ public class UserInfoSharePreference {
     private final static String MESSAGE_UPDATE_TIME_DATA_KEY = "message_update_time_data_key";
 
     private final static String DEVICE_CONFIG_CACHE_KEY = "device_config_cache_key";
-    private static String mSession = "";
+    private static volatile String mSession = "";
 
     private final static String Alarm_list_DATA_KEY = "alarm_list_data_key";
     private final static String WS_URL_KEY = "ws_url_key";
