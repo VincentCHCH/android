@@ -7,6 +7,9 @@ import com.honeywell.hch.airtouch.library.util.StringUtil;
 import com.honeywell.hch.airtouch.plateform.config.AppConfig;
 import com.honeywell.hch.airtouch.plateform.config.HPlusConstants;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by h127856 on 6/23/16.
  * <p/>
@@ -14,6 +17,7 @@ import com.honeywell.hch.airtouch.plateform.config.HPlusConstants;
  */
 public class UserInfoSharePreference {
 
+    private final static HashSet<String> DEFAULT_SET_STRING_VALUE = new HashSet<>();
     private final static String DEFAULT_STRING_VALUE = "";
     public final static int DEFAULT_INT_VALUE = -1;
     private final static long DEFAULT_LONG_VALUE = -1;
@@ -85,18 +89,18 @@ public class UserInfoSharePreference {
 
     /**
      * @param nickname
-     * @param mobilePhone
-     * @param password    bcrypt password
-     * @param userId
      * @param countryCode
      */
-    public static void saveUserInfoInSp(String nickname, String mobilePhone, String password,
-                                        int userId, String countryCode) {
+    public static void saveUserInfoInSp(String nickname,  String countryCode) {
         SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_NICK_NAME_KEY, nickname);
+        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_COUNTRY_CODE_KEY, countryCode);
+    }
+
+    public static void saveNameAndPwdInSp(String mobilePhone, String password,
+                                        int userId) {
         SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_PHONE_NUMBER_KEY, mobilePhone);
         SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_PASSWORD_KEY, password);
         SharePreferenceUtil.setPrefInt(USER_INFO_SHAREPREFERENCE, USER_USER_ID_KEY, userId);
-        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_COUNTRY_CODE_KEY, countryCode);
     }
 
     public static void saveLoginSession(String sessionId) {
@@ -137,12 +141,12 @@ public class UserInfoSharePreference {
                 getUserId() + USER_DEFAULT_HOME_ID, id);
     }
 
-    public static void saveWsUrl(String wsUrl) {
-        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, WS_URL_KEY, wsUrl);
+    public static void saveWsUrl(Set<String> wsUrl) {
+        SharePreferenceUtil.setPrefStringSet(USER_INFO_SHAREPREFERENCE, WS_URL_KEY, wsUrl);
     }
 
-    public static String getWsUrl() {
-        return SharePreferenceUtil.getPrefString(USER_INFO_SHAREPREFERENCE, WS_URL_KEY, DEFAULT_STRING_VALUE);
+    public static Set<String> getWsUrl() {
+        return SharePreferenceUtil.getPrefStringSet(USER_INFO_SHAREPREFERENCE, WS_URL_KEY, DEFAULT_SET_STRING_VALUE);
     }
 
     public static void savePhoneUUID(String phoneUUID) {
