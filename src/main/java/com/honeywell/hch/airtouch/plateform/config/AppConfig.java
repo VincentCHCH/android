@@ -53,7 +53,11 @@ public class AppConfig {
     public static final int PRODUCT_ENV = 0;
     public static final int STAGE_ENV = 1;
     public static final int DEV_ENV = 2;
+
     public static final int QA_ENV = 3;
+
+    public static final int DEVOPS_ENV = 4;
+
     public static int urlEnv;
 
     public static boolean isLauchendFirstTime;
