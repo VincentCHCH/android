@@ -34,7 +34,7 @@ public class HPlusConstants {
 
 
     public static String downLoadUrl() {
-        if (AppConfig.isDebugMode) {
+        if (AppConfig.isDebugMode()) {
             return "https://acscloud.honeywell.com.cn/hplus/qa/model_type_qa/Hplus_DeviceType.txt";
         } else {
             return "https://acscloud.honeywell.com.cn/hplus/model_type/Hplus_DeviceType.txt";

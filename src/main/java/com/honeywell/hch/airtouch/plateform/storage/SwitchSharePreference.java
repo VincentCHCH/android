@@ -12,7 +12,7 @@ public class SwitchSharePreference {
     private final static String SELF_HTTP_KEY = "self_http_key";
     private final static String SELF_WEBSOCKET_KEY = "self_websocket_key";
     public static void saveDevelopEnv(int id) {
-        AppConfig.isChangeEnv = true;
+        AppConfig.setIsChangeEnv(true);
         SharePreferenceUtil.setPrefInt(DEVELOP_INFO_SHAREPREFERENCE,
                 DEVELOP_ENV_KEY, id);
     }
@@ -22,13 +22,13 @@ public class SwitchSharePreference {
     }
 
     public static void saveSelfHttpUrl(String url) {
-        AppConfig.isChangeEnv = true;
+        AppConfig.setIsChangeEnv(true);
         SharePreferenceUtil.setPrefString(DEVELOP_INFO_SHAREPREFERENCE,
                 SELF_HTTP_KEY, url);
     }
 
     public static void saveWebsocketUrl(String url) {
-        AppConfig.isChangeEnv = true;
+        AppConfig.setIsChangeEnv(true);
         SharePreferenceUtil.setPrefString(DEVELOP_INFO_SHAREPREFERENCE,
                 SELF_WEBSOCKET_KEY, url);
     }
