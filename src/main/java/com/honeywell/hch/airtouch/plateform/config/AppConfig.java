@@ -58,6 +58,8 @@ public class AppConfig {
 
     public static final int DEVOPS_ENV = 4;
 
+    public static final int SELF_ENV = 5;
+
     public static int urlEnv;
 
     public static boolean isLauchendFirstTime;

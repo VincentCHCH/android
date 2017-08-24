@@ -91,14 +91,14 @@ public class UserInfoSharePreference {
      * @param nickname
      * @param countryCode
      */
-    public static void saveUserInfoInSp(String nickname,  String countryCode) {
+    public static void saveUserInfoInSp(String nickname, String countryCode) {
         SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_NICK_NAME_KEY, nickname);
         SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_COUNTRY_CODE_KEY, countryCode);
     }
 
-    public static void saveNameAndPwdInSp(String mobilePhone, String password,
-                                        int userId) {
-        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_PHONE_NUMBER_KEY, mobilePhone);
+    public static void saveNameAndPwdInSp(String password,
+                                          int userId) {
+//        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_PHONE_NUMBER_KEY, mobilePhone);
         SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_PSW_KEY, password);
         SharePreferenceUtil.setPrefInt(USER_INFO_SHAREPREFERENCE, USER_USER_ID_KEY, userId);
     }
@@ -172,6 +172,10 @@ public class UserInfoSharePreference {
 
     public static String getMobilePhone() {
         return SharePreferenceUtil.getPrefString(USER_INFO_SHAREPREFERENCE, USER_PHONE_NUMBER_KEY, DEFAULT_STRING_VALUE);
+    }
+
+    public static void saveMobilePhone(String mobilePhone) {
+        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_PHONE_NUMBER_KEY, mobilePhone);
     }
 
     public static String getPassword() {
