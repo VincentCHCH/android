@@ -46,9 +46,8 @@ public class AppConfig {
      */
     public static final int WEATHER_CHART_EFFECT_NUMBER_THRESHOLD = 10;
 
-    public static boolean isTestMode;
-    public static boolean isDebugMode;
-    public static boolean isChangeEnv = false;
+    private static boolean isDebugMode;
+    private static boolean isChangeEnv = false;
 
     public static final int PRODUCT_ENV = 0;
     public static final int STAGE_ENV = 1;
@@ -60,19 +59,19 @@ public class AppConfig {
 
     public static final int SELF_ENV = 5;
 
-    public static int urlEnv;
+    private static int urlEnv;
 
-    public static boolean isLauchendFirstTime;
-    public static boolean isHouseTutorial;
-    public static boolean isControlTutorial;
-    public static boolean isFilterTutorial;
-    public static boolean isHomeTutorial;
-    public static boolean isWeatherTutorial;
+    private static boolean isLauchendFirstTime;
+    private static boolean isHouseTutorial;
+    private static boolean isControlTutorial;
+    private static boolean isFilterTutorial;
+    private static boolean isHomeTutorial;
+    private static boolean isWeatherTutorial;
     private static volatile String language = null;
     private static volatile String mGpsCityCode = "";
     private static volatile String mLastGpsCityCode = null;
 
-    public static boolean canFilterScrollPage = false;
+    private static boolean canFilterScrollPage = false;
     private static boolean isHomePageCover = false;
 
     public static final String LANGUAGE_ZH = "zh";
@@ -81,7 +80,7 @@ public class AppConfig {
     public static final String APPLICATION_ID = "1237b42b-0ce7-4582-830c-34d930b1fd52";
 
 
-    public static int mInitTime = 0;
+    private static int mInitTime = 0;
 
     private static volatile AppConfig appConfig = null;
 
@@ -316,4 +315,51 @@ public class AppConfig {
         return getBasePurchaseUrl() + mContext.getString(R.string.purchase_url_suffix,version,model,product);
     }
 
+    public static boolean isDebugMode() {
+        return isDebugMode;
+    }
+
+    public static void setIsDebugMode(boolean isDebugMode) {
+        AppConfig.isDebugMode = isDebugMode;
+    }
+
+    public static boolean isChangeEnv() {
+        return isChangeEnv;
+    }
+
+    public static void setIsChangeEnv(boolean isChangeEnv) {
+        AppConfig.isChangeEnv = isChangeEnv;
+    }
+
+    public static int getUrlEnv() {
+        return urlEnv;
+    }
+
+    public static void setUrlEnv(int urlEnv) {
+        AppConfig.urlEnv = urlEnv;
+    }
+
+    public static boolean isLauchendFirstTime() {
+        return isLauchendFirstTime;
+    }
+
+    public static void setIsLauchendFirstTime(boolean isLauchendFirstTime) {
+        AppConfig.isLauchendFirstTime = isLauchendFirstTime;
+    }
+
+    public static boolean isCanFilterScrollPage() {
+        return canFilterScrollPage;
+    }
+
+    public static void setCanFilterScrollPage(boolean canFilterScrollPage) {
+        AppConfig.canFilterScrollPage = canFilterScrollPage;
+    }
+
+    public static int getmInitTime() {
+        return mInitTime;
+    }
+
+    public static void setmInitTime(int mInitTime) {
+        AppConfig.mInitTime = mInitTime;
+    }
 }

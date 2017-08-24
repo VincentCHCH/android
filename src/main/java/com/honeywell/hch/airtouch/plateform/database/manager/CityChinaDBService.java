@@ -22,7 +22,7 @@ public class CityChinaDBService extends DBService {
     public static final String CODE = "code";
     public static final String IS_CURRENT = "isCurrent";
 
-    public static String[] DBKey = {NAME_ZH, NAME_EN, CODE, IS_CURRENT};
+    private String[] DBKey = {NAME_ZH, NAME_EN, CODE, IS_CURRENT};
 
     public CityChinaDBService(Context context) {
         super(context);

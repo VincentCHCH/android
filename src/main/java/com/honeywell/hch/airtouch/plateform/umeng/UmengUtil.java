@@ -171,7 +171,7 @@ public class UmengUtil {
     public static final String SCAN_SSID_STR_ID = "scan_ssid";
 
 
-    public static final String INPUT_WIFI_PASSWORD_SSID_STR_ID = "device_enroll_ssid";
+    public static final String INPUT_WIFI_PSW_SSID_STR_ID = "device_enroll_ssid";
 
 
     /**

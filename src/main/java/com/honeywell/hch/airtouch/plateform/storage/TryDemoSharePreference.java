@@ -11,7 +11,7 @@ public class TryDemoSharePreference {
     private final static String TRYDEMO_INFO_SHAREPREFERENCE = "trydemo_info_sharepreference";
 
     public static void saveTryDemoEntrance(boolean isShown) {
-        AppConfig.isChangeEnv = true;
+        AppConfig.setIsChangeEnv(true);
         SharePreferenceUtil.setPrefBoolean(TRYDEMO_INFO_SHAREPREFERENCE,
                 TRYDEMO_KEY, isShown);
     }
