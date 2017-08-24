@@ -162,7 +162,7 @@ public class HPlusConstants {
     /**
      * the max value of low pm value
      */
-    public static int MAX_PMVALUE_LOW = 75;
+    public static final int MAX_PMVALUE_LOW = 75;
     public static final int OUTDOOR_PM25_MAX = 110;
     /**
      * the middle value of middle pm value
@@ -194,7 +194,7 @@ public class HPlusConstants {
     /**
      * intent putExtra
      */
-    public static final String FORGET_PASSWORD = "forgetPassword";
+    public static final String FORGET_PWD = "forgetPassword";
     public static final String GET_SMS_RESULT = "get_sms_result";
     public static final String SMS_CODE_VALID_RESULT = "sms_code_valid_result";
     public static final String MOBILE_DONE_BACK = "mobileDoneBack";
@@ -206,7 +206,7 @@ public class HPlusConstants {
     public static final String GET_TOTAL_DUST_PARAMETER= "get_total_dust_parameter";
     public static final String GET_TOTAL_VOLUME_PARAMETER= "get_total_volume_parameter";
 
-    public static int COMM_TASK_TIME_GAP = 1000;
+    public static final int COMM_TASK_TIME_GAP = 1000;
 
     public static final int ERROR_FILTER_RUNTIME = -1;
 

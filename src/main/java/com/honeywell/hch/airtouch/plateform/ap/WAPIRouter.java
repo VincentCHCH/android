@@ -106,7 +106,7 @@ public class WAPIRouter implements IRequestParams, Serializable, Comparable<WAPI
     private String mSecurity;
 
     @SerializedName("Password")
-    private String mPassword;
+    private String mPwd;
 
     @SerializedName("SignalStrength")
     private String mSignalStrength;
@@ -117,7 +117,7 @@ public class WAPIRouter implements IRequestParams, Serializable, Comparable<WAPI
     public WAPIRouter(WAPIRouter wapiRouter) {
         mSSID = wapiRouter.getSSID();
         mSecurity = wapiRouter.getSecurity().getServerValue();
-        mPassword = wapiRouter.getPassword();
+        mPwd = wapiRouter.getPassword();
         mSignalStrength = wapiRouter.getSignalStrength().getServerValue();
     }
 
@@ -143,11 +143,11 @@ public class WAPIRouter implements IRequestParams, Serializable, Comparable<WAPI
 
 
     public String getPassword() {
-        return mPassword;
+        return mPwd;
     }
 
     public void setPassword(String password) {
-        mPassword = password;
+        mPwd = password;
     }
 
     public RouterSignalStrength getSignalStrength() {
@@ -174,10 +174,10 @@ public class WAPIRouter implements IRequestParams, Serializable, Comparable<WAPI
 
     @Override
     public String getPrintableRequest(Gson gson) {
-        String password = mPassword;
-        mPassword = "*****";
+        String password = mPwd;
+        mPwd = "*****";
         String log = getRequest(gson);
-        mPassword = password;
+        mPwd = password;
         return log;
     }
 

@@ -128,7 +128,6 @@ public class EnrollHTTPRequestManager {
         } catch (IOException e) {
             httpRequestResponse.setStatusCode(StatusCode.NETWORK_ERROR);
             httpRequestResponse.setException(e);
-            e.printStackTrace();
         } catch (Exception e) {
             httpRequestResponse.setException(e);
         } finally {

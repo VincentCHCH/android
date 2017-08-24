@@ -61,11 +61,11 @@ public class AppConfig {
     public static int urlEnv;
 
     public static boolean isLauchendFirstTime;
-    public static boolean isHouseTutorial;
-    public static boolean isControlTutorial;
-    public static boolean isFilterTutorial;
-    public static boolean isHomeTutorial;
-    public static boolean isWeatherTutorial;
+    private static boolean isHouseTutorial;
+    private static boolean isControlTutorial;
+    private static boolean isFilterTutorial;
+    private static boolean isHomeTutorial;
+    private static boolean isWeatherTutorial;
     private static volatile String language = null;
     private static volatile String mGpsCityCode = "";
     private static volatile String mLastGpsCityCode = null;

@@ -29,7 +29,7 @@ public class UserInfoSharePreference {
     private final static String USER_INFO_SHAREPREFERENCE_DEFAULT = "user_info_sp_default"; //default 专门用一个file
     private final static String USER_NICK_NAME_KEY = "nick_name";
     private final static String USER_PHONE_NUMBER_KEY = "phone_number";
-    private final static String USER_PASSWORD_KEY = "user_password";
+    private final static String USER_PSW_KEY = "user_password";
     private final static String USER_USER_ID_KEY = "user_id";
 
     private final static String USER_SESSION_ID_KEY = "session_id";
@@ -99,7 +99,7 @@ public class UserInfoSharePreference {
     public static void saveNameAndPwdInSp(String mobilePhone, String password,
                                         int userId) {
         SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_PHONE_NUMBER_KEY, mobilePhone);
-        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_PASSWORD_KEY, password);
+        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_PSW_KEY, password);
         SharePreferenceUtil.setPrefInt(USER_INFO_SHAREPREFERENCE, USER_USER_ID_KEY, userId);
     }
 
@@ -117,7 +117,7 @@ public class UserInfoSharePreference {
     }
 
     public static void savePassword(String newPassword) {
-        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_PASSWORD_KEY, newPassword);
+        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_PSW_KEY, newPassword);
     }
 
     public static void saveGpsCityCode(String gpsCityCode) {
@@ -175,7 +175,7 @@ public class UserInfoSharePreference {
     }
 
     public static String getPassword() {
-        String pass = SharePreferenceUtil.getPrefString(USER_INFO_SHAREPREFERENCE, USER_PASSWORD_KEY, DEFAULT_STRING_VALUE);
+        String pass = SharePreferenceUtil.getPrefString(USER_INFO_SHAREPREFERENCE, USER_PSW_KEY, DEFAULT_STRING_VALUE);
         return pass;
     }
 
