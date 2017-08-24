@@ -166,5 +166,6 @@
 
     <color name="safety_bg">#d7f7f7f7</color>
     <color name="safety_blue">#6093f3</color>
-
+    <color name="arm_blue">#1892e5</color>
+    <color name="disarm_black">#0b1126</color>
 </resources>
