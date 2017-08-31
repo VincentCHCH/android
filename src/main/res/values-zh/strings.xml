@@ -25,8 +25,6 @@
     <string name="pm25_filter">高效颗粒物滤网</string>
     <string name="hisiv_filter">HiSiv过滤网</string>
     <string name="hisiv_composite_filter">HiSiv复合滤网</string>
-    <string name="filter_instruction">滤网介绍</string>
-
 
     <string name="pre_filter_instruction">用以滤除毛发以及较大的颗粒物，有效延长其他滤网使用寿命</string>
     <string name="pm25_filter_instruction">大容量，低阻力，有效去除PM2.5\n和PM0.3颗粒物</string>
