@@ -29,6 +29,8 @@
     <string name="smart_ro_100_str">Aqua Touch RO 100S</string>
     <string name="smart_ro_75_str">Aqua Touch RO 75S</string>
     <string name="smart_ro_50_str">Aqua Touch RO 50S</string>
+    <string name="water_abnormal">Error</string>
+
 
     <string name="offline">Offline</string>
     <string name="online">Online</string>
