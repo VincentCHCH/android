@@ -591,17 +591,17 @@ public class WebSocketConnection implements WebSocket {
                             }
 
                             public void checkServerTrusted(X509Certificate[] certs, String authType) throws CertificateException {
-//                            if(certs == null || certs.length == 0) {
-//                                throw new IllegalArgumentException("certificate is null or empty");
-//                            }
-//                            if(authType == null || authType.length() == 0) {
-//                                throw new IllegalArgumentException("authtype is null or empty");
-//                            }
-//                            try {
-//                                origTrustmanager.checkServerTrusted(certs, authType);
-//                            } catch (CertificateException e) {
-//                                throw new CertificateException("certificate is not trust");
-//                            }
+                                if (certs == null || certs.length == 0) {
+                                    throw new IllegalArgumentException("certificate is null or empty");
+                                }
+                                if (authType == null || authType.length() == 0) {
+                                    throw new IllegalArgumentException("authtype is null or empty");
+                                }
+                                try {
+                                    origTrustmanager.checkServerTrusted(certs, authType);
+                                } catch (CertificateException e) {
+                                    throw new CertificateException("certificate is not trust");
+                                }
                             }
                         }
                 };
