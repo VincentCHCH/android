@@ -107,8 +107,9 @@ public class AppConfig {
 
     // load sharedPreference data to CurrentApp
     public void loadAppInfo() {
-        isDebugMode = isDebugEnvironment();
-
+        //5.0正式版本要改回来
+//        isDebugMode = isDebugEnvironment();
+        isDebugMode = true;
         if (isDebugMode) {
             urlEnv = SwitchSharePreference.getDevelopEnv();
         } else {
