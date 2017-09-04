@@ -426,7 +426,10 @@ public class WebSocketWriter extends Thread {
 
         this.mOutputStream = outputStream;
 
-        Looper.prepare();
+        // fix : Only one Looper may be created per thread
+        if (Looper.myLooper() == null) {
+            Looper.prepare();
+        }
 
         this.mHandler = new ThreadHandler(this);
 
