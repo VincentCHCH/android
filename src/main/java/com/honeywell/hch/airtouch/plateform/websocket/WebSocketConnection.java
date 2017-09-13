@@ -40,6 +40,7 @@ import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import javax.net.SocketFactory;
 import javax.net.ssl.SSLContext;
@@ -76,13 +77,13 @@ public class WebSocketConnection implements WebSocket {
 
     private List<BasicNameValuePair> mWsHeaders;
 
-    private boolean isReconnecting = false;
 
     private static int index = 0;
 
     private List<Integer> dontReconnectCode = new ArrayList<>();
 
     private boolean isShouldReconnect = true;
+
 
     public WebSocketConnection() {
         this.mHandler = new ThreadHandler(this);
@@ -240,6 +241,9 @@ public class WebSocketConnection implements WebSocket {
         }
 
         this.mPreviousConnection = false;
+        this.isShouldReconnect = false;
+        this.mConsumeThreadRunning = false;
+        concurrentLinkedQueue.clear();
     }
 
     /**
@@ -263,7 +267,6 @@ public class WebSocketConnection implements WebSocket {
             connect();
             return true;
         }
-        isReconnecting = false;
         return false;
     }
 
@@ -288,7 +291,6 @@ public class WebSocketConnection implements WebSocket {
                 WebSocketMessage.ClientHandshake clientHandshake = new WebSocketMessage.ClientHandshake(mWebSocketURI, null, mWebSocketSubprotocols);
                 clientHandshake.mHeaderList = mWsHeaders;
                 mWebSocketWriter.forward(clientHandshake);
-                isReconnecting = false;
             } catch (Exception e) {
                 onClose(ConnectionHandler.WebSocketCloseNotification.INTERNAL_ERROR.ordinal(), e.getLocalizedMessage());
                 LogUtil.error(TAG, "connect", e);
@@ -300,48 +302,73 @@ public class WebSocketConnection implements WebSocket {
 
     }
 
+    private ConcurrentLinkedQueue concurrentLinkedQueue = new ConcurrentLinkedQueue();
+    private boolean mConsumeThreadRunning = true;
+    private Thread mConsumeThread = null;
     /**
      * Perform reconnection
      *
      * @return true if reconnection was scheduled
      */
-    protected boolean scheduleReconnect() {
+    protected void scheduleReconnect() {
         /**
          * Reconnect only if:
          *  - connection active (connected but not disconnected)
          *  - has previous success connections
          *  - reconnect interval is set
          */
+        consumeLinkedQueue();
         final int interval = mWebSocketOptions.getReconnectInterval();
-        boolean shouldReconnect =
-//                mSocket != null
-//                && mSocket.isConnected()
-//                && mPreviousConnection
-//                &&
-                (interval > 0);
-        if (shouldReconnect) {
-            if (!isReconnecting) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        isReconnecting = true;
-                        Log.d(TAG, "WebSocket reconnecting...");
-                        try {
-                            Thread.sleep(interval);
-                        } catch (Exception e) {
+//        boolean shouldReconnect =
+////                mSocket != null
+////                && mSocket.isConnected()
+////                && mPreviousConnection
+////                &&
+//                (interval > 0);
+        if ((mSocket == null || !mSocket.isConnected()) && isShouldReconnect) {
+            concurrentLinkedQueue.add(new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.e(TAG, "WebSocket reconnecting...");
+                    try {
+                        Thread.sleep(interval);
+                    } catch (Exception e) {
 
-                        }
-                        reconnect();
                     }
-                }).start();
-            }
+                    reconnect();
+                }
+            }));
+
             Log.d(TAG, "WebSocket reconnection scheduled");
 
         }
-
-        return shouldReconnect;
     }
 
+    private void consumeLinkedQueue(){
+        if (mConsumeThread == null){
+            mConsumeThread  =  new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while(mConsumeThreadRunning){
+                        try{
+                            if (concurrentLinkedQueue.size() > 0){
+                                Log.e(TAG, "WebSocket consumeLinkedQueue...");
+
+                                Thread thread = (Thread) concurrentLinkedQueue.poll();
+                                thread.start();
+                            }
+                        }catch (Exception e){
+
+                        }
+
+                    }
+                }
+            });
+            mConsumeThread.start();
+        }
+
+
+    }
 
     /**
      * Common close handler
@@ -350,12 +377,9 @@ public class WebSocketConnection implements WebSocket {
      * @param reason Close reason (human-readable).
      */
     private void onClose(int code, String reason) {
-        isReconnecting = false;
         Log.e(TAG,"WebSocketCloseNotification code = " + code);
-        if (dontReconnectCode != null && !dontReconnectCode.contains(code) && isShouldReconnect) {
+        if (dontReconnectCode != null && !dontReconnectCode.contains(code)) {
             scheduleReconnect();
-        }else{
-            isShouldReconnect = false;
         }
 
         ConnectionHandler webSocketObserver = mWebSocketConnectionObserver.get();
