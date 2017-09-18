@@ -548,7 +548,8 @@ public class WebSocketConnection implements WebSocket {
 
                 SocketFactory factory = null;
                 if (mWebSocketURI.getScheme().equalsIgnoreCase(WSS_URI_SCHEME)) {
-                    factory = getProductCertificatesFactory();
+                    String cerFileName =  mWebSocketURI.toString().contains("wss://homecloud.honeywell.com.cn") ? "GeoTrust_Global_CA.PEM" : "qa.cer";
+                    factory = getProductCertificatesFactory(cerFileName);
                     Log.e("haha", "factory === " + factory);
                     if (factory == null) {
                         SSLContext sc = SSLContext.getInstance("TLSv1.2");
@@ -579,12 +580,12 @@ public class WebSocketConnection implements WebSocket {
 
         private static final String KEY_STORE_TYPE_BKS = "bks";//证书类型 固定值
 
-        private SSLSocketFactory getProductCertificatesFactory() {
+        private SSLSocketFactory getProductCertificatesFactory(String cerFileName) {
             InputStream ksIn = null;
 
             try {
                 SSLContext sslContext = SSLContext.getInstance("TLS");
-                ksIn = LibApplication.getContext().getResources().getAssets().open("qa.cer");
+                ksIn = LibApplication.getContext().getResources().getAssets().open(cerFileName);
                 CertificateFactory cerFactory = CertificateFactory.getInstance("X.509", "BC");
                 Certificate cer = cerFactory.generateCertificate(ksIn);
 
@@ -616,17 +617,17 @@ public class WebSocketConnection implements WebSocket {
                             }
 
                             public void checkServerTrusted(X509Certificate[] certs, String authType) throws CertificateException {
-//                                if (certs == null || certs.length == 0) {
-//                                    throw new IllegalArgumentException("certificate is null or empty");
-//                                }
-//                                if (authType == null || authType.length() == 0) {
-//                                    throw new IllegalArgumentException("authtype is null or empty");
-//                                }
-//                                try {
-//                                    origTrustmanager.checkServerTrusted(certs, authType);
-//                                } catch (CertificateException e) {
-//                                    throw new CertificateException("certificate is not trust");
-//                                }
+                                if (certs == null || certs.length == 0) {
+                                    throw new IllegalArgumentException("certificate is null or empty");
+                                }
+                                if (authType == null || authType.length() == 0) {
+                                    throw new IllegalArgumentException("authtype is null or empty");
+                                }
+                                try {
+                                    origTrustmanager.checkServerTrusted(certs, authType);
+                                } catch (CertificateException e) {
+                                    throw new CertificateException("certificate is not trust");
+                                }
                             }
                         }
                 };
