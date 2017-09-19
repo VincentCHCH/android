@@ -82,7 +82,6 @@ public class WebSocketConnection implements WebSocket {
 
     private List<Integer> dontReconnectCode = new ArrayList<>();
 
-    private boolean isShouldReconnect = true;
 
 
     public WebSocketConnection() {
@@ -241,7 +240,6 @@ public class WebSocketConnection implements WebSocket {
         }
 
         this.mPreviousConnection = false;
-        this.isShouldReconnect = false;
         this.mConsumeThreadRunning = false;
         concurrentLinkedQueue.clear();
     }
@@ -325,7 +323,8 @@ public class WebSocketConnection implements WebSocket {
 ////                && mPreviousConnection
 ////                &&
 //                (interval > 0);
-        if ((mSocket == null || !mSocket.isConnected()) && isShouldReconnect) {
+
+        if (UserInfoSharePreference.isUserAccountHasData()) {
             concurrentLinkedQueue.add(new Thread(new Runnable() {
                 @Override
                 public void run() {
