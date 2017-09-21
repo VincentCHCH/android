@@ -160,5 +160,7 @@
 
     <string name="tuna_product_type">Hub</string>
     <string name="elevator">Elevator</string>
-
+    <string name="call_type_lobby">Lobby</string>
+    <string name="call_type_front_door">Front door</string>
+    <string name="call_type_rear_door">Rear door</string>
 </resources>

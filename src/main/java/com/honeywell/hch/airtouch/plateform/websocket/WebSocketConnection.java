@@ -21,6 +21,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.honeywell.hch.airtouch.library.LibApplication;
+import com.honeywell.hch.airtouch.library.http.NoSSLv3SocketFactory;
 import com.honeywell.hch.airtouch.library.util.LogUtil;
 import com.honeywell.hch.airtouch.plateform.storage.UserInfoSharePreference;
 
@@ -39,6 +40,7 @@ import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import javax.net.SocketFactory;
 import javax.net.ssl.SSLContext;
@@ -75,13 +77,12 @@ public class WebSocketConnection implements WebSocket {
 
     private List<BasicNameValuePair> mWsHeaders;
 
-    private boolean isReconnecting = false;
 
     private static int index = 0;
 
     private List<Integer> dontReconnectCode = new ArrayList<>();
 
-    private boolean isShouldReconnect = true;
+
 
     public WebSocketConnection() {
         this.mHandler = new ThreadHandler(this);
@@ -239,6 +240,8 @@ public class WebSocketConnection implements WebSocket {
         }
 
         this.mPreviousConnection = false;
+        this.mConsumeThreadRunning = false;
+        concurrentLinkedQueue.clear();
     }
 
     /**
@@ -262,7 +265,6 @@ public class WebSocketConnection implements WebSocket {
             connect();
             return true;
         }
-        isReconnecting = false;
         return false;
     }
 
@@ -287,7 +289,6 @@ public class WebSocketConnection implements WebSocket {
                 WebSocketMessage.ClientHandshake clientHandshake = new WebSocketMessage.ClientHandshake(mWebSocketURI, null, mWebSocketSubprotocols);
                 clientHandshake.mHeaderList = mWsHeaders;
                 mWebSocketWriter.forward(clientHandshake);
-                isReconnecting = false;
             } catch (Exception e) {
                 onClose(ConnectionHandler.WebSocketCloseNotification.INTERNAL_ERROR.ordinal(), e.getLocalizedMessage());
                 LogUtil.error(TAG, "connect", e);
@@ -299,48 +300,74 @@ public class WebSocketConnection implements WebSocket {
 
     }
 
+    private ConcurrentLinkedQueue concurrentLinkedQueue = new ConcurrentLinkedQueue();
+    private boolean mConsumeThreadRunning = true;
+    private Thread mConsumeThread = null;
     /**
      * Perform reconnection
      *
      * @return true if reconnection was scheduled
      */
-    protected boolean scheduleReconnect() {
+    protected void scheduleReconnect() {
         /**
          * Reconnect only if:
          *  - connection active (connected but not disconnected)
          *  - has previous success connections
          *  - reconnect interval is set
          */
+        consumeLinkedQueue();
         final int interval = mWebSocketOptions.getReconnectInterval();
-        boolean shouldReconnect =
-//                mSocket != null
-//                && mSocket.isConnected()
-//                && mPreviousConnection
-//                &&
-                (interval > 0);
-        if (shouldReconnect) {
-            if (!isReconnecting) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        isReconnecting = true;
-                        Log.d(TAG, "WebSocket reconnecting...");
-                        try {
-                            Thread.sleep(interval);
-                        } catch (Exception e) {
+//        boolean shouldReconnect =
+////                mSocket != null
+////                && mSocket.isConnected()
+////                && mPreviousConnection
+////                &&
+//                (interval > 0);
 
-                        }
-                        reconnect();
+        if (UserInfoSharePreference.isUserAccountHasData()) {
+            concurrentLinkedQueue.add(new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.e(TAG, "WebSocket reconnecting...");
+                    try {
+                        Thread.sleep(interval);
+                    } catch (Exception e) {
+
                     }
-                }).start();
-            }
+                    reconnect();
+                }
+            }));
+
             Log.d(TAG, "WebSocket reconnection scheduled");
 
         }
-
-        return shouldReconnect;
     }
 
+    private void consumeLinkedQueue(){
+        if (mConsumeThread == null){
+            mConsumeThread  =  new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while(mConsumeThreadRunning){
+                        try{
+                            if (concurrentLinkedQueue.size() > 0){
+                                Log.e(TAG, "WebSocket consumeLinkedQueue...");
+
+                                Thread thread = (Thread) concurrentLinkedQueue.poll();
+                                thread.start();
+                            }
+                        }catch (Exception e){
+
+                        }
+
+                    }
+                }
+            });
+            mConsumeThread.start();
+        }
+
+
+    }
 
     /**
      * Common close handler
@@ -349,12 +376,9 @@ public class WebSocketConnection implements WebSocket {
      * @param reason Close reason (human-readable).
      */
     private void onClose(int code, String reason) {
-        isReconnecting = false;
         Log.e(TAG,"WebSocketCloseNotification code = " + code);
-        if (dontReconnectCode != null && !dontReconnectCode.contains(code) && isShouldReconnect) {
+        if (dontReconnectCode != null && !dontReconnectCode.contains(code)) {
             scheduleReconnect();
-        }else{
-            isShouldReconnect = false;
         }
 
         ConnectionHandler webSocketObserver = mWebSocketConnectionObserver.get();
@@ -523,7 +547,8 @@ public class WebSocketConnection implements WebSocket {
 
                 SocketFactory factory = null;
                 if (mWebSocketURI.getScheme().equalsIgnoreCase(WSS_URI_SCHEME)) {
-                    factory = getProductCertificatesFactory();
+                    String cerFileName =  mWebSocketURI.toString().contains("wss://homecloud.honeywell.com.cn") ? "GeoTrust_Global_CA.PEM" : "qa.cer";
+                    factory = getProductCertificatesFactory(cerFileName);
                     Log.e("haha", "factory === " + factory);
                     if (factory == null) {
                         SSLContext sc = SSLContext.getInstance("TLSv1.2");
@@ -554,12 +579,12 @@ public class WebSocketConnection implements WebSocket {
 
         private static final String KEY_STORE_TYPE_BKS = "bks";//证书类型 固定值
 
-        private SSLSocketFactory getProductCertificatesFactory() {
+        private SSLSocketFactory getProductCertificatesFactory(String cerFileName) {
             InputStream ksIn = null;
 
             try {
                 SSLContext sslContext = SSLContext.getInstance("TLS");
-                ksIn = LibApplication.getContext().getResources().getAssets().open("qa.cer");
+                ksIn = LibApplication.getContext().getResources().getAssets().open(cerFileName);
                 CertificateFactory cerFactory = CertificateFactory.getInstance("X.509", "BC");
                 Certificate cer = cerFactory.generateCertificate(ksIn);
 
@@ -591,24 +616,24 @@ public class WebSocketConnection implements WebSocket {
                             }
 
                             public void checkServerTrusted(X509Certificate[] certs, String authType) throws CertificateException {
-//                                if (certs == null || certs.length == 0) {
-//                                    throw new IllegalArgumentException("certificate is null or empty");
-//                                }
-//                                if (authType == null || authType.length() == 0) {
-//                                    throw new IllegalArgumentException("authtype is null or empty");
-//                                }
-//                                try {
-//                                    origTrustmanager.checkServerTrusted(certs, authType);
-//                                } catch (CertificateException e) {
-//                                    throw new CertificateException("certificate is not trust");
-//                                }
+                                if (certs == null || certs.length == 0) {
+                                    throw new IllegalArgumentException("certificate is null or empty");
+                                }
+                                if (authType == null || authType.length() == 0) {
+                                    throw new IllegalArgumentException("authtype is null or empty");
+                                }
+                                try {
+                                    origTrustmanager.checkServerTrusted(certs, authType);
+                                } catch (CertificateException e) {
+                                    throw new CertificateException("certificate is not trust");
+                                }
                             }
                         }
                 };
 
                 sslContext.init(null, wrappedTrustManagers, new SecureRandom());
-                return sslContext.getSocketFactory();
 
+                return new Tls12SocketFactory(sslContext.getSocketFactory());
 
             } catch (CertificateException e) {
                 LogUtil.log(LogUtil.LogLevel.ERROR, TAG, e.toString());
