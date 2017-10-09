@@ -75,7 +75,7 @@ public class HPlusConstants {
     public static final String WATER_SMART_RO_100_TYPE = "1114115";
     public static final String WATER_SMART_RO_75_TYPE = "1114116";
     public static final String WATER_SMART_RO_50_TYPE = "1114117";
-    public static final String TUNA_TYPE = "2236962";
+    public static final String TUNA_TYPE = "2162689";
     public static final String TUNA_TYPE2 = "2162690";
 
     public static final String MAD_AIR_TYPE = "1000000";
