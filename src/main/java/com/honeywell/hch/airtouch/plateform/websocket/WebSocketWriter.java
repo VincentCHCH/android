@@ -424,29 +424,31 @@ public class WebSocketWriter extends Thread {
     // Thread method overrides
     @Override
     public void run() {
-        OutputStream outputStream = null;
-        try {
+        try{
+            OutputStream outputStream = null;
             outputStream = mSocket.getOutputStream();
-        } catch (IOException e) {
-            Log.e(TAG, e.getLocalizedMessage());
+
+
+            this.mOutputStream = outputStream;
+
+            // fix : Only one Looper may be created per thread
+            if (Looper.myLooper() == null) {
+                Looper.prepare();
+            }
+
+            this.mHandler = new ThreadHandler(this);
+
+            synchronized (this) {
+                Log.d(TAG, "WebSocker writer running.");
+
+                notifyAll();
+            }
+
+            Looper.loop();
+        }catch (Exception e){
+
         }
 
-        this.mOutputStream = outputStream;
-
-        // fix : Only one Looper may be created per thread
-        if (Looper.myLooper() == null) {
-            Looper.prepare();
-        }
-
-        this.mHandler = new ThreadHandler(this);
-
-        synchronized (this) {
-            Log.d(TAG, "WebSocker writer running.");
-
-            notifyAll();
-        }
-
-        Looper.loop();
     }
 
 
