@@ -9,6 +9,8 @@ import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 
+import static com.honeywell.hch.airtouch.plateform.permission.Permission.PermissionCodes.READ_CONTACTS_CODE;
+
 public class HPlusPermission implements Permission {
 
     private PermissionListener mPermissionListener;
@@ -295,9 +297,28 @@ public class HPlusPermission implements Permission {
             case PermissionCodes.RECORD_AUDIO_CODE:
                 requestAudioRecordPermission(permissionActivity);
                 break;
+            case READ_CONTACTS_CODE:
+                requestReadContactsPermission(permissionActivity);
+                break;
 
         }
 
+    }
+
+    private void requestReadContactsPermission(Activity permissionActivity){
+        int permission = checkPermission(permissionActivity, READ_CONTACTS);
+
+        boolean isPermissionDialogAlreadyShown = ActivityCompat.shouldShowRequestPermissionRationale(permissionActivity, READ_CONTACTS);
+        if (PackageManager.PERMISSION_GRANTED == permission) {
+            mPermissionListener.onPermissionGranted(PermissionCodes.READ_CONTACTS_CODE);
+
+        } else {
+            mPermissionListener.onPermissionNotGranted(new String[]{READ_CONTACTS}, PermissionCodes.READ_CONTACTS_CODE);
+        }
+
+        if (permission == PackageManager.PERMISSION_DENIED && !isPermissionDialogAlreadyShown) {
+            mPermissionListener.onPermissionDenied(PermissionCodes.READ_CONTACTS_CODE);
+        }
     }
 
     public boolean checkPhoneCallPermission(Activity permissionActivity) {
