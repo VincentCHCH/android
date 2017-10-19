@@ -61,7 +61,6 @@ public class AppConfig {
 
     private static int urlEnv;
 
-    private static boolean isLauchendFirstTime;
     private static boolean isHouseTutorial;
     private static boolean isControlTutorial;
     private static boolean isFilterTutorial;
@@ -116,7 +115,6 @@ public class AppConfig {
             urlEnv = PRODUCT_ENV;
         }
 
-        isLauchendFirstTime = true;
         isHouseTutorial = SharePreferenceUtil.getPrefBoolean(HPlusConstants.PREFERENCE_USER_CONFIG,
                 "isHouseTutorial", false);
         isControlTutorial = SharePreferenceUtil.getPrefBoolean(HPlusConstants.PREFERENCE_USER_CONFIG,
@@ -338,14 +336,6 @@ public class AppConfig {
 
     public static void setUrlEnv(int urlEnv) {
         AppConfig.urlEnv = urlEnv;
-    }
-
-    public static boolean isLauchendFirstTime() {
-        return isLauchendFirstTime;
-    }
-
-    public static void setIsLauchendFirstTime(boolean isLauchendFirstTime) {
-        AppConfig.isLauchendFirstTime = isLauchendFirstTime;
     }
 
     public static boolean isCanFilterScrollPage() {
