@@ -1,6 +1,9 @@
 buildscript {
     repositories {
         mavenCentral()
+        maven {
+            url  "http://dl.bintray.com/countly/maven"
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.0'
@@ -9,6 +12,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+
     }
 }
 
@@ -69,6 +73,7 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     annotationProcessor 'org.greenrobot:eventbus-annotation-processor:3.0.1'
     compile files('libs/jg_filter_sdk_1.1.jar')
+    compile 'ly.count.android:sdk:17.09'
 }
 
 

@@ -9,10 +9,10 @@ import com.broadcom.cooee.Cooee;
 import com.honeywell.hch.airtouch.library.util.ByteUtil;
 import com.honeywell.hch.airtouch.library.util.LogUtil;
 import com.honeywell.hch.airtouch.library.util.NetWorkUtil;
+import com.honeywell.hch.airtouch.plateform.countly.CountlyUtil;
 import com.honeywell.hch.airtouch.plateform.eventbus.EventBusConstant;
 import com.honeywell.hch.airtouch.plateform.eventbus.EventBusUtil;
 import com.honeywell.hch.airtouch.plateform.smartlink.udpmode.UDPContentData;
-import com.honeywell.hch.airtouch.plateform.umeng.UmengUtil;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -117,7 +117,7 @@ public class ConnectAndFindDeviceManager {
                 case THREAD_ERROR:
                     endAllThread();
 
-                    UmengUtil.enrollEvent(mDeviceMacWithNocolon, UmengUtil.EnrollEventType.SMARTLINK_TIMEOUT, "");
+                    CountlyUtil.enrollEvent(mDeviceMacWithNocolon, CountlyUtil.EnrollEventType.SMARTLINK_TIMEOUT, "");
                     break;
                 case PROCESS_END:
                     endAllThread();

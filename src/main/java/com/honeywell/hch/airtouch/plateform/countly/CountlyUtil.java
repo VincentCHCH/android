@@ -1,5 +1,6 @@
-package com.honeywell.hch.airtouch.plateform.umeng;
+package com.honeywell.hch.airtouch.plateform.countly;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -7,58 +8,52 @@ import android.os.Bundle;
 
 import com.honeywell.hch.airtouch.library.util.LogUtil;
 import com.honeywell.hch.airtouch.library.util.StringUtil;
-import com.honeywell.hch.airtouch.plateform.appmanager.AppManager;
 import com.honeywell.hch.airtouch.plateform.config.DIYInstallationState;
 import com.honeywell.hch.airtouch.plateform.storage.UserInfoSharePreference;
-import com.umeng.analytics.MobclickAgent;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import ly.count.android.sdk.Countly;
+
 /**
  * Created by Qian Jin on 9/10/15.
  */
-public class UmengUtil {
+public class CountlyUtil {
 
 
-    public static void onActivityResume(Context context, String tag) {
-        MobclickAgent.onPageStart(tag);
-        MobclickAgent.onResume(context);
+    public static final String COUNTLY_SERVER_URL = "https://statistics.homecloud.honeywell.com.cn";
+    public static final String COUNTLY_APP_KEY = "f79c39ea5662981c04a246b0fc6883fa1a93d061";
+
+
+    public static void onInit(Context context) {
+        Countly.sharedInstance().init(context, CountlyUtil.COUNTLY_SERVER_URL, CountlyUtil.COUNTLY_APP_KEY);
+        //Countly crash report enable
+        Countly.sharedInstance().enableCrashReporting();
+        Countly.sharedInstance().setViewTracking(true);
     }
 
-    public static void onActivityPause(Context context, String tag) {
-        MobclickAgent.onPageEnd(tag);
-        MobclickAgent.onPause(context);
+    public static void onActivityResume(Context context) {
+        if (context != null){
+            Countly.sharedInstance().onStart((Activity) context);
+        }
+    }
+
+    public static void onActivityPause() {
+
+        Countly.sharedInstance().onStop();
     }
 
     public static void onFragmentActivityResume(Context context, String tag) {
-        MobclickAgent.onResume(context);
+        Countly.sharedInstance().onStart((Activity) context);
     }
 
     public static void onFragmentActivityPause(Context context, String tag) {
-        MobclickAgent.onResume(context);
+       Countly.sharedInstance().onStop();
     }
 
-    public static void onFragmentActivityStart() {
-        MobclickAgent.onPageStart("MainScreen"); //统计页面，"MainScreen"为页面名称，可自定义
-    }
-
-    public static void onFragmentActivityEnd() {
-        MobclickAgent.onPageEnd("MainScreen");
-    }
-
-    public static void onKillProcess(Context context) {
-        MobclickAgent.onKillProcess(context);
-    }
-
-    public static void onActivityCreate(Context context) {
-        MobclickAgent.openActivityDurationTrack(false);
-        MobclickAgent.startWithConfigure(
-                new MobclickAgent.UMAnalyticsConfig(context, getMetaValue(context, "UMENG_APPKEY"), "Umeng",
-                        MobclickAgent.EScenarioType.E_UM_NORMAL));
-    }
 
     // get ApiKey
     private static String getMetaValue(Context context, String metaKey) {
@@ -78,13 +73,13 @@ public class UmengUtil {
                 apiKey = metaData.getString(metaKey);
             }
         } catch (PackageManager.NameNotFoundException e) {
-            LogUtil.log(LogUtil.LogLevel.ERROR, "UmengUtil", e.toString());
+            LogUtil.log(LogUtil.LogLevel.ERROR, "CountlyUtil", e.toString());
         }
         return apiKey;
     }
 
     public static void onEvent(Context context, String event, String msg) {
-        Map<String, String> map = new HashMap<>();
+        HashMap<String, String> map = new HashMap<>();
 
         // get current time
 //        SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
@@ -104,7 +99,8 @@ public class UmengUtil {
 //                    + "_macId_" + macId + "_" + msg + "_" + time);
 //        }
 
-        MobclickAgent.onEvent(context, event, map);
+        Countly.sharedInstance().recordEvent(event, map,1);
+//        MobclickAgent.onEvent(context, event, map);
     }
 
 
@@ -272,7 +268,8 @@ public class UmengUtil {
         Map<String, String> map = new HashMap<>();
         map.put(ENROLL_KEY, vaule);
         map.put(ENROLL_USERID_KEY, getUserId());
-        MobclickAgent.onEvent(AppManager.getInstance().getApplication(), eventId, map);
+
+        Countly.sharedInstance().recordEvent(eventId, map,1);
     }
 
 
@@ -293,7 +290,7 @@ public class UmengUtil {
         Map<String, String> map = new HashMap<>();
         map.put(HOME_CONTROL_KEY, vaule);
         map.put(CONTROL_USERID_KEY, getUserId());
-        MobclickAgent.onEvent(AppManager.getInstance().getApplication(), eventId, map);
+        Countly.sharedInstance().recordEvent(eventId, map,1);
     }
 
 
@@ -314,7 +311,7 @@ public class UmengUtil {
         Map<String, String> map = new HashMap<>();
         map.put(GROUP_CONTROL_KEY, vaule);
         map.put(CONTROL_USERID_KEY, getUserId());
-        MobclickAgent.onEvent(AppManager.getInstance().getApplication(), eventId, map);
+        Countly.sharedInstance().recordEvent(eventId, map,1);
     }
 
     private static void constructedDeviceControlEvent(String deviceProductName, String type, DeviceControlType deviceControlType, String otherMessage) {
@@ -334,7 +331,7 @@ public class UmengUtil {
         Map<String, String> map = new HashMap<>();
         map.put(DEVICE_CONTROL_KEY, vaule);
         map.put(CONTROL_USERID_KEY, getUserId());
-        MobclickAgent.onEvent(AppManager.getInstance().getApplication(), eventId, map);
+        Countly.sharedInstance().recordEvent(eventId, map,1);
     }
 
     private static void contructedVisitPageEvent(String activityName) {
@@ -343,7 +340,7 @@ public class UmengUtil {
         Map<String, String> map = new HashMap<>();
         map.put(VISIT_PAGE_KEY, vaule);
         map.put(VISIT_USERID, getUserId());
-        MobclickAgent.onEvent(AppManager.getInstance().getApplication(), VISIT_PAGE_EVENT_ID, map);
+        Countly.sharedInstance().recordEvent(VISIT_PAGE_EVENT_ID, map,1);
     }
 
     private static void contructedClickEvent(String viewName) {
@@ -352,7 +349,7 @@ public class UmengUtil {
         Map<String, String> map = new HashMap<>();
         map.put(VISIT_PAGE_KEY, vaule);
         map.put(VISIT_USERID, getUserId());
-        MobclickAgent.onEvent(AppManager.getInstance().getApplication(), VISIT_PAGE_EVENT_ID, map);
+        Countly.sharedInstance().recordEvent(CLICKABLE_EVENT_ID, map,1);
     }
 
 
