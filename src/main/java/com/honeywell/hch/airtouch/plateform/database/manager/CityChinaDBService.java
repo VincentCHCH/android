@@ -4,11 +4,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.honeywell.hch.airtouch.plateform.config.AppConfig;
 import com.honeywell.hch.airtouch.plateform.database.model.City;
+import com.honeywell.hch.airtouch.plateform.database.model.PickerViewData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by nan.liu on 2/3/15.
@@ -16,13 +20,22 @@ import java.util.List;
 public class CityChinaDBService extends DBService {
 
     //table info
-    public static final String TABLE_NAME = "city";
-    public static final String NAME_ZH = "nameZh";
-    public static final String NAME_EN = "nameEn";
-    public static final String CODE = "code";
-    public static final String IS_CURRENT = "isCurrent";
+    public static final String TABLE_NAME = "CityInfo";
+    public static final String ID = "id";
+    public static final String DISTRICT_CODE = "DistrictCode";
+    public static final String DISTRICT_NAME_CN = "DistrictName_CN";
+    public static final String DISTRICT_NAME_EN = "DistrictName_EN";
+    public static final String CITY_NAME_CN = "CityName_CN";
+    public static final String CITY_NAME_EN = "CityName_EN";
+    public static final String PROVINCE_NAME_CN = "ProvinceName_CN";
+    public static final String PROVINCE_NAME_EN = "ProvinceName_EN";
+    public static final String COUNTRY_NAME = "CountryName";
+    public static final String COUNTRY_CODE = "CountryCode";
+    public static final String CITY_LEVEL = "CityLevel";
 
-    private String[] DBKey = {NAME_ZH, NAME_EN, CODE, IS_CURRENT};
+    private String[] DBKey = {ID, DISTRICT_CODE, DISTRICT_NAME_CN, DISTRICT_NAME_EN,
+            CITY_NAME_CN, CITY_NAME_EN, PROVINCE_NAME_CN, PROVINCE_NAME_EN,
+            COUNTRY_NAME, COUNTRY_CODE, CITY_LEVEL};
 
     public CityChinaDBService(Context context) {
         super(context);
@@ -45,38 +58,136 @@ public class CityChinaDBService extends DBService {
         return cityList;
     }
 
-    public  ArrayList<City> getCitiesByKey(String key) {
-        ArrayList<City> cityList = new ArrayList<>();
+    public PickerViewData getPickerViewData() {
+        PickerViewData pickerViewData = new PickerViewData();
+        ArrayList<String> pickerViewProvince = new ArrayList<>();
         SQLiteDatabase sqLiteDatabase = getSqliteDatabase();
         if (sqLiteDatabase != null) {
-            Cursor cursor = sqLiteDatabase.rawQuery("SELECT *"
-                    + " FROM " + TABLE_NAME
-                    + " WHERE " + NAME_ZH + " LIKE '" + "%" + key + "%'"
-                    + " OR " + NAME_EN + " LIKE '" + "%" + key + "%'"
-                    + " COLLATE NOCASE", null);
-            while (cursor.moveToNext()) {
-                HashMap<String, String> cityMap = new HashMap<>();
-                for (int i = 0; i < DBKey.length; i++) {
-                    cityMap.put(DBKey[i], cursor.getString(i));
+            if ( AppConfig.shareInstance().getLanguage().equals(AppConfig.LANGUAGE_ZH)) {
+                Cursor cursor_p = sqLiteDatabase.rawQuery("SELECT DISTINCT " + PROVINCE_NAME_CN
+                    + " FROM " + TABLE_NAME, null);
+                while (cursor_p.moveToNext()) {
+                    pickerViewProvince.add(cursor_p.getString(0));
                 }
-                cityList.add(new City(cityMap));
+                cursor_p.close();
+
+            } else {
+                Cursor cursor_p = sqLiteDatabase.rawQuery("SELECT DISTINCT " + PROVINCE_NAME_EN
+                        + " FROM " + TABLE_NAME, null);
+                while (cursor_p.moveToNext()) {
+                    pickerViewProvince.add(cursor_p.getString(0));
+                }
+                cursor_p.close();
             }
-            cursor.close();
+            pickerViewData.setProvinceList(pickerViewProvince);
+
+            ArrayList<ArrayList<String>> pickerViewCities = new ArrayList<>();
+            for (String province : pickerViewProvince) {
+                ArrayList<String> cityNameList = new ArrayList<>();
+                if ( AppConfig.shareInstance().getLanguage().equals(AppConfig.LANGUAGE_ZH)) {
+                    Cursor cursor_c = sqLiteDatabase.rawQuery("SELECT DISTINCT " + CITY_NAME_CN
+                        + " FROM " + TABLE_NAME
+                        + " WHERE " + PROVINCE_NAME_CN + " = '" + province + "'"
+                        + " COLLATE NOCASE", null);
+                    while (cursor_c.moveToNext()) {
+                        cityNameList.add(cursor_c.getString(0));
+                    }
+                    cursor_c.close();
+
+                } else {
+                    Cursor cursor_c = sqLiteDatabase.rawQuery("SELECT DISTINCT " + CITY_NAME_EN
+                            + " FROM " + TABLE_NAME
+                            + " WHERE " + PROVINCE_NAME_EN + " = '" + province + "'"
+                            + " COLLATE NOCASE", null);
+                    while (cursor_c.moveToNext()) {
+                        cityNameList.add(cursor_c.getString(0));
+                    }
+                    cursor_c.close();
+                }
+                pickerViewCities.add(cityNameList);
+            }
+
+            pickerViewData.setCityList(pickerViewCities);
+
+            ArrayList<ArrayList<ArrayList<String>>> pickerViewDistricts = new ArrayList<>();
+
+            for(int j = 0 ; j < pickerViewCities.size() ; j++) {
+                String province = pickerViewProvince.get(j);
+                ArrayList<String> cities = pickerViewCities.get(j);
+                ArrayList<ArrayList<String>> cityDistictList = new ArrayList<>();
+                for (String city : cities) {
+                    ArrayList<String> districtList = new ArrayList<>();
+                    if ( AppConfig.shareInstance().getLanguage().equals(AppConfig.LANGUAGE_ZH)) {
+
+                        Cursor cursor_d = sqLiteDatabase.rawQuery("SELECT " + DISTRICT_NAME_CN
+                                + " FROM " + TABLE_NAME
+                                + " WHERE " + PROVINCE_NAME_CN + " = '" + province + "'"
+                                + " AND " + CITY_NAME_CN + " = '" + city + "'"
+                                + " COLLATE NOCASE", null);
+
+                        while (cursor_d.moveToNext()) {
+                            districtList.add(cursor_d.getString(0));
+                        }
+                        cursor_d.close();
+
+                    } else {
+                        Cursor cursor_d = sqLiteDatabase.rawQuery("SELECT " + DISTRICT_NAME_EN
+                                + " FROM " + TABLE_NAME
+                                + " WHERE " + PROVINCE_NAME_EN + " = '" + province + "'"
+                                + " AND " + CITY_NAME_EN + " = '" + city + "'"
+                                + " COLLATE NOCASE", null);
+                        while (cursor_d.moveToNext()) {
+                            districtList.add(cursor_d.getString(0));
+                        }
+                        cursor_d.close();
+                    }
+                    cityDistictList.add(districtList);
+                }
+                pickerViewDistricts.add(cityDistictList);
+                pickerViewData.setDistrictList(pickerViewDistricts);
+            }
             sqLiteDatabase.close();
         }
 
-        return cityList;
+        return pickerViewData;
     }
 
-    public  City getCityByName(String name) {
+//    public  ArrayList<City> getCitiesByKey(String key) {
+//        ArrayList<City> cityList = new ArrayList<>();
+//        SQLiteDatabase sqLiteDatabase = getSqliteDatabase();
+//        if (sqLiteDatabase != null) {
+//            Cursor cursor = sqLiteDatabase.rawQuery("SELECT *"
+//                    + " FROM " + TABLE_NAME
+//                    + " WHERE " + NAME_ZH + " LIKE '" + "%" + key + "%'"
+//                    + " OR " + NAME_EN + " LIKE '" + "%" + key + "%'"
+//                    + " COLLATE NOCASE", null);
+//            while (cursor.moveToNext()) {
+//                HashMap<String, String> cityMap = new HashMap<>();
+//                for (int i = 0; i < DBKey.length; i++) {
+//                    cityMap.put(DBKey[i], cursor.getString(i));
+//                }
+//                cityList.add(new City(cityMap));
+//            }
+//            cursor.close();
+//            sqLiteDatabase.close();
+//        }
+//
+//        return cityList;
+//    }
+//
+    public  City getCityByName(String provinceName, String cityName, String districtName) {
         SQLiteDatabase sqLiteDatabase = getSqliteDatabase();
         City city = new City();
 
         if (sqLiteDatabase != null) {
             Cursor cursor = sqLiteDatabase.rawQuery("SELECT *"
                     + " FROM " + TABLE_NAME
-                    + " WHERE " + NAME_ZH + " = '" + name + "'"
-                    + " OR " + NAME_EN + " = '" + name + "'"
+                    + " WHERE " + "(" + PROVINCE_NAME_CN + " = '" + provinceName + "'"
+                    + " OR " + PROVINCE_NAME_EN + " = '" + provinceName + "'" + ")"
+                    + " AND " + "(" + CITY_NAME_CN + " = '" + cityName + "'"
+                    + " OR " + CITY_NAME_EN + " = '" + cityName + "'" + ")"
+                    + " AND " + "(" + DISTRICT_NAME_CN + " = '" + districtName + "'"
+                    + " OR " + DISTRICT_NAME_EN + " = '" + districtName + "'" + ")"
                     + " COLLATE NOCASE", null);
 
             if (cursor.getCount() != 0) {
@@ -95,13 +206,13 @@ public class CityChinaDBService extends DBService {
         return city;
     }
 
-    public  City getCityByCode(String cityCode) {
+    public City getCityByCode(String cityCode) {
         City city = new City();
         SQLiteDatabase sqLiteDatabase = getSqliteDatabase();
         if (sqLiteDatabase != null) {
             Cursor cursor = sqLiteDatabase.rawQuery("SELECT *"
                     + " FROM " + TABLE_NAME
-                    + " WHERE " + CODE + " = '" + cityCode + "'", null);
+                    + " WHERE " + DISTRICT_CODE + " = '" + cityCode + "'", null);
 
             if (cursor.getCount() != 0) {
                 cursor.moveToNext();
