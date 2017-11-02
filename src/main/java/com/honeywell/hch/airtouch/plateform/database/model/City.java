@@ -7,60 +7,138 @@ import java.util.HashMap;
  * Created by nan.liu on 2/5/15.
  */
 public class City implements Serializable, IDBModel {
-    private String mCode;
-    private String mNameZh;
-    private String mNameEn;
-    private int isCurrent = 0;
+
+    private int mId;
+    private String mDistrictCode;
+    private String mDistrictNameCN;
+    private String mDistrictNameEN;
+    private String mCityNameCN;
+    private String mCityNameEN;
+    private String mProvinceNameCN;
+    private String mProvinceNameEN;
+    private String mCountryName;
+    private String mCountryCode;
+    private String mCityLevel;
 
     public City(){
 
     }
 
+    public int getId() {
+        return mId;
+    }
+
+    public void setId(int id) {
+        mId = id;
+    }
+
+    public String getDistrictCode() {
+        return mDistrictCode;
+    }
+
+    public void setDistrictCode(String districtCode) {
+        mDistrictCode = districtCode;
+    }
+
+    public String getDistrictNameCN() {
+        return mDistrictNameCN;
+    }
+
+    public void setDistrictNameCN(String districtNameCN) {
+        mDistrictNameCN = districtNameCN;
+    }
+
+    public String getDistrictNameEN() {
+        return mDistrictNameEN;
+    }
+
+    public void setDistrictNameEN(String districtNameEN) {
+        mDistrictNameEN = districtNameEN;
+    }
+
+    public String getCityNameCN() {
+        return mCityNameCN;
+    }
+
+    public void setCityNameCN(String cityNameCN) {
+        mCityNameCN = cityNameCN;
+    }
+
+    public String getCityNameEN() {
+        return mCityNameEN;
+    }
+
+    public void setCityNameEN(String cityNameEN) {
+        mCityNameEN = cityNameEN;
+    }
+
+    public String getProvinceNameCN() {
+        return mProvinceNameCN;
+    }
+
+    public void setProvinceNameCN(String provinceNameCN) {
+        mProvinceNameCN = provinceNameCN;
+    }
+
+    public String getProvinceNameEN() {
+        return mProvinceNameEN;
+    }
+
+    public void setProvinceNameEN(String provinceNameEN) {
+        mProvinceNameEN = provinceNameEN;
+    }
+
+    public String getCountryName() {
+        return mCountryName;
+    }
+
+    public void setCountryName(String countryName) {
+        mCountryName = countryName;
+    }
+
+    public String getCountryCode() {
+        return mCountryCode;
+    }
+
+    public void setCountryCode(String countryCode) {
+        mCountryCode = countryCode;
+    }
+
+    public String getCityLevel() {
+        return mCityLevel;
+    }
+
+    public void setCityLevel(String cityLevel) {
+        mCityLevel = cityLevel;
+    }
+
     public City(HashMap<String, String> cityMap) {
-        mCode = cityMap.get("code");
-        mNameZh = cityMap.get("nameZh");
-        mNameEn = cityMap.get("nameEn");
-        isCurrent = Integer.parseInt(cityMap.get("isCurrent"));
-    }
-
-    public String getCode() {
-        return mCode;
-    }
-
-    public void setCode(String code) {
-        this.mCode = code;
-    }
-
-    public String getNameZh() {
-        return mNameZh;
-    }
-
-    public void setNameZh(String nameZh) {
-        this.mNameZh = nameZh;
-    }
-
-    public String getNameEn() {
-        return mNameEn;
-    }
-
-    public void setNameEn(String nameEn) {
-        this.mNameEn = nameEn;
-    }
-
-    public int isCurrent() {
-        return isCurrent;
-    }
-
-    public void setCurrent(int isCurrent) {
-        this.isCurrent = isCurrent;
+        mId = Integer.parseInt(cityMap.get("id"));
+        mDistrictCode = cityMap.get("DistrictCode");
+        mDistrictNameCN = cityMap.get("DistrictName_CN");
+        mDistrictNameEN = cityMap.get("DistrictName_EN");
+        mCityNameCN = cityMap.get("CityName_CN");
+        mCityNameEN = cityMap.get("CityName_EN");
+        mProvinceNameCN = cityMap.get("ProvinceName_CN");
+        mProvinceNameEN = cityMap.get("ProvinceName_EN");
+        mCountryName = cityMap.get("CountryName");
+        mCountryCode = cityMap.get("CountryCode");
+        mCityLevel = cityMap.get("CityLevel");
     }
 
     public HashMap<String, Object> getHashMap() {
         HashMap<String, Object> cityMap = new HashMap<>();
-        cityMap.put("code", mCode);
-        cityMap.put("nameZh", mNameZh);
-        cityMap.put("nameEn", mNameEn);
-        cityMap.put("isCurrent", isCurrent);
+        cityMap.put("id", mId);
+        cityMap.put("DistrictCode", mDistrictCode);
+        cityMap.put("DistrictName_CN", mDistrictNameCN);
+        cityMap.put("DistrictName_EN", mDistrictNameEN);
+        cityMap.put("CityName_CN", mCityNameCN);
+        cityMap.put("CityName_EN", mCityNameEN);
+        cityMap.put("ProvinceName_CN", mProvinceNameCN);
+        cityMap.put("ProvinceName_EN", mProvinceNameEN);
+        cityMap.put("CountryName", mCountryName);
+        cityMap.put("CountryCode", mCountryCode);
+        cityMap.put("CityLevel", mCityLevel);
         return cityMap;
     }
 }
