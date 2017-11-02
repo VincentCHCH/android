@@ -13,6 +13,8 @@ import com.honeywell.hch.airtouch.plateform.config.HPlusConstants;
 import com.honeywell.hch.airtouch.plateform.database.manager.CityChinaDBService;
 import com.honeywell.hch.airtouch.plateform.database.manager.CityIndiaDBService;
 import com.honeywell.hch.airtouch.plateform.database.model.City;
+import com.honeywell.hch.airtouch.plateform.eventbus.EventBusConstant;
+import com.honeywell.hch.airtouch.plateform.eventbus.EventBusUtil;
 import com.honeywell.hch.airtouch.plateform.location.model.CityInfo;
 import com.honeywell.hch.airtouch.plateform.storage.UserInfoSharePreference;
 
@@ -173,15 +175,21 @@ public class GpsUtil {
 
 
     private void processLocation(CityInfo cityLocation, int whereFrom) {
-
         if (cityLocation != null) {
-            City city = mCityChinaDBService.getCityByName(cityLocation.getCity());
+            double lat = cityLocation.getLatitude();
+            double lng = cityLocation.getLongitude();
+
+            LogUtil.log(LogUtil.LogLevel.INFO, "BaiduCoordinate = ", String.valueOf(lat) + " "+ String.valueOf(lng));
+
+            String code = "WTW3T7RMWMB4";
+
+            City city = mCityChinaDBService.getCityByCode(code);
             // India version
-            if (city.getNameEn() != null) {
+            if (city.getDistrictCode() != null) {
                 UserInfoSharePreference.saveGpsCountryCode(HPlusConstants.CHINA_CODE);
             } else {
                 city = mCityIndiaDBService.getCityByKey(cityLocation.getCity());
-                if (city.getNameEn() != null) {
+                if (city.getCityNameEN() != null) {
                     UserInfoSharePreference.saveGpsCountryCode(HPlusConstants.INDIA_CODE);
                 } else {
                     UserInfoSharePreference.saveGpsCountryCode(HPlusConstants.CHINA_CODE);
@@ -189,9 +197,9 @@ public class GpsUtil {
             }
             if (cityLocation.getCity() != null) {
                 //gps success
-                if (city.getNameEn() != null && city.getCode() != null) {
+                if (city.getDistrictCode() != null) {
                     mSelectedGPSCity = city;
-                    mAppConfig.setGpsCityCode(mSelectedGPSCity.getCode());
+                    mAppConfig.setGpsCityCode(mSelectedGPSCity.getDistrictCode());
                 } else {
                     // The located city is not in database.
                     mAppConfig.setGpsCityCode(cityLocation.getCity());
@@ -203,11 +211,13 @@ public class GpsUtil {
             mAppConfig.setGpsCityCode(AppConfig.LOCATION_FAIL);
         }
 
-        Intent intent = new Intent();
-        intent.putExtra(GPS_FROME_WHERE, whereFrom);
-        intent.setAction(HPlusConstants.GPS_RESULT);
-        AppManager.getInstance().getApplication().getApplicationContext().sendBroadcast(intent);
+        Bundle bundle = new Bundle();
+        bundle.putInt("GPS_FROM_WHERE",whereFrom);
+        EventBusUtil.post(HPlusConstants.GPS_RESULT,bundle);
+
+//        Intent intent = new Intent();
+//        intent.putExtra(GPS_FROME_WHERE, whereFrom);
+//        intent.setAction(HPlusConstants.GPS_RESULT);
+//        AppManager.getInstance().getApplication().getApplicationContext().sendBroadcast(intent);
     }
-
-
 }
