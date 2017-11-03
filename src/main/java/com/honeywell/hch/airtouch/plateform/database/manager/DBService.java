@@ -30,7 +30,7 @@ public class DBService {
             + Environment.getDataDirectory().getAbsolutePath() + "/"
             + LibApplication.getContext().getPackageName();
 
-    public static final String DB_NAME = "citytable.db";
+    public static final String DB_NAME = "citytable2.db";
 
     private static int BUFFER_SIZE = 512;
 
@@ -162,7 +162,7 @@ public class DBService {
         InputStream is = null;
         try {
             if (!(new File(path).exists())) {
-                is = AppManager.getInstance().getApplication().getApplicationContext().getResources().openRawResource(R.raw.citytable);//导入数据库
+                is = AppManager.getInstance().getApplication().getApplicationContext().getResources().openRawResource(R.raw.citytable2);//导入数据库
                 fos = new FileOutputStream(path);
                 byte[] buffer = new byte[BUFFER_SIZE];
                 int count = 0;
