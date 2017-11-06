@@ -24,6 +24,8 @@ public class EventBusConstant {
 
     public static final String SEND_CMD_RESULT = "send_cmmd_result";
 
+    public static final String DONT_DEAL_DATA_IN_NATIVE = "dont_deal_data_in_native";
+
     public static final String HTTP_ACTION = "http_action";
 
     public static final String JS_CMD_EVENT_ACTION = "js_cmd_event";
@@ -54,7 +56,7 @@ public class EventBusConstant {
 
     public static final String DATA_RESPONSE_KEY = "response_data";
 
-
+    public static final String HTTP_DATA_RESPONSE_KEY = "htt_response_data";
 
 
     public static final String LOGOUT_REASON = "logout_reason";
