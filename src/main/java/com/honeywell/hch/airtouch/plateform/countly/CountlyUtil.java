@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import com.honeywell.hch.airtouch.library.util.LogUtil;
 import com.honeywell.hch.airtouch.library.util.StringUtil;
+import com.honeywell.hch.airtouch.library.util.Utils;
 import com.honeywell.hch.airtouch.plateform.config.DIYInstallationState;
 import com.honeywell.hch.airtouch.plateform.storage.UserInfoSharePreference;
 
@@ -22,21 +23,21 @@ import ly.count.android.sdk.Countly;
  * Created by Qian Jin on 9/10/15.
  */
 public class CountlyUtil {
-
+    private static final String TAG = "CountlyUtil";
 
     public static final String COUNTLY_SERVER_URL = "https://statistics.homecloud.honeywell.com.cn";
-    public static final String COUNTLY_APP_KEY = "f79c39ea5662981c04a246b0fc6883fa1a93d061";
-
+    //    public static final String COUNTLY_APP_KEY = "f79c39ea5662981c04a246b0fc6883fa1a93d061";  //dev env
 
     public static void onInit(Context context) {
-        Countly.sharedInstance().init(context, CountlyUtil.COUNTLY_SERVER_URL, CountlyUtil.COUNTLY_APP_KEY);
+        LogUtil.log(LogUtil.LogLevel.INFO,TAG,"conutly_key: "+ Utils.getMetaValue(context, "COUNTLY_APP_KEY"));
+        Countly.sharedInstance().init(context, CountlyUtil.COUNTLY_SERVER_URL, Utils.getMetaValue(context, "COUNTLY_APP_KEY"));
         //Countly crash report enable
         Countly.sharedInstance().enableCrashReporting();
         Countly.sharedInstance().setViewTracking(true);
     }
 
     public static void onActivityResume(Context context) {
-        if (context != null){
+        if (context != null) {
             Countly.sharedInstance().onStart((Activity) context);
         }
     }
@@ -51,7 +52,7 @@ public class CountlyUtil {
     }
 
     public static void onFragmentActivityPause(Context context, String tag) {
-       Countly.sharedInstance().onStop();
+        Countly.sharedInstance().onStop();
     }
 
 
@@ -99,7 +100,7 @@ public class CountlyUtil {
 //                    + "_macId_" + macId + "_" + msg + "_" + time);
 //        }
 
-        Countly.sharedInstance().recordEvent(event, map,1);
+        Countly.sharedInstance().recordEvent(event, map, 1);
 //        MobclickAgent.onEvent(context, event, map);
     }
 
@@ -237,8 +238,8 @@ public class CountlyUtil {
     }
 
     private static void constructedEnrollEvent(String productName, EnrollEventType enrollStep, String otherMessage) {
-        String enrollStatusStr ;
-        String eventId  ;
+        String enrollStatusStr;
+        String eventId;
         if (enrollStep == EnrollEventType.ENROLL_START) {
             enrollStatusStr = START_STATUS_STR;
             eventId = ENROLL_EVNET_START_ID;
@@ -269,13 +270,13 @@ public class CountlyUtil {
         map.put(ENROLL_KEY, vaule);
         map.put(ENROLL_USERID_KEY, getUserId());
 
-        Countly.sharedInstance().recordEvent(eventId, map,1);
+        Countly.sharedInstance().recordEvent(eventId, map, 1);
     }
 
 
     private static void constructedHomeControlEvent(int locationId, int type, HomeControlType homeControlType, String otherMessage) {
-        String homeControlStatusStr ;
-        String eventId ;
+        String homeControlStatusStr;
+        String eventId;
         if (homeControlType == HomeControlType.HOME_CONTROL_SUCCESS) {
             homeControlStatusStr = SUCCESS_STATUS_STR;
             eventId = CONTROL_HOME_SUCCESS_EVENT_ID;
@@ -290,13 +291,13 @@ public class CountlyUtil {
         Map<String, String> map = new HashMap<>();
         map.put(HOME_CONTROL_KEY, vaule);
         map.put(CONTROL_USERID_KEY, getUserId());
-        Countly.sharedInstance().recordEvent(eventId, map,1);
+        Countly.sharedInstance().recordEvent(eventId, map, 1);
     }
 
 
     private static void constructedGroupControlEvent(int groupid, int type, GroupControlType groupControlType, String otherMessage) {
-        String groupControlStatusStr  ;
-        String eventId  ;
+        String groupControlStatusStr;
+        String eventId;
         if (groupControlType == GroupControlType.GROUP_CONTROL_SUCCESS) {
             groupControlStatusStr = SUCCESS_STATUS_STR;
             eventId = CONTROL_GROUP_SUCCES_EVENT_ID;
@@ -311,12 +312,12 @@ public class CountlyUtil {
         Map<String, String> map = new HashMap<>();
         map.put(GROUP_CONTROL_KEY, vaule);
         map.put(CONTROL_USERID_KEY, getUserId());
-        Countly.sharedInstance().recordEvent(eventId, map,1);
+        Countly.sharedInstance().recordEvent(eventId, map, 1);
     }
 
     private static void constructedDeviceControlEvent(String deviceProductName, String type, DeviceControlType deviceControlType, String otherMessage) {
-        String deviceControlStatusStr ;
-        String eventId  ;
+        String deviceControlStatusStr;
+        String eventId;
         if (deviceControlType == DeviceControlType.DEVICE_CONTROL_SUCCESS) {
             deviceControlStatusStr = SUCCESS_STATUS_STR;
             eventId = CONTROL_DEVICE_SUCCES_EVENT_ID;
@@ -331,7 +332,7 @@ public class CountlyUtil {
         Map<String, String> map = new HashMap<>();
         map.put(DEVICE_CONTROL_KEY, vaule);
         map.put(CONTROL_USERID_KEY, getUserId());
-        Countly.sharedInstance().recordEvent(eventId, map,1);
+        Countly.sharedInstance().recordEvent(eventId, map, 1);
     }
 
     private static void contructedVisitPageEvent(String activityName) {
@@ -340,7 +341,7 @@ public class CountlyUtil {
         Map<String, String> map = new HashMap<>();
         map.put(VISIT_PAGE_KEY, vaule);
         map.put(VISIT_USERID, getUserId());
-        Countly.sharedInstance().recordEvent(VISIT_PAGE_EVENT_ID, map,1);
+        Countly.sharedInstance().recordEvent(VISIT_PAGE_EVENT_ID, map, 1);
     }
 
     private static void contructedClickEvent(String viewName) {
@@ -349,7 +350,7 @@ public class CountlyUtil {
         Map<String, String> map = new HashMap<>();
         map.put(VISIT_PAGE_KEY, vaule);
         map.put(VISIT_USERID, getUserId());
-        Countly.sharedInstance().recordEvent(CLICKABLE_EVENT_ID, map,1);
+        Countly.sharedInstance().recordEvent(CLICKABLE_EVENT_ID, map, 1);
     }
 
 
