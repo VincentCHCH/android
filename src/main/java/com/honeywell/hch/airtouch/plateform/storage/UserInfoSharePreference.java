@@ -31,6 +31,7 @@ public class UserInfoSharePreference {
     private final static String USER_PHONE_NUMBER_KEY = "phone_number";
     private final static String USER_PSW_KEY = "user_password";
     private final static String USER_USER_ID_KEY = "user_id";
+    private final static String USER_GENDER_KEY = "gender_id";
 
     private final static String USER_SESSION_ID_KEY = "session_id";
     private final static String USER_TOKEN_ID_KEY = "token_id";
@@ -97,10 +98,11 @@ public class UserInfoSharePreference {
     }
 
     public static void saveNameAndPwdInSp(String password,
-                                          int userId) {
+                                          int userId,int gender) {
 //        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_PHONE_NUMBER_KEY, mobilePhone);
         SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_PSW_KEY, password);
         SharePreferenceUtil.setPrefInt(USER_INFO_SHAREPREFERENCE, USER_USER_ID_KEY, userId);
+        SharePreferenceUtil.setPrefInt(USER_INFO_SHAREPREFERENCE, USER_GENDER_KEY, gender);
     }
 
     public static void saveLoginSession(String sessionId) {
