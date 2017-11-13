@@ -20,9 +20,9 @@ import java.util.Set;
 public class CityChinaDBService extends DBService {
 
     //table info
-    public static final String TABLE_NAME = "CityInfo";
+    public static final String TABLE_NAME = "CNCityInfo";
     public static final String ID = "id";
-    public static final String DISTRICT_CODE = "DistrictCode";
+    public static final String CODE = "Code";
     public static final String DISTRICT_NAME_CN = "DistrictName_CN";
     public static final String DISTRICT_NAME_EN = "DistrictName_EN";
     public static final String CITY_NAME_CN = "CityName_CN";
@@ -33,7 +33,7 @@ public class CityChinaDBService extends DBService {
     public static final String COUNTRY_CODE = "CountryCode";
     public static final String CITY_LEVEL = "CityLevel";
 
-    private String[] DBKey = {ID, DISTRICT_CODE, DISTRICT_NAME_CN, DISTRICT_NAME_EN,
+    private String[] DBKey = {ID, CODE, DISTRICT_NAME_CN, DISTRICT_NAME_EN,
             CITY_NAME_CN, CITY_NAME_EN, PROVINCE_NAME_CN, PROVINCE_NAME_EN,
             COUNTRY_NAME, COUNTRY_CODE, CITY_LEVEL};
 
@@ -212,7 +212,7 @@ public class CityChinaDBService extends DBService {
         if (sqLiteDatabase != null) {
             Cursor cursor = sqLiteDatabase.rawQuery("SELECT *"
                     + " FROM " + TABLE_NAME
-                    + " WHERE " + DISTRICT_CODE + " = '" + cityCode + "'", null);
+                    + " WHERE " + CODE + " = '" + cityCode + "'", null);
 
             if (cursor.getCount() != 0) {
                 cursor.moveToNext();

@@ -179,16 +179,14 @@ public class GpsUtil {
             double lat = cityLocation.getLatitude();
             double lng = cityLocation.getLongitude();
 
-            LogUtil.log(LogUtil.LogLevel.INFO, "BaiduCoordinate = ", String.valueOf(lat) + " "+ String.valueOf(lng));
-
             String code = "WTW3T7RMWMB4";
 
             City city = mCityChinaDBService.getCityByCode(code);
             // India version
-            if (city.getDistrictCode() != null) {
+            if (city.getCode() != null) {
                 UserInfoSharePreference.saveGpsCountryCode(HPlusConstants.CHINA_CODE);
             } else {
-                city = mCityIndiaDBService.getCityByKey(cityLocation.getCity());
+                city = mCityIndiaDBService.getCityByCode(code);
                 if (city.getCityNameEN() != null) {
                     UserInfoSharePreference.saveGpsCountryCode(HPlusConstants.INDIA_CODE);
                 } else {
@@ -197,9 +195,9 @@ public class GpsUtil {
             }
             if (cityLocation.getCity() != null) {
                 //gps success
-                if (city.getDistrictCode() != null) {
+                if (city.getCode() != null) {
                     mSelectedGPSCity = city;
-                    mAppConfig.setGpsCityCode(mSelectedGPSCity.getDistrictCode());
+                    mAppConfig.setGpsCityCode(mSelectedGPSCity.getCode());
                 } else {
                     // The located city is not in database.
                     mAppConfig.setGpsCityCode(cityLocation.getCity());
