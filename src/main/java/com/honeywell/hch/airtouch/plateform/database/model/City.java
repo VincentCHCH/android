@@ -9,7 +9,7 @@ import java.util.HashMap;
 public class City implements Serializable, IDBModel {
 
     private int mId;
-    private String mDistrictCode;
+    private String mCode;
     private String mDistrictNameCN;
     private String mDistrictNameEN;
     private String mCityNameCN;
@@ -32,12 +32,12 @@ public class City implements Serializable, IDBModel {
         mId = id;
     }
 
-    public String getDistrictCode() {
-        return mDistrictCode;
+    public String getCode() {
+        return mCode;
     }
 
-    public void setDistrictCode(String districtCode) {
-        mDistrictCode = districtCode;
+    public void setCode(String code) {
+        mCode = code;
     }
 
     public String getDistrictNameCN() {
@@ -114,7 +114,7 @@ public class City implements Serializable, IDBModel {
 
     public City(HashMap<String, String> cityMap) {
         mId = Integer.parseInt(cityMap.get("id"));
-        mDistrictCode = cityMap.get("DistrictCode");
+        mCode = cityMap.get("Code");
         mDistrictNameCN = cityMap.get("DistrictName_CN");
         mDistrictNameEN = cityMap.get("DistrictName_EN");
         mCityNameCN = cityMap.get("CityName_CN");
@@ -129,7 +129,7 @@ public class City implements Serializable, IDBModel {
     public HashMap<String, Object> getHashMap() {
         HashMap<String, Object> cityMap = new HashMap<>();
         cityMap.put("id", mId);
-        cityMap.put("DistrictCode", mDistrictCode);
+        cityMap.put("Code", mCode);
         cityMap.put("DistrictName_CN", mDistrictNameCN);
         cityMap.put("DistrictName_EN", mDistrictNameEN);
         cityMap.put("CityName_CN", mCityNameCN);
