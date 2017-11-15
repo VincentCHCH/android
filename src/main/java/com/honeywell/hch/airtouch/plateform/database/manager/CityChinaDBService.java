@@ -10,9 +10,7 @@ import com.honeywell.hch.airtouch.plateform.database.model.PickerViewData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by nan.liu on 2/3/15.

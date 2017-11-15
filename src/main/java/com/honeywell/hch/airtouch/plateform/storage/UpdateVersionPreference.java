@@ -1,7 +1,6 @@
 package com.honeywell.hch.airtouch.plateform.storage;
 
 import com.honeywell.hch.airtouch.library.util.SharePreferenceUtil;
-import com.honeywell.hch.airtouch.plateform.config.AppConfig;
 
 /**
  * Created by Vincent on 10/11/16.

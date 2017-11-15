@@ -1,7 +1,6 @@
 package com.honeywell.hch.airtouch.plateform.database.manager;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
@@ -12,9 +11,7 @@ import com.honeywell.hch.airtouch.plateform.R;
 import com.honeywell.hch.airtouch.plateform.appmanager.AppManager;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;

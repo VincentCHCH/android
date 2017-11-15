@@ -21,7 +21,6 @@ import android.os.Message;
 import android.util.Log;
 
 import com.honeywell.hch.airtouch.library.LibApplication;
-import com.honeywell.hch.airtouch.library.http.NoSSLv3SocketFactory;
 import com.honeywell.hch.airtouch.library.util.LogUtil;
 import com.honeywell.hch.airtouch.plateform.storage.UserInfoSharePreference;
 
