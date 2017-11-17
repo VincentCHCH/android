@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.honeywell.hch.airtouch.library.util.LogUtil;
 import com.honeywell.hch.airtouch.plateform.config.AppConfig;
 import com.honeywell.hch.airtouch.plateform.database.model.City;
 import com.honeywell.hch.airtouch.plateform.database.model.PickerViewData;

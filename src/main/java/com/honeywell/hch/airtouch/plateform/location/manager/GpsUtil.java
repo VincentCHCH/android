@@ -1,19 +1,16 @@
 package com.honeywell.hch.airtouch.plateform.location.manager;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
 import com.honeywell.hch.airtouch.library.util.LogUtil;
 import com.honeywell.hch.airtouch.library.util.StringUtil;
-import com.honeywell.hch.airtouch.plateform.appmanager.AppManager;
 import com.honeywell.hch.airtouch.plateform.config.AppConfig;
 import com.honeywell.hch.airtouch.plateform.config.HPlusConstants;
 import com.honeywell.hch.airtouch.plateform.database.manager.CityChinaDBService;
 import com.honeywell.hch.airtouch.plateform.database.manager.CityIndiaDBService;
 import com.honeywell.hch.airtouch.plateform.database.model.City;
-import com.honeywell.hch.airtouch.plateform.eventbus.EventBusConstant;
 import com.honeywell.hch.airtouch.plateform.eventbus.EventBusUtil;
 import com.honeywell.hch.airtouch.plateform.location.model.CityInfo;
 import com.honeywell.hch.airtouch.plateform.storage.UserInfoSharePreference;
