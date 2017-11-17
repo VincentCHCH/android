@@ -1,6 +1,14 @@
 <resources>
     <string name="app_name">H Plus</string>
 
+    <string name="hub">Hub</string>
+
+    <string name="video_call_lobby">Lobby</string>
+    <string name="video_call_front_door">Front door</string>
+    <string name="video_call_rear_door">Rear door</string>
+
+
+
     <string name="wapi_router_security_open">None</string>
     <string name="wapi_router_security_wep">WEP</string>
     <string name="wapi_router_security_wpa_aes">WPA AES</string>
@@ -158,9 +166,6 @@
     <string name="tuan_str">Tuna</string>
 
 
-    <string name="tuna_product_type">Hub</string>
     <string name="elevator">Elevator</string>
-    <string name="call_type_lobby">Lobby</string>
-    <string name="call_type_front_door">Front door</string>
-    <string name="call_type_rear_door">Rear door</string>
+
 </resources>
