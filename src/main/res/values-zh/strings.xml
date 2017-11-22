@@ -1,4 +1,16 @@
 <resources>
+    <string name="hub">中控</string>
+
+    <!--Video Call-->
+    <string name="video_call_lobby">大堂</string>
+    <string name="video_call_front_door">前门</string>
+    <string name="video_call_rear_door">后门</string>
+
+
+
+
+
+
     <string name="wapi_router_security_open">无</string>
     <string name="wapi_router_security_wep">WEP</string>
     <string name="wapi_router_security_wpa_aes">WPA AES</string>
@@ -131,9 +143,6 @@
         <item quantity="other">上次更新： %1$s天前</item>
     </plurals>
 
-    <string name="tuna_product_type">中控</string>
     <string name="elevator">电梯</string>
-    <string name="call_type_lobby">大堂</string>
-    <string name="call_type_front_door">前门</string>
-    <string name="call_type_rear_door">后门</string>
+
 </resources>
