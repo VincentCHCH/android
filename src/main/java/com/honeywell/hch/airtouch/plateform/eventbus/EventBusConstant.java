@@ -58,6 +58,8 @@ public class EventBusConstant {
 
     public static final String HTTP_DATA_RESPONSE_KEY = "htt_response_data";
 
+    public static final String WEBSOCKET_RESPONSE = "websocket_response_data";
+
 
     public static final String LOGOUT_REASON = "logout_reason";
     public static final int FORCE_LOGOUT_REASON = 1;
