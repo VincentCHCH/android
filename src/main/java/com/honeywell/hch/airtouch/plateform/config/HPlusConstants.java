@@ -414,6 +414,7 @@ public class HPlusConstants {
     public final static int UNSUPPORT_MESSAGE_UPDATE = 3;
     public final static int NOTIFICATION_UPDATE = 4;
     public final static int VIDEO_CALL_UPDATE = 5;
+    public final static int UNSUPPORT_DEVICE_UPDATE = 6;
 
 
     public final static int DEFAULT_COMD_TASK_KEY = -1;
