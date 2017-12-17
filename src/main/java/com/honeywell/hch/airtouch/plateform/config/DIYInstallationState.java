@@ -21,7 +21,7 @@ public class DIYInstallationState implements Serializable {
     private static int errorCode;
     private static volatile  String mHomeConnectedSsid;
     private static boolean isDeviceAlreadyEnrolled = false;
-    private static int mDeviceType;
+    private static String mDeviceType;
 
     private static volatile  String mSsid;
 
@@ -102,11 +102,11 @@ public class DIYInstallationState implements Serializable {
         DIYInstallationState.isDeviceAlreadyEnrolled = isDeviceAlreadyEnrolled;
     }
 
-    public static int getDeviceType() {
+    public static String getDeviceType() {
         return mDeviceType;
     }
 
-    public static void setDeviceType(int mDeviceType) {
+    public static void setDeviceType(String mDeviceType) {
         DIYInstallationState.mDeviceType = mDeviceType;
     }
 
@@ -139,7 +139,7 @@ public class DIYInstallationState implements Serializable {
         errorCode = 0;
         mHomeConnectedSsid = null;
         isDeviceAlreadyEnrolled = false;
-        mDeviceType = 0;
+        mDeviceType = "";
         mSsid = null;
         mLocationId = 0;
     }
