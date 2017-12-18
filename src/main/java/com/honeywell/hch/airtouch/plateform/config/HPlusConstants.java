@@ -51,30 +51,25 @@ public class HPlusConstants {
     public static final String INIT_STR_VALUE = "0.00";
 
     public static final String AIRTOUCH_S_TYPE = "1048577";
-
-    public static final String AIRTOUCH_X_TYPE = "1048592";
-
     public static final String AIRTOUCH_JD_TYPE = "1048578";
+    public static final String AIRTOUCH_S_UPDATE_TYPE = "1048585";
 
     public static final String AIRTOUCH_450_TYPE = "1048579";
+    public static final String AIRTOUCH_450_UPDATE_TYPE = "1048586";
+
+    public static final String AIRTOUCH_X_TYPE = "1048592";
+    public static final String AIRTOUCH_XCOMPACT_TYPE = "1048581";
+    public static final String AIRTOUCH_X3COMPACT_TYPE = "1048582";
+    public static final String AIRTOUCH_X3COMPACT_UPDATE_TYPE = "1048584";
 
     public static final String AIRTOUCH_FFAC_TYPE = "1048580";
 
     public static final String WATER_SMART_RO_600_TYPE = "1048608";
-
     public static final String WATER_SMART_RO_400_TYPE = "1114114";
-
-    public static final String AIRTOUCH_XCOMPACT_TYPE = "1048581";
-
-    public static final String AIRTOUCH_X3COMPACT_TYPE = "1048582";
-    public static final String AIRTOUCH_X3COMPACT_UPDATE_TYPE = "1048584";
-
-    public static final String AIRTOUCH_S_UPDATE_TYPE = "1048585";
-    public static final String AIRTOUCH_450_UPDATE_TYPE = "1048586";
-
     public static final String WATER_SMART_RO_100_TYPE = "1114115";
     public static final String WATER_SMART_RO_75_TYPE = "1114116";
     public static final String WATER_SMART_RO_50_TYPE = "1114117";
+
     public static final String TUNA_TYPE = "2162689";
     public static final String TUNA_TYPE2 = "2162690";
 
@@ -367,6 +362,12 @@ public class HPlusConstants {
     public static final String MAD_AIR_MODEL_BLACK = "MA50100PB";
     public static final String MAD_AIR_MODEL_PINK = "MA50100PI";
     public static final String MAD_AIR_MODEL_SKULL = "MA50100SK";
+
+
+    public static final String TUNA_VDP7_PRO_B = "VDP7-PRO-B";
+    public static final String TUNA_VDP7_PRO_W = "VDP7-PRO-W";
+    public static final String TUNA_VDP7_KA_B = "VDP7-KA-B";
+    public static final String TUNA_VDP7_KA_W = "VDP7-KA-W";
 
     /**
      * Personal/Enterprise account
