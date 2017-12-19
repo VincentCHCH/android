@@ -76,6 +76,8 @@ public class HPlusConstants {
     public static final String MAD_AIR_TYPE = "1000000";
     public static final String MAD_AIR_AUTH = "1000001";
 
+    public static final String ELEVATOR = "elevator";
+
 
     /**
      * broadcast
