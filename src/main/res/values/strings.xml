@@ -100,10 +100,14 @@
     <string name="no_water">Low water pressure detected by device! Device was shut off! \nPlease check if water supply is cut off. If water supply is OK but device still cannot work, please shut off input valve and contact customer care. </string>
     <string name="water_unknow_alarm">Unknown error detected! \nPlease contact customer care.</string>
 
-    <string name="control_auto">Auto</string>
-    <string name="control_quick">Quick</string>
-    <string name="control_silent">Quiet</string>
-    <string name="control_sleep">Sleep</string>
+    <!--device -->
+    <string name="device_off">Off</string>
+    <string name="device_auto">Auto</string>
+    <string name="device_quick">Quick</string>
+    <string name="device_silent">Quiet</string>
+    <string name="device_sleep">Sleep</string>
+    <string name="device_manual">Manual</string>
+
 
     <string name="all_device_fan_speed">Fan Speed %s</string>
 

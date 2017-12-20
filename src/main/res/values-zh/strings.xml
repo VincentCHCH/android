@@ -85,6 +85,13 @@
     <string name="control_quick">快速</string>
     <string name="control_silent">静音</string>
     <string name="control_sleep">睡眠</string>
+    <!--device -->
+    <string name="device_off">关闭</string>
+    <string name="device_auto">自动</string>
+    <string name="device_quick">快速</string>
+    <string name="device_silent">静音</string>
+    <string name="device_sleep">睡眠</string>
+    <string name="device_manual">手动</string>
 
     <string name="all_device_fan_speed">风速%s</string>
 
