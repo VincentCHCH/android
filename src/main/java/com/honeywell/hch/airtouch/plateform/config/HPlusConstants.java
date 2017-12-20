@@ -278,14 +278,6 @@ public class HPlusConstants {
      *         QuickClean ----- 4
      *         Manual  ------ 5
      */
-    public final static int MODE_AUTO_INT = 1;
-    public final static int MODE_SLEEP_INT = 2;
-    public final static int MODE_QUICK_INT = 4;
-    public final static int MODE_SILENT_INT = 3;
-    public final static int MODE_OFF_INT = 0;
-    public final static int MODE_MANUAL_INT = 5;
-    public final static int MODE_DEFAULT_INT = -1;
-    public final static int MODE_DEFAULT_NONE_MODE = -2;
 
     public final static String MODE_AUTO = "Auto";
     public final static String MODE_SLEEP = "Sleep";
