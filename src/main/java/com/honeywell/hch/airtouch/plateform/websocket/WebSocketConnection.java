@@ -347,9 +347,9 @@ public class WebSocketConnection implements WebSocket {
             mConsumeThread  =  new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    while(mConsumeThreadRunning){
+                    if(mConsumeThreadRunning){
                         try{
-                            if (concurrentLinkedQueue.size() > 0){
+                            if (!concurrentLinkedQueue.isEmpty()){
                                 Log.e(TAG, "WebSocket consumeLinkedQueue...");
 
                                 Thread thread = (Thread) concurrentLinkedQueue.poll();
