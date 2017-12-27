@@ -21,11 +21,11 @@ public class DIYInstallationState implements Serializable {
     private static int errorCode;
     private static volatile  String mHomeConnectedSsid;
     private static boolean isDeviceAlreadyEnrolled = false;
+    private static boolean isUpdateWifi = false;
     private static String mDeviceType;
-
     private static volatile  String mSsid;
-
     private static int mLocationId;
+    private static int mEnrollDeviceId;
 
     public static String getmHomeConnectedSsid() {
         return mHomeConnectedSsid;
@@ -126,6 +126,22 @@ public class DIYInstallationState implements Serializable {
         DIYInstallationState.mLocationId = locationId;
     }
 
+    public static boolean isUpdateWifi() {
+        return isUpdateWifi;
+    }
+
+    public static void setIsUpdateWifi(boolean isUpdateWifi) {
+        DIYInstallationState.isUpdateWifi = isUpdateWifi;
+    }
+
+    public static int getEnrollDeviceId() {
+        return mEnrollDeviceId;
+    }
+
+    public static void setEnrollDeviceId(int enrollDeviceId) {
+        DIYInstallationState.mEnrollDeviceId = enrollDeviceId;
+    }
+
     /**
      * 在每次进入enroll的开始界面，都进行reset操作，保证这个对象里的所有状态为初始状态
      */
@@ -139,8 +155,10 @@ public class DIYInstallationState implements Serializable {
         errorCode = 0;
         mHomeConnectedSsid = null;
         isDeviceAlreadyEnrolled = false;
+        isUpdateWifi = false;
         mDeviceType = "";
         mSsid = null;
         mLocationId = 0;
+        mEnrollDeviceId = 0;
     }
 }
