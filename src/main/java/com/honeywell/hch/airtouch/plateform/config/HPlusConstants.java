@@ -393,8 +393,6 @@ public class HPlusConstants {
     public static final String DISABLE_CONTROL = "DISABLE";
 
 
-    public static final int WATER_ENABLE_CONTROL = 1;
-
     public static final int WATER_INIT_QUALITY_LEVEL = 0;
 
 
