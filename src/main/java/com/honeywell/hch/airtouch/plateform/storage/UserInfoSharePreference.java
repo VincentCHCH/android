@@ -29,12 +29,11 @@ public class UserInfoSharePreference {
     private final static String USER_INFO_SHAREPREFERENCE_DEFAULT = "user_info_sp_default"; //default 专门用一个file
     private final static String USER_NICK_NAME_KEY = "nick_name";
     private final static String USER_PHONE_NUMBER_KEY = "phone_number";
-    private final static String USER_PSW_KEY = "user_password";
     private final static String USER_USER_ID_KEY = "user_id";
     private final static String USER_GENDER_KEY = "gender_id";
 
     private final static String USER_SESSION_ID_KEY = "session_id";
-    private final static String USER_TOKEN_ID_KEY = "token_id";
+    private final static String USER_TOKEN_ID_KEY = "user_token_id";
     private final static String USER_TYPE_KEY = "user_type";
     private final static String GPS_CITY_CODE_KEY = "gps_city_code";
     private final static String LAST_UPDATE_SESSION = "last_update_session";
@@ -87,6 +86,7 @@ public class UserInfoSharePreference {
     private final static String Alarm_list_DATA_KEY = "alarm_list_data_key";
     private final static String WS_URL_KEY = "ws_url_key";
     private final static String PHONE_UUID_KEY = "phone_uuid_key";
+    private final static String WS_URL = "ws_url";
 
     /**
      * @param nickname
@@ -97,12 +97,10 @@ public class UserInfoSharePreference {
         SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_COUNTRY_CODE_KEY, countryCode);
     }
 
-    public static void saveNameAndPwdInSp(String password,
-                                          int userId,int gender) {
-//        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_PHONE_NUMBER_KEY, mobilePhone);
-        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_PSW_KEY, password);
+    public static void saveNameAndPwdInSp(int userId, int gender, String userToken) {
         SharePreferenceUtil.setPrefInt(USER_INFO_SHAREPREFERENCE, USER_USER_ID_KEY, userId);
         SharePreferenceUtil.setPrefInt(USER_INFO_SHAREPREFERENCE, USER_GENDER_KEY, gender);
+        saveUserLoginToken(userToken);
     }
 
     public static void saveLoginSession(String sessionId) {
@@ -110,16 +108,12 @@ public class UserInfoSharePreference {
         mSession = sessionId;
     }
 
-    public static void saveUserTokenFromBaiduPush(String token) {
+    public static void saveUserLoginToken(String token) {
         SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_TOKEN_ID_KEY, token);
     }
 
     public static void saveUserType(int userType) {
         SharePreferenceUtil.setPrefInt(USER_INFO_SHAREPREFERENCE, USER_TYPE_KEY, userType);
-    }
-
-    public static void savePassword(String newPassword) {
-        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_PSW_KEY, newPassword);
     }
 
     public static void saveGpsCityCode(String gpsCityCode) {
@@ -151,6 +145,14 @@ public class UserInfoSharePreference {
         return SharePreferenceUtil.getPrefStringSet(USER_INFO_SHAREPREFERENCE, WS_URL_KEY, DEFAULT_SET_STRING_VALUE);
     }
 
+    public static void saveWebSocketAddress(Set<String> wsUrl) {
+        SharePreferenceUtil.setPrefStringSet(USER_INFO_SHAREPREFERENCE, WS_URL, wsUrl);
+    }
+
+    public static Set<String> getWebSocketAddress() {
+        return SharePreferenceUtil.getPrefStringSet(USER_INFO_SHAREPREFERENCE, WS_URL, DEFAULT_SET_STRING_VALUE);
+    }
+
     public static void savePhoneUUID(String phoneUUID) {
         SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, PHONE_UUID_KEY, phoneUUID);
     }
@@ -180,13 +182,12 @@ public class UserInfoSharePreference {
         SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, USER_PHONE_NUMBER_KEY, mobilePhone);
     }
 
-    public static String getPassword() {
-        String pass = SharePreferenceUtil.getPrefString(USER_INFO_SHAREPREFERENCE, USER_PSW_KEY, DEFAULT_STRING_VALUE);
-        return pass;
-    }
-
     public static int getUserId() {
         return SharePreferenceUtil.getPrefInt(USER_INFO_SHAREPREFERENCE, USER_USER_ID_KEY, DEFAULT_INT_VALUE);
+    }
+
+    public static int getUserGender() {
+        return SharePreferenceUtil.getPrefInt(USER_INFO_SHAREPREFERENCE, USER_GENDER_KEY, DEFAULT_INT_VALUE);
     }
 
     public static String getCountryCode() {
@@ -198,7 +199,7 @@ public class UserInfoSharePreference {
         return mSession;
     }
 
-    public static String getTokenFromBaiduPush() {
+    public static String getUserLoginToken() {
         return SharePreferenceUtil.getPrefString(USER_INFO_SHAREPREFERENCE, USER_TOKEN_ID_KEY, DEFAULT_STRING_VALUE);
     }
 
@@ -224,7 +225,7 @@ public class UserInfoSharePreference {
      * 通过判断这个sharePreference的是否有账号相关的值来判断用户是否登录
      */
     public static boolean isUserAccountHasData() {
-        if (!StringUtil.isEmpty(getPassword())) {
+        if (!StringUtil.isEmpty(getUserLoginToken())) {
             return true;
         }
         return false;
