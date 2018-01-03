@@ -92,7 +92,7 @@ public class AppConfig {
     private CityIndiaDBService cityIndiaDBService = null;
 
     public AppConfig(Context context) {
-        mContext = context = context.getApplicationContext();
+        mContext = context.getApplicationContext();
     }
 
     public static final String URLVERSION = "4";
@@ -310,8 +310,8 @@ public class AppConfig {
         }
     }
 
-    public String getDevicePurchaseUrl(String version,String model,String product){
-        return getBasePurchaseUrl() + mContext.getString(R.string.purchase_url_suffix,version,model,product);
+    public String getDevicePurchaseUrl(String version, String model, String product) {
+        return getBasePurchaseUrl() + mContext.getString(R.string.purchase_url_suffix, version, model, product);
     }
 
     public static boolean isDebugMode() {
