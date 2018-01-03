@@ -86,6 +86,7 @@ public class UserInfoSharePreference {
     private final static String Alarm_list_DATA_KEY = "alarm_list_data_key";
     private final static String WS_URL_KEY = "ws_url_key";
     private final static String PHONE_UUID_KEY = "phone_uuid_key";
+    private final static String WS_URL = "ws_url";
 
     /**
      * @param nickname
@@ -142,6 +143,14 @@ public class UserInfoSharePreference {
 
     public static Set<String> getWsUrl() {
         return SharePreferenceUtil.getPrefStringSet(USER_INFO_SHAREPREFERENCE, WS_URL_KEY, DEFAULT_SET_STRING_VALUE);
+    }
+
+    public static void saveWebSocketAddress(Set<String> wsUrl) {
+        SharePreferenceUtil.setPrefStringSet(USER_INFO_SHAREPREFERENCE, WS_URL, wsUrl);
+    }
+
+    public static Set<String> getWebSocketAddress() {
+        return SharePreferenceUtil.getPrefStringSet(USER_INFO_SHAREPREFERENCE, WS_URL, DEFAULT_SET_STRING_VALUE);
     }
 
     public static void savePhoneUUID(String phoneUUID) {

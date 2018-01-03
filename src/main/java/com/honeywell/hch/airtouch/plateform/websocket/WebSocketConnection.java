@@ -82,16 +82,16 @@ public class WebSocketConnection implements WebSocket {
     private List<Integer> dontReconnectCode = new ArrayList<>();
 
 
-
     public WebSocketConnection() {
         this.mHandler = new ThreadHandler(this);
     }
 
     /**
      * 根据各个业务，设定不同的错误码
+     *
      * @param dontReconnectCode
      */
-    public void setDontReconnectCode(List<Integer> dontReconnectCode){
+    public void setDontReconnectCode(List<Integer> dontReconnectCode) {
         this.dontReconnectCode = dontReconnectCode;
     }
 
@@ -159,10 +159,10 @@ public class WebSocketConnection implements WebSocket {
                             LogUtil.error(TAG, "fail connection", e);
                         }
                         try {
-                            if (mSocketManager != null){
+                            if (mSocketManager != null) {
                                 mSocketManager.stopConnection();
                             }
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             LogUtil.error(TAG, "fail mSocketManager", e);
                         }
 
@@ -176,8 +176,8 @@ public class WebSocketConnection implements WebSocket {
 
             Log.d(TAG, "worker threads stopped");
         } catch (Exception e) {
-           Log.e(TAG,"failConnection Exception ==" +e.toString());
-        }finally {
+            Log.e(TAG, "failConnection Exception ==" + e.toString());
+        } finally {
             onClose(code, reason);
         }
 
@@ -214,6 +214,7 @@ public class WebSocketConnection implements WebSocket {
     }
 
     public void connect(String wsUri, String[] wsSubprotocols, WebSocket.ConnectionHandler wsHandler, WebSocketOptions options, List<BasicNameValuePair> headers) throws WebSocketException {
+        LogUtil.log(LogUtil.LogLevel.DEBUG,TAG,"wsUri:"+wsUri);
         try {
             index = 0;
             this.mWebSocketURI = new URI(wsUri);
@@ -256,7 +257,7 @@ public class WebSocketConnection implements WebSocket {
                 urlStrings.addAll(UserInfoSharePreference.getWsUrl());
                 index = (index + 1) % urlStrings.size();
                 mWebSocketURI = new URI(urlStrings.get(index));
-                Log.i(TAG,urlStrings.get(index));
+                Log.i(TAG, urlStrings.get(index));
             } catch (Exception e) {
 
             }
@@ -302,6 +303,7 @@ public class WebSocketConnection implements WebSocket {
     private ConcurrentLinkedQueue concurrentLinkedQueue = new ConcurrentLinkedQueue();
     private boolean mConsumeThreadRunning = true;
     private Thread mConsumeThread = null;
+
     /**
      * Perform reconnection
      *
@@ -342,14 +344,14 @@ public class WebSocketConnection implements WebSocket {
         }
     }
 
-    private void consumeLinkedQueue(){
-        if (mConsumeThread == null){
-            mConsumeThread  =  new Thread(new Runnable() {
+    private void consumeLinkedQueue() {
+        if (mConsumeThread == null) {
+            mConsumeThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    while(mConsumeThreadRunning){
-                        try{
-                            if (!concurrentLinkedQueue.isEmpty()){
+                    while (mConsumeThreadRunning) {
+                        try {
+                            if (!concurrentLinkedQueue.isEmpty()) {
                                 Log.e(TAG, "WebSocket consumeLinkedQueue...");
 
                                 Thread thread = (Thread) concurrentLinkedQueue.poll();
@@ -357,7 +359,7 @@ public class WebSocketConnection implements WebSocket {
                             }
 
                             Thread.sleep(500);
-                        }catch (Exception e){
+                        } catch (Exception e) {
 
                         }
 
@@ -377,7 +379,7 @@ public class WebSocketConnection implements WebSocket {
      * @param reason Close reason (human-readable).
      */
     private void onClose(int code, String reason) {
-        Log.e(TAG,"WebSocketCloseNotification code = " + code);
+        Log.e(TAG, "WebSocketCloseNotification code = " + code);
         if (dontReconnectCode != null && !dontReconnectCode.contains(code)) {
             scheduleReconnect();
         }
@@ -500,7 +502,7 @@ public class WebSocketConnection implements WebSocket {
 
         } else if (message.obj instanceof WebSocketMessage.ProtocolViolation) {
             //			WebSocketMessage.ProtocolViolation protocolViolation = (WebSocketMessage.ProtocolViolation) message.obj;
-            failConnection(((WebSocketMessage.ProtocolViolation)message.obj).mException.getErrorCode(), "WebSockets protocol violation");
+            failConnection(((WebSocketMessage.ProtocolViolation) message.obj).mException.getErrorCode(), "WebSockets protocol violation");
 
         } else if (message.obj instanceof WebSocketMessage.Error) {
             WebSocketMessage.Error error = (WebSocketMessage.Error) message.obj;
@@ -548,7 +550,7 @@ public class WebSocketConnection implements WebSocket {
 
                 SocketFactory factory = null;
                 if (mWebSocketURI.getScheme().equalsIgnoreCase(WSS_URI_SCHEME)) {
-                    String cerFileName =  mWebSocketURI.toString().contains("wss://homecloud.honeywell.com.cn") ? "GeoTrust_Global_CA.PEM" : "qa.cer";
+                    String cerFileName = mWebSocketURI.toString().contains("wss://homecloud.honeywell.com.cn") ? "GeoTrust_Global_CA.PEM" : "qa.cer";
                     factory = getProductCertificatesFactory(cerFileName);
                     Log.e("haha", "factory === " + factory);
                     if (factory == null) {
