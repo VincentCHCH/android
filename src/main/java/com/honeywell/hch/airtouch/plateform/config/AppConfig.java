@@ -310,8 +310,8 @@ public class AppConfig {
         }
     }
 
-    public String getDevicePurchaseUrl(String version,String model,String product){
-        return getBasePurchaseUrl() + mContext.getString(R.string.purchase_url_suffix,version,model,product);
+    public String getDevicePurchaseUrl(String version, String model, String product) {
+        return getBasePurchaseUrl() + mContext.getString(R.string.purchase_url_suffix, version, model, product);
     }
 
     public static boolean isDebugMode() {

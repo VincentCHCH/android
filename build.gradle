@@ -63,17 +63,16 @@ dependencies {
     testCompile 'org.robolectric:robolectric:3.0'
     debugCompile project(path: ':Library', configuration: 'debug')
     releaseCompile project(path: ':Library', configuration: 'release')
-    //    debugCompile(project(path: "androidlibrary", configuration: "debug"))
-    //    releaseCompile(project(path: "androidlibrary", configuration: "release"))
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.googlecode.plist:dd-plist:1.8'
-    compile files('libs/umeng-analytics-v6.0.3.jar')
     compile files('libs/core-3.1.0.jar')
     compile files('libs/pushservice-5.5.0.50.jar')
     compile 'org.greenrobot:eventbus:3.0.0'
     annotationProcessor 'org.greenrobot:eventbus-annotation-processor:3.0.1'
     compile files('libs/jg_filter_sdk_1.1.jar')
     compile 'ly.count.android:sdk:17.09'
+    compile files('libs/mid-core-sdk-3.9.0.jar')
+    compile files('libs/Xg_sdk_v3.12_20171113_1059.jar')
 }
 
 

@@ -66,6 +66,7 @@ public class EventBusConstant {
     public static final int WRONG_PWD_LOGOUT_REASON = 2;
     public static final int TOKEN_EXPIRE_REASON = 3;
     public static final int TOKEN_ERR_USER_NOT_EXIST = 4;
+    public static final int MIGRATION_FAILED_EVENT_BUS = 5;
 
     public static final String AVIDEO_RECEIVE_CALL = "avideo_receive_call"; //向APP端推送有人call的msg
     public static final String AVIDEO_RECEIVE_END = "audio_receive_end";//当其他人已经挂断时；
