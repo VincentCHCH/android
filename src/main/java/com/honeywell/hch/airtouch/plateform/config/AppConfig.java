@@ -86,7 +86,7 @@ public class AppConfig {
     private CityIndiaDBService cityIndiaDBService = null;
 
     public AppConfig(Context context) {
-        mContext = context;
+        mContext = context.getApplicationContext();
     }
 
     public static final String URLVERSION = "4";
