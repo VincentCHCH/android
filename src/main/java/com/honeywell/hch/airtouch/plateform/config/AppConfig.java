@@ -235,7 +235,7 @@ public class AppConfig {
     public City getCityFromDatabase(String cityCode) {
 
         City city = getCityChinaDBService().getCityByCode(cityCode);
-        if (city.getCityNameEN() == null) {
+        if (city.getCode() == null) {
             city = getCityIndiaDBService().getCityByCode(cityCode);
         }
 
@@ -354,3 +354,5 @@ public class AppConfig {
         AppConfig.mInitTime = mInitTime;
     }
 }
+
+
