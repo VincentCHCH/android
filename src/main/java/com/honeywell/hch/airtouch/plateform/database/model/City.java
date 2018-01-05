@@ -1,99 +1,57 @@
 package com.honeywell.hch.airtouch.plateform.database.model;
 
+import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
+import com.honeywell.hch.airtouch.library.http.model.IRequestParams;
+
 import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  * Created by nan.liu on 2/5/15.
  */
-public class City implements Serializable, IDBModel {
+public class City implements IRequestParams, Serializable, IDBModel {
 
-    private int mId;
-    private String mCode;
-    private String mDistrictNameCN;
-    private String mDistrictNameEN;
-    private String mCityNameCN;
-    private String mCityNameEN;
-    private String mProvinceNameCN;
-    private String mProvinceNameEN;
-    private String mCountryName;
+    @SerializedName("id")
+    private String mId;
+
+    @SerializedName("countryCode")
     private String mCountryCode;
-    private String mCityLevel;
+
+    @SerializedName("countryCN")
+    private String mCountryCN;
+
+    @SerializedName("countryEN")
+    private String mCountryEN;
+
+    @SerializedName("provinceCN")
+    private String mProvinceCN;
+
+    @SerializedName("provinceEN")
+    private String mProvinceEN;
+
+    @SerializedName("cityCN")
+    private String mCityCN;
+
+    @SerializedName("cityEN")
+    private String mCityEN;
+
+    @SerializedName("districtCN")
+    private String mDistrictCN;
+
+    @SerializedName("districtEN")
+    private String mDistrictEN;
 
     public City(){
 
     }
 
-    public int getId() {
+    public String getId() {
         return mId;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         mId = id;
-    }
-
-    public String getCode() {
-        return mCode;
-    }
-
-    public void setCode(String code) {
-        mCode = code;
-    }
-
-    public String getDistrictNameCN() {
-        return mDistrictNameCN;
-    }
-
-    public void setDistrictNameCN(String districtNameCN) {
-        mDistrictNameCN = districtNameCN;
-    }
-
-    public String getDistrictNameEN() {
-        return mDistrictNameEN;
-    }
-
-    public void setDistrictNameEN(String districtNameEN) {
-        mDistrictNameEN = districtNameEN;
-    }
-
-    public String getCityNameCN() {
-        return mCityNameCN;
-    }
-
-    public void setCityNameCN(String cityNameCN) {
-        mCityNameCN = cityNameCN;
-    }
-
-    public String getCityNameEN() {
-        return mCityNameEN;
-    }
-
-    public void setCityNameEN(String cityNameEN) {
-        mCityNameEN = cityNameEN;
-    }
-
-    public String getProvinceNameCN() {
-        return mProvinceNameCN;
-    }
-
-    public void setProvinceNameCN(String provinceNameCN) {
-        mProvinceNameCN = provinceNameCN;
-    }
-
-    public String getProvinceNameEN() {
-        return mProvinceNameEN;
-    }
-
-    public void setProvinceNameEN(String provinceNameEN) {
-        mProvinceNameEN = provinceNameEN;
-    }
-
-    public String getCountryName() {
-        return mCountryName;
-    }
-
-    public void setCountryName(String countryName) {
-        mCountryName = countryName;
     }
 
     public String getCountryCode() {
@@ -104,41 +62,105 @@ public class City implements Serializable, IDBModel {
         mCountryCode = countryCode;
     }
 
-    public String getCityLevel() {
-        return mCityLevel;
+    public String getCountryCN() {
+        return mCountryCN;
     }
 
-    public void setCityLevel(String cityLevel) {
-        mCityLevel = cityLevel;
+    public void setCountryCN(String countryCN) {
+        mCountryCN = countryCN;
+    }
+
+    public String getCountryEN() {
+        return mCountryEN;
+    }
+
+    public void setCountryEN(String countryEN) {
+        mCountryEN = countryEN;
+    }
+
+    public String getProvinceCN() {
+        return mProvinceCN;
+    }
+
+    public void setProvinceCN(String provinceCN) {
+        mProvinceCN = provinceCN;
+    }
+
+    public String getProvinceEN() {
+        return mProvinceEN;
+    }
+
+    public void setProvinceEN(String provinceEN) {
+        mProvinceEN = provinceEN;
+    }
+
+    public String getCityCN() {
+        return mCityCN;
+    }
+
+    public void setCityCN(String cityCN) {
+        mCityCN = cityCN;
+    }
+
+    public String getCityEN() {
+        return mCityEN;
+    }
+
+    public void setCityEN(String cityEN) {
+        mCityEN = cityEN;
+    }
+
+    public String getDistrictCN() {
+        return mDistrictCN;
+    }
+
+    public void setDistrictCN(String districtCN) {
+        mDistrictCN = districtCN;
+    }
+
+    public String getDistrictEN() {
+        return mDistrictEN;
+    }
+
+    public void setDistrictEN(String districtEN) {
+        mDistrictEN = districtEN;
     }
 
     public City(HashMap<String, String> cityMap) {
-        mId = Integer.parseInt(cityMap.get("id"));
-        mCode = cityMap.get("Code");
-        mDistrictNameCN = cityMap.get("DistrictName_CN");
-        mDistrictNameEN = cityMap.get("DistrictName_EN");
-        mCityNameCN = cityMap.get("CityName_CN");
-        mCityNameEN = cityMap.get("CityName_EN");
-        mProvinceNameCN = cityMap.get("ProvinceName_CN");
-        mProvinceNameEN = cityMap.get("ProvinceName_EN");
-        mCountryName = cityMap.get("CountryName");
-        mCountryCode = cityMap.get("CountryCode");
-        mCityLevel = cityMap.get("CityLevel");
+        mId = cityMap.get("id");
+        mCountryCode = cityMap.get("countryCode");
+        mCountryCN = cityMap.get("countryCN");
+        mCountryEN = cityMap.get("countryEN");
+        mProvinceCN = cityMap.get("provinceCN");
+        mProvinceEN = cityMap.get("provinceEN");
+        mCityCN = cityMap.get("cityCN");
+        mCityEN = cityMap.get("cityEN");
+        mDistrictCN = cityMap.get("districtCN");
+        mDistrictEN = cityMap.get("districtEN");
     }
 
     public HashMap<String, Object> getHashMap() {
         HashMap<String, Object> cityMap = new HashMap<>();
         cityMap.put("id", mId);
-        cityMap.put("Code", mCode);
-        cityMap.put("DistrictName_CN", mDistrictNameCN);
-        cityMap.put("DistrictName_EN", mDistrictNameEN);
-        cityMap.put("CityName_CN", mCityNameCN);
-        cityMap.put("CityName_EN", mCityNameEN);
-        cityMap.put("ProvinceName_CN", mProvinceNameCN);
-        cityMap.put("ProvinceName_EN", mProvinceNameEN);
-        cityMap.put("CountryName", mCountryName);
-        cityMap.put("CountryCode", mCountryCode);
-        cityMap.put("CityLevel", mCityLevel);
+        cityMap.put("countryCode", mCountryCode);
+        cityMap.put("countryCN", mCountryCN);
+        cityMap.put("countryEN", mCountryEN);
+        cityMap.put("provinceCN", mProvinceCN);
+        cityMap.put("provinceEN", mProvinceEN);
+        cityMap.put("cityCN", mCityCN);
+        cityMap.put("cityEN", mCityEN);
+        cityMap.put("districtCN", mDistrictCN);
+        cityMap.put("districtEN", mDistrictEN);
         return cityMap;
+    }
+
+    @Override
+    public String getRequest(Gson gson) {
+        return gson.toJson(this);
+    }
+
+    @Override
+    public String getPrintableRequest(Gson gson) {
+        return getRequest(gson);
     }
 }

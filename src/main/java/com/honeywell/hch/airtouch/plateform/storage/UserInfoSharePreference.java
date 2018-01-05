@@ -20,7 +20,7 @@ public class UserInfoSharePreference {
     private final static HashSet<String> DEFAULT_SET_STRING_VALUE = new HashSet<>();
     private final static String DEFAULT_STRING_VALUE = "";
     public final static int DEFAULT_INT_VALUE = -1;
-    private final static long DEFAULT_LONG_VALUE = -1;
+    public final static long DEFAULT_LONG_VALUE = -1;
 
     /**
      * profile相关缓存
@@ -88,6 +88,8 @@ public class UserInfoSharePreference {
     private final static String PHONE_UUID_KEY = "phone_uuid_key";
     private final static String WS_URL = "ws_url";
 
+    private final static String DB_UPDATE_TIME_KEY = "db_update_time_key";
+
     /**
      * @param nickname
      * @param countryCode
@@ -122,6 +124,14 @@ public class UserInfoSharePreference {
 
     public static void saveGpsCountryCode(String gpsCountryCode) {
         SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, GPS_COUNTRY_CODE_KEY, gpsCountryCode);
+    }
+
+    public static void saveDBUpdateTime(long time) {
+        SharePreferenceUtil.setPrefLong(USER_INFO_SHAREPREFERENCE, DB_UPDATE_TIME_KEY, time);
+    }
+
+    public static long getDBUpdateTime() {
+        return SharePreferenceUtil.getPrefLong(USER_INFO_SHAREPREFERENCE, DB_UPDATE_TIME_KEY, DEFAULT_LONG_VALUE);
     }
 
     public static void saveLastUpdateSession(long lastSession) {
