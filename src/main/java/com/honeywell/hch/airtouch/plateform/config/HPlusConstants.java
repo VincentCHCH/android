@@ -365,17 +365,17 @@ public class HPlusConstants {
     public static final String TUNA_VDP7_KA_B = "VDP7-KA-B";
     public static final String TUNA_VDP7_KA_W = "VDP7-KA-W";
 
-    public static final String IS_4500S_G = "IS-4500S-G";
-    public static final String IS_4500S = "IS-4500S";
-    public static final String IS_4500S_B = "IS-4500S-B";
-    public static final String IS_4500S_KA_G = "IS-4500S-KA-G";
-    public static final String IS_4500S_KA = "IS-4500S-KA";
-    public static final String IS_4500S_KA_B = "IS-4500S-KA-B";
+    public static final String TUNA_IS_4500S_G = "IS-4500S-G";
+    public static final String TUNA_IS_4500S = "IS-4500S";
+    public static final String TUNA_IS_4500S_B = "IS-4500S-B";
+    public static final String TUNA_IS_4500S_KA_G = "IS-4500S-KA-G";
+    public static final String TUNA_IS_4500S_KA = "IS-4500S-KA";
+    public static final String TUNA_IS_4500S_KA_B = "IS-4500S-KA-B";
 
-    public static final String VDP10_PRO_B = "VDP10-PRO-B";
-    public static final String VDP10_PRO_W = "VDP10-PRO-W";
-    public static final String VDP10_KA_B = "VDP10-KA-B";
-    public static final String VDP10_KA_W = "VDP10-KA-W";
+    public static final String TUNA_VDP10_PRO_B = "VDP10-PRO-B";
+    public static final String TUNA_VDP10_PRO_W = "VDP10-PRO-W";
+    public static final String TUNA_VDP10_KA_B = "VDP10-KA-B";
+    public static final String TUNA_VDP10_KA_W = "VDP10-KA-W";
 
     /**
      * Personal/Enterprise account
