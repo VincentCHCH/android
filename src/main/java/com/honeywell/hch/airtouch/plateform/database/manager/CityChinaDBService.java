@@ -20,20 +20,18 @@ public class CityChinaDBService extends DBService {
     //table info
     public static final String TABLE_NAME = "CNCityInfo";
     public static final String ID = "id";
-    public static final String CODE = "Code";
-    public static final String DISTRICT_NAME_CN = "DistrictName_CN";
-    public static final String DISTRICT_NAME_EN = "DistrictName_EN";
-    public static final String CITY_NAME_CN = "CityName_CN";
-    public static final String CITY_NAME_EN = "CityName_EN";
-    public static final String PROVINCE_NAME_CN = "ProvinceName_CN";
-    public static final String PROVINCE_NAME_EN = "ProvinceName_EN";
-    public static final String COUNTRY_NAME = "CountryName";
-    public static final String COUNTRY_CODE = "CountryCode";
-    public static final String CITY_LEVEL = "CityLevel";
+    public static final String COUNTRY_CODE = "countryCode";
+    public static final String COUNTRY_NAME_CN = "countryCN";
+    public static final String COUNTRY_NAME_EN = "countryEN";
+    public static final String PROVINCE_NAME_CN = "provinceCN";
+    public static final String PROVINCE_NAME_EN = "provinceEN";
+    public static final String CITY_NAME_CN = "cityCN";
+    public static final String CITY_NAME_EN = "cityEN";
+    public static final String DISTRICT_NAME_CN = "districtCN";
+    public static final String DISTRICT_NAME_EN = "districtEN";
 
-    private String[] DBKey = {ID, CODE, DISTRICT_NAME_CN, DISTRICT_NAME_EN,
-            CITY_NAME_CN, CITY_NAME_EN, PROVINCE_NAME_CN, PROVINCE_NAME_EN,
-            COUNTRY_NAME, COUNTRY_CODE, CITY_LEVEL};
+    private String[] DBKey = {ID, COUNTRY_CODE, COUNTRY_NAME_CN, COUNTRY_NAME_EN, PROVINCE_NAME_CN, PROVINCE_NAME_EN,
+    CITY_NAME_CN, CITY_NAME_EN, DISTRICT_NAME_CN, DISTRICT_NAME_EN};
 
     public CityChinaDBService(Context context) {
         super(context);
@@ -210,7 +208,7 @@ public class CityChinaDBService extends DBService {
         if (sqLiteDatabase != null) {
             Cursor cursor = sqLiteDatabase.rawQuery("SELECT *"
                     + " FROM " + TABLE_NAME
-                    + " WHERE " + CODE + " = '" + cityCode + "'", null);
+                    + " WHERE " + ID + " = '" + cityCode + "'", null);
 
             if (cursor.getCount() != 0) {
                 cursor.moveToNext();

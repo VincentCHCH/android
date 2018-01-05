@@ -155,45 +155,7 @@ public class DBService {
 
 
     public SQLiteDatabase openDatabase(String path) {
-        FileOutputStream fos = null;
-        InputStream is = null;
-        try {
-            if (!(new File(path).exists())) {
-                is = AppManager.getInstance().getApplication().getApplicationContext().getResources().openRawResource(R.raw.citytable);//导入数据库
-                fos = new FileOutputStream(path);
-                byte[] buffer = new byte[BUFFER_SIZE];
-                int count = 0;
-
-                while ((count = is.read(buffer)) > 0) {
-                    fos.write(buffer, 0, count);
-                }
-            }
-            SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(path, null);
-            return db;
-
-        } catch (Exception e) {
-            LogUtil.error("DBService","openDatabase",e);
-//            LogUtil.log(LogUtil.LogLevel.ERROR,"openDatabase", e.toString());
-        } finally {
-            if (is != null) {
-                try {
-                    is.close();
-                } catch (Exception e) {
-                    LogUtil.error("DBService","openDatabase close",e);
-//                    LogUtil.log(LogUtil.LogLevel.ERROR,"openDatabase", e.toString());
-                }
-            }
-
-            if (fos != null) {
-                try {
-                    fos.close();
-                } catch (Exception e) {
-                    LogUtil.error("DBService","openDatabase close",e);
-//                    LogUtil.log(LogUtil.LogLevel.ERROR,"openDatabase", e.toString());
-                }
-            }
-        }
-        return null;
+        return SQLiteDatabase.openOrCreateDatabase(path, null);
     }
 
 }

@@ -26,65 +26,29 @@ public class GpsUtil {
     public static final String GPS_FROME_WHERE = "gps_from_where";
 
     private static final String TAG = "GpsUtil";
-
-    private CityChinaDBService mCityChinaDBService = null;
-    private CityIndiaDBService mCityIndiaDBService = null;
-
-    private AppConfig mAppConfig;
-
     private static final int GPS_TIMEOUT = 30 * 1000;
+    private String mLongitude;
+    private String mLatitude;
 
-    private City mSelectedGPSCity;
+    public GpsUtil() {
 
-    public GpsUtil(CityChinaDBService cityChinaDBService, CityIndiaDBService cityIndiaDBService) {
-        mCityChinaDBService = cityChinaDBService;
-        mCityIndiaDBService = cityIndiaDBService;
-        mAppConfig = AppConfig.shareInstance();
     }
-
-
-    /**
-     * Receive GPS location update
-     */
-//    private Handler mMessageHandler = new Handler() {
-//        @Override
-//        public void handleMessage(Message msg) {
-//            if (msg == null)
-//                return;
-//            switch (msg.what) {
-//                //GPS find the city
-//                case LocationManager.HANDLER_GPS_LOCATION:
-//                    Bundle bundle = msg.getData();
-//                    if (bundle != null) {
-//                        CityInfo cityLocation = (CityInfo) bundle
-//                                .getSerializable(LocationManager.HANDLER_MESSAGE_KEY_GPS_LOCATION);
-//                        if (StringUtil.isEmpty(mAppConfig.getGpsCityCode()) || isNeedUpdateGpsInfo(cityLocation)) {
-//                            processLocation(cityLocation);
-//                        }
-//                    }
-//                    break;
-//
-//                default:
-//                    break;
-//            }
-//        }
-//    };
 
     /**
      * when the current location is located success and is different with the last .need to update
      *
-     * @param cityLocation
+     * @param
      * @return
      */
-    private boolean isNeedUpdateGpsInfo(CityInfo cityLocation) {
-        if (cityLocation == null || cityLocation.getCity() == null) {
-            return false;
-        } else if (!StringUtil.isEmpty(cityLocation.getCity()) && !cityLocation.getCity().equals(mAppConfig.getGpsCityCode())) {
-            return true;
-        }
-
-        return false;
-    }
+//    private boolean isNeedUpdateGpsInfo(CityInfo cityLocation) {
+//        if (cityLocation == null || cityLocation.getCity() == null) {
+//            return false;
+//        } else if (!StringUtil.isEmpty(cityLocation.getCity()) && !cityLocation.getCity().equals(mAppConfig.getGpsCityCode())) {
+//            return true;
+//        }
+//
+//        return false;
+//    }
 
     public void initGps(final int whereFrom) {
 
@@ -100,9 +64,7 @@ public class GpsUtil {
                         if (bundle != null) {
                             CityInfo cityLocation = (CityInfo) bundle
                                     .getSerializable(LocationManager.HANDLER_MESSAGE_KEY_GPS_LOCATION);
-                            if (StringUtil.isEmpty(mAppConfig.getGpsCityCode()) || isNeedUpdateGpsInfo(cityLocation)) {
                                 processLocation(cityLocation, whereFrom);
-                            }
                         }
                         break;
 
@@ -124,7 +86,7 @@ public class GpsUtil {
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }
-                if (mSelectedGPSCity == null) {
+                if (mLongitude.equals("-1") && mLatitude.equals("-1")) {
                     LocationManager.getInstance().unRegisterGPSLocationListener(mMessageHandler);
                     LogUtil.log(LogUtil.LogLevel.ERROR, TAG, "GPS locating timeout");
                     processLocation(null, whereFrom);
@@ -134,85 +96,44 @@ public class GpsUtil {
 
     }
 
-//    /**
-//     * 20S GPS timeout
-//     */
-//    private class TimeoutCheckThread extends
-//            AsyncTask<String, Integer, String> {
-//
-//        public TimeoutCheckThread() {
-//
-//        }
-//
-//        @Override
-//        protected String doInBackground(String... params) {
-//            Date date1 = new Date();
-////            LogUtil.log(LogUtil.LogLevel.DEBUG, TAG, "GPS locating start：" + date1.toLocaleString());
-//
-//            try {
-//                Thread.sleep(GPS_TIMEOUT);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//
-//            Date date2 = new Date();
-////            LogUtil.log(LogUtil.LogLevel.DEBUG, TAG, "GPS locating end：" + date2.toLocaleString());
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String result) {
-//            if (mSelectedGPSCity == null) {
-//                LocationManager.getInstance().unRegisterGPSLocationListener(mMessageHandler);
-//                LogUtil.log(LogUtil.LogLevel.ERROR, TAG, "GPS locating timeout");
-//                processLocation(null);
-//            }
-//        }
-//    }
-
-
     private void processLocation(CityInfo cityLocation, int whereFrom) {
         if (cityLocation != null) {
-            double lat = cityLocation.getLatitude();
-            double lng = cityLocation.getLongitude();
+            mLongitude = String.valueOf(cityLocation.getLongitude());
+            mLatitude = String.valueOf(cityLocation.getLatitude());
+//            String code = "WTW3T7RMWMB4";
+//            City city = mCityChinaDBService.getCityByCode(code);
+//            // India version
+//            if (city.getCode() != null) {
+//                UserInfoSharePreference.saveGpsCountryCode(HPlusConstants.CHINA_CODE);
+//            } else {
+//                city = mCityIndiaDBService.getCityByCode(code);
+//                if (city.getCityNameEN() != null) {
+//                    UserInfoSharePreference.saveGpsCountryCode(HPlusConstants.INDIA_CODE);
+//                } else {
+//                    UserInfoSharePreference.saveGpsCountryCode(HPlusConstants.CHINA_CODE);
+//                }
+//            }
+//            if (cityLocation.getCity() != null) {
+//                //gps success
+//                if (city.getCode() != null) {
+//                    mSelectedGPSCity = city;
+//                    mAppConfig.setGpsCityCode(mSelectedGPSCity.getCode());
+//                } else {
+//                    // The located city is not in database.
+//                    mAppConfig.setGpsCityCode(cityLocation.getCity());
+//                }
+//            } else if (whereFrom != FROM_ENROLL_PROCESS) {
+//                mAppConfig.setGpsCityCode(AppConfig.LOCATION_FAIL);
+//            }
+//        } else if (whereFrom != FROM_ENROLL_PROCESS) {
+//            mAppConfig.setGpsCityCode(AppConfig.LOCATION_FAIL);
+//        }
 
-            String code = "WTW3T7RMWMB4";
-
-            City city = mCityChinaDBService.getCityByCode(code);
-            // India version
-            if (city.getCode() != null) {
-                UserInfoSharePreference.saveGpsCountryCode(HPlusConstants.CHINA_CODE);
-            } else {
-                city = mCityIndiaDBService.getCityByCode(code);
-                if (city.getCityNameEN() != null) {
-                    UserInfoSharePreference.saveGpsCountryCode(HPlusConstants.INDIA_CODE);
-                } else {
-                    UserInfoSharePreference.saveGpsCountryCode(HPlusConstants.CHINA_CODE);
-                }
-            }
-            if (cityLocation.getCity() != null) {
-                //gps success
-                if (city.getCode() != null) {
-                    mSelectedGPSCity = city;
-                    mAppConfig.setGpsCityCode(mSelectedGPSCity.getCode());
-                } else {
-                    // The located city is not in database.
-                    mAppConfig.setGpsCityCode(cityLocation.getCity());
-                }
-            } else if (whereFrom != FROM_ENROLL_PROCESS) {
-                mAppConfig.setGpsCityCode(AppConfig.LOCATION_FAIL);
-            }
-        } else if (whereFrom != FROM_ENROLL_PROCESS) {
-            mAppConfig.setGpsCityCode(AppConfig.LOCATION_FAIL);
+            Bundle bundle = new Bundle();
+            bundle.putInt("GPS_FROM_WHERE", whereFrom);
+            bundle.putString("GPS_LONGITUDE", mLongitude);
+            bundle.putString("GPS_LATITUDE", mLatitude);
+            EventBusUtil.post(HPlusConstants.GPS_RESULT, bundle);
         }
-
-        Bundle bundle = new Bundle();
-        bundle.putInt("GPS_FROM_WHERE",whereFrom);
-        EventBusUtil.post(HPlusConstants.GPS_RESULT,bundle);
-
-//        Intent intent = new Intent();
-//        intent.putExtra(GPS_FROME_WHERE, whereFrom);
-//        intent.setAction(HPlusConstants.GPS_RESULT);
-//        AppManager.getInstance().getApplication().getApplicationContext().sendBroadcast(intent);
     }
 }
