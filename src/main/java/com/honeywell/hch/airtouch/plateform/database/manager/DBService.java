@@ -27,7 +27,7 @@ public class DBService {
             + Environment.getDataDirectory().getAbsolutePath() + "/"
             + LibApplication.getContext().getPackageName();
 
-    public static final String DB_NAME = "citytable.db";
+    public static final String DB_NAME = "hplus.db";
 
     private static int BUFFER_SIZE = 512;
 
