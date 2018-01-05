@@ -35,7 +35,7 @@ public class EventBusConstant {
     public static final String FORCE_LOGOUT_ACTION = "force_logout_action";
 
     public static final String REFRESH_WEATHER_ACTION = "refresh_weather_action";
-    public static final String AFTER_ENROLL_SUCCESS = "after_enroll_success";
+    public static final String AFTER_ENROLL_END = "after_enroll_end";
 
     public static final String HTTP_ERROR_MSG_SHOW = "enroll_error_msg_show";
 
