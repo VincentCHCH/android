@@ -72,6 +72,8 @@ public class HPlusConstants {
 
     public static final String TUNA_TYPE = "2162689";
     public static final String TUNA_TYPE2 = "2162690";
+    public static final String TUNA_TYPE3 = "2162691";
+    public static final String TUNA_TYPE4 = "2162692";
 
     public static final String MAD_AIR_TYPE = "1000000";
     public static final String MAD_AIR_AUTH = "1000001";
@@ -362,6 +364,18 @@ public class HPlusConstants {
     public static final String TUNA_VDP7_PRO_W = "VDP7-PRO-W";
     public static final String TUNA_VDP7_KA_B = "VDP7-KA-B";
     public static final String TUNA_VDP7_KA_W = "VDP7-KA-W";
+
+    public static final String IS_4500S_G = "IS-4500S-G";
+    public static final String IS_4500S = "IS-4500S";
+    public static final String IS_4500S_B = "IS-4500S-B";
+    public static final String IS_4500S_KA_G = "IS-4500S-KA-G";
+    public static final String IS_4500S_KA = "IS-4500S-KA";
+    public static final String IS_4500S_KA_B = "IS-4500S-KA-B";
+
+    public static final String VDP10_PRO_B = "VDP10-PRO-B";
+    public static final String VDP10_PRO_W = "VDP10-PRO-W";
+    public static final String VDP10_KA_B = "VDP10-KA-B";
+    public static final String VDP10_KA_W = "VDP10-KA-W";
 
     /**
      * Personal/Enterprise account
