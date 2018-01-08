@@ -1,5 +1,6 @@
 package com.honeywell.hch.airtouch.plateform.database.manager;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -18,7 +19,7 @@ import java.util.List;
 public class CityChinaDBService extends DBService {
 
     //table info
-    public static final String TABLE_NAME = "CNCityInfo";
+    public static final String TABLE_NAME = "ChinaCity";
     public static final String ID = "id";
     public static final String COUNTRY_CODE = "countryCode";
     public static final String COUNTRY_NAME_CN = "countryCN";
@@ -38,11 +39,26 @@ public class CityChinaDBService extends DBService {
     }
 
     public  void insertAllCity(List<City> list) {
-        List<HashMap<String, Object>> cityList = new ArrayList<>();
+        SQLiteDatabase sqLiteDatabase = getSqliteDatabase();
+        sqLiteDatabase.beginTransaction();
         for (City cityInfo : list) {
-            cityList.add(cityInfo.getHashMap());
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(ID, cityInfo.getId());
+            contentValues.put(COUNTRY_CODE, cityInfo.getCountryCode());
+            contentValues.put(COUNTRY_NAME_CN, cityInfo.getCountryCN());
+            contentValues.put(COUNTRY_NAME_EN, cityInfo.getCountryEN());
+            contentValues.put(PROVINCE_NAME_CN, cityInfo.getProvinceCN());
+            contentValues.put(PROVINCE_NAME_EN, cityInfo.getProvinceEN());
+            contentValues.put(CITY_NAME_CN, cityInfo.getCityCN());
+            contentValues.put(CITY_NAME_EN, cityInfo.getCityEN());
+            contentValues.put(DISTRICT_NAME_CN, cityInfo.getDistrictCN());
+            contentValues.put(DISTRICT_NAME_EN, cityInfo.getDistrictEN());
+            sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
         }
-        insertOrUpdate(TABLE_NAME, DBKey, cityList);
+
+        sqLiteDatabase.setTransactionSuccessful();
+        sqLiteDatabase.endTransaction();
+        sqLiteDatabase.close();
     }
 
     public  ArrayList<City> findAllCities() {

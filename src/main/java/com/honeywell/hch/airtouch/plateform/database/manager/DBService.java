@@ -6,13 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
 
 import com.honeywell.hch.airtouch.library.LibApplication;
-import com.honeywell.hch.airtouch.library.util.LogUtil;
-import com.honeywell.hch.airtouch.plateform.R;
-import com.honeywell.hch.airtouch.plateform.appmanager.AppManager;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,14 +15,13 @@ import java.util.List;
  * Created by nan.liu on 2/2/15.
  */
 public class DBService {
-
     public static final String DB_PATH = "/data"
             + Environment.getDataDirectory().getAbsolutePath() + "/"
-            + LibApplication.getContext().getPackageName();
+            + LibApplication.getContext().getPackageName() + "/databases";
+
 
     public static final String DB_NAME = "hplus.db";
 
-    private static int BUFFER_SIZE = 512;
 
     public DBService(Context context) {
     }
@@ -38,6 +30,7 @@ public class DBService {
         SQLiteDatabase sqLiteDatabase = openDatabase(DB_PATH + "/" + DB_NAME);
         return sqLiteDatabase;
     }
+
 
 
     public void insertOrUpdate(String tableName, String[] volumn,
