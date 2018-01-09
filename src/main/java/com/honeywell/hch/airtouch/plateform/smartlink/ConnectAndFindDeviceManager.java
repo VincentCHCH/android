@@ -3,9 +3,7 @@ package com.honeywell.hch.airtouch.plateform.smartlink;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
-import com.broadcom.cooee.Cooee;
 import com.honeywell.hch.airtouch.library.util.ByteUtil;
 import com.honeywell.hch.airtouch.library.util.LogUtil;
 import com.honeywell.hch.airtouch.library.util.NetWorkUtil;
@@ -200,7 +198,7 @@ public class ConnectAndFindDeviceManager {
                     while (!mSendCooeeThreadDone) {
 
                         String mac = MAC_HAADER_COOEE + mDeviceMacWithNocolon;
-                        Cooee.send(ssid, password, mLocalIp, mac);
+//                        Cooee.send(ssid, password, mLocalIp, mac);
 
                         try {
                             Thread.sleep(500);
@@ -226,10 +224,10 @@ public class ConnectAndFindDeviceManager {
 
         byte[] udpdataBytes;
         if (type == 1) {
-            Log.e("Main", "constructUDPContentData first udp data");
+            LogUtil.log(LogUtil.LogLevel.INFO,"Main", "constructUDPContentData first udp data");
             udpdataBytes = ByteUtil.getDataBytes(udpContentData.getUdpFirstData());
         } else {
-            Log.e("Main", "constructUDPContentData third udp data");
+            LogUtil.log(LogUtil.LogLevel.INFO,"Main", "constructUDPContentData third udp data");
 
             udpContentData.getUdpData().setMac(mDeviceMacWithcolon);
             udpdataBytes = ByteUtil.getDataBytes(udpContentData.getUdpData());
@@ -402,17 +400,17 @@ public class ConnectAndFindDeviceManager {
                                     if (null != receiveudpPacket.getAddress()) {
                                         //解析数据
                                         String thisUdpIp = receiveudpPacket.getAddress().toString();
-                                        Log.e("WebViewMainActivity", "thisUdpIp = " + thisUdpIp);
+                                        LogUtil.log(LogUtil.LogLevel.INFO,"WebViewMainActivity", "thisUdpIp = " + thisUdpIp);
                                         if (receiveTime == 0) {
                                             if (pareseDeviceFirstUdpBytes(data, thisUdpIp)) {
-                                                Log.e("WebViewMainActivity", "receive second upd package success");
+                                                LogUtil.log(LogUtil.LogLevel.INFO,"WebViewMainActivity", "receive second upd package success");
                                                 //send the third udp to device
                                                 constructUDPContentData(3);
 
                                             }
                                         } else if (receiveTime == 1) {
                                             if (pareseDeviceLastUdpBytes(data, thisUdpIp)) {
-                                                Log.e("WebViewMainActivity", "receive last upd package success");
+                                                LogUtil.log(LogUtil.LogLevel.INFO,"WebViewMainActivity", "receive last upd package success");
                                                 Message message = Message.obtain();
                                                 message.what = PROCESS_END;
                                                 mHandler.sendMessage(message);
@@ -438,7 +436,7 @@ public class ConnectAndFindDeviceManager {
     private boolean pareseDeviceFirstUdpBytes(byte[] deviceBytes, String ipAddress) {
         try {
             String deviceUdpStr = new String(deviceBytes);
-            Log.e("WebViewMainActivity", "deviceUdpStr = " + deviceUdpStr);
+            LogUtil.log(LogUtil.LogLevel.INFO,"WebViewMainActivity", "deviceUdpStr = " + deviceUdpStr);
 
             int left = deviceUdpStr.indexOf(PRODUCT_UUID_STR);
             if (left >= 0) {
@@ -451,7 +449,7 @@ public class ConnectAndFindDeviceManager {
                         mSendCooeeThreadDone = true;
                         deviceIdAddress = ipAddress;
                         receiveTime++;
-                        Log.e("WebViewMainActivity", "return true");
+                        LogUtil.log(LogUtil.LogLevel.INFO,"WebViewMainActivity", "return true");
                         return true;
                     }
 
