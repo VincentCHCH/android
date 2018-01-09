@@ -258,12 +258,12 @@ public class UserInfoSharePreference {
         return SharePreferenceUtil.getPrefString(USER_INFO_SHAREPREFERENCE, USER_LOCATION_CACH_DATA_KEY, DEFAULT_STRING_VALUE);
     }
 
-    public static void saveAlarmCachesData(int locationId, String alarm) {
-        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, Alarm_list_DATA_KEY + locationId, alarm);
+    public static void saveAlarmCachesData(int locationId, String alarm, int alarmCategory) {
+        SharePreferenceUtil.setPrefString(USER_INFO_SHAREPREFERENCE, Alarm_list_DATA_KEY + String.valueOf(locationId) + String.valueOf(alarmCategory), alarm);
     }
 
-    public static String getAlarmCachesData(int locationId) {
-        return SharePreferenceUtil.getPrefString(USER_INFO_SHAREPREFERENCE, Alarm_list_DATA_KEY + locationId, DEFAULT_STRING_VALUE);
+    public static String getAlarmCachesData(int locationId, int alarmCategory) {
+        return SharePreferenceUtil.getPrefString(USER_INFO_SHAREPREFERENCE, Alarm_list_DATA_KEY + String.valueOf(locationId) + String.valueOf(alarmCategory), DEFAULT_STRING_VALUE);
 
     }
 
