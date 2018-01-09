@@ -19,7 +19,8 @@ import java.util.List;
 public class CityChinaDBService extends DBService {
 
     //table info
-    public static final String TABLE_NAME = "ChinaCity";
+//    public static final String TABLE_NAME = "ChinaCity";
+    public static final String TABLE_NAME = "CityList_CN";
     public static final String ID = "id";
     public static final String COUNTRY_CODE = "countryCode";
     public static final String COUNTRY_NAME_CN = "countryCN";
