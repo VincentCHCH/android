@@ -10,11 +10,11 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 
 import com.honeywell.hch.airtouch.library.util.DensityUtil;
+import com.honeywell.hch.airtouch.library.util.LogUtil;
 import com.honeywell.hch.airtouch.library.util.StatusBarUtil;
 import com.honeywell.hch.airtouch.plateform.R;
 
@@ -105,12 +105,12 @@ public class ShareUtility {
 //                Bitmap microThumb = StoreThumbnail(cr, miniThumb, id, 50F, 50F,
 //                        MediaStore.Images.Thumbnails.MICRO_KIND);
             } else {
-                Log.e(TAG, "Failed to create thumbnail, removing original");
+                LogUtil.log(LogUtil.LogLevel.ERROR,TAG, "Failed to create thumbnail, removing original");
                 cr.delete(url, null, null);
                 url = null;
             }
         } catch (Exception e) {
-            Log.e(TAG, "Failed to insert image", e);
+            LogUtil.log(LogUtil.LogLevel.ERROR,TAG, "Failed to insert image");
             if (url != null) {
                 cr.delete(url, null, null);
                 url = null;

@@ -18,17 +18,19 @@
 
 package com.honeywell.hch.airtouch.plateform.websocket;
 
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
+import android.util.Pair;
+
+import com.honeywell.hch.airtouch.library.util.LogUtil;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.Socket;
 import java.net.SocketException;
 import java.nio.ByteBuffer;
-
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
-import android.util.Pair;
 
 /**
  * WebSocket reader, the receiving leg of a WebSockets connection.
@@ -91,7 +93,7 @@ public class WebSocketReader extends Thread {
 		this.mFrameHeader = null;
 		this.mState = ReaderState.STATE_CONNECTING;
 
-		Log.d(TAG, "WebSocket reader created.");
+		LogUtil.log(LogUtil.LogLevel.INFO,TAG, "WebSocket reader created.");
 	}
 
 
@@ -102,7 +104,7 @@ public class WebSocketReader extends Thread {
 
 		mStopped = true;
 
-		Log.d(TAG, "quit");
+		LogUtil.log(LogUtil.LogLevel.INFO,TAG, "quit");
 	}
 
 
@@ -302,7 +304,6 @@ public class WebSocketReader extends Thread {
 									code != 1000 && code != 1001 && code != 1002 && code != 1003 && code != 1007 && code != 1008 && code != 1009 && code != 1010 && code != 1011)
 									|| code >= 5000) {
 
-								Log.e(TAG,"ws response code 111 === " + code);
 								throw new WebSocketException("invalid close code " + code,code);
 							}
 							// parse and check close reason
@@ -619,13 +620,13 @@ public class WebSocketReader extends Thread {
 		try {
 			inputStream = mSocket.getInputStream();
 		} catch (IOException e) {
-			Log.e(TAG, e.getLocalizedMessage());
+			LogUtil.log(LogUtil.LogLevel.DEBUG,TAG, e.getLocalizedMessage());
 			return;
 		}
 
 		this.mInputStream = inputStream;
 
-		Log.d(TAG, "WebSocker reader running.");
+		LogUtil.log(LogUtil.LogLevel.DEBUG,TAG, "WebSocker reader running.");
 		mApplicationBuffer.clear();
 
 		while (!mStopped) {
@@ -637,30 +638,30 @@ public class WebSocketReader extends Thread {
 					while (consumeData()) {
 					}
 				} else if (bytesRead == -1) {
-					Log.d(TAG, "run() : ConnectionLost");
+					LogUtil.log(LogUtil.LogLevel.DEBUG,TAG, "run() : ConnectionLost");
 
 					notify(new WebSocketMessage.ConnectionLost());
 					this.mStopped = true;
 				} else {
-					Log.e(TAG, "WebSocketReader read() failed.");
+					LogUtil.log(LogUtil.LogLevel.ERROR,TAG, "WebSocketReader read() failed.");
 				}
 
 			} catch (WebSocketException e) {
-				Log.d(TAG, "run() : WebSocketException (" + e.toString() + ")");
+				LogUtil.log(LogUtil.LogLevel.ERROR,TAG, "run() : WebSocketException (" + e.toString() + ")");
 
 				// wrap the exception and notify master
 				notify(new WebSocketMessage.ProtocolViolation(e));
 			} catch (SocketException e) {
-				Log.d(TAG, "run() : SocketException (" + e.toString() + ")");
+				LogUtil.log(LogUtil.LogLevel.ERROR,TAG, "run() : SocketException (" + e.toString() + ")");
 
 				// wrap the exception and notify master
 				notify(new WebSocketMessage.ConnectionLost());
 			} catch (IOException e) {
-				Log.d(TAG, "run() : IOException (" + e.toString() + ")");
+				LogUtil.log(LogUtil.LogLevel.ERROR,TAG, "run() : IOException (" + e.toString() + ")");
 
 				notify(new WebSocketMessage.ConnectionLost());
 			} catch (Exception e) {
-				Log.d(TAG, "run() : Exception (" + e.toString() + ")");
+				LogUtil.log(LogUtil.LogLevel.ERROR,TAG, "run() : Exception (" + e.toString() + ")");
 
 				// wrap the exception and notify master
 				notify(new WebSocketMessage.Error(e));
@@ -668,6 +669,6 @@ public class WebSocketReader extends Thread {
 		}
 
 
-		Log.d(TAG, "WebSocket reader ended.");
+		LogUtil.log(LogUtil.LogLevel.DEBUG,TAG, "WebSocket reader ended.");
 	}
 }
