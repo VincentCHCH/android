@@ -16,6 +16,13 @@
 
 package com.honeywell.hch.airtouch.plateform.websocket;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.util.Base64;
+
+import com.honeywell.hch.airtouch.library.util.LogUtil;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.ref.WeakReference;
@@ -23,12 +30,6 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.nio.ByteBuffer;
 import java.util.Random;
-
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-import android.util.Base64;
-import android.util.Log;
 
 import cz.msebera.android.httpclient.message.BasicNameValuePair;
 
@@ -76,7 +77,7 @@ public class WebSocketWriter extends Thread {
 
         this.mApplicationBuffer = ByteBuffer.allocate(options.getMaxFramePayloadSize() + 14);
 
-        Log.d(TAG, "WebSocket writer created.");
+        LogUtil.log(LogUtil.LogLevel.DEBUG,TAG, "WebSocket writer created.");
     }
 
 
@@ -385,7 +386,7 @@ public class WebSocketWriter extends Thread {
         } else if (msg instanceof WebSocketMessage.Quit) {
             Looper.myLooper().quit();
 
-            Log.d(TAG, "WebSocket writer ended.");
+            LogUtil.log(LogUtil.LogLevel.DEBUG,TAG, "WebSocket writer ended.");
         } else {
             processAppMessage(msg);
         }
@@ -399,11 +400,11 @@ public class WebSocketWriter extends Thread {
 
             mOutputStream.write(mApplicationBuffer.array(), mApplicationBuffer.position(), mApplicationBuffer.limit());
         } catch (SocketException e) {
-            Log.e(TAG, "run() : SocketException (" + e.toString() + ")");
+            LogUtil.log(LogUtil.LogLevel.ERROR,TAG, "run() : SocketException (" + e.toString() + ")");
 
             notify(new WebSocketMessage.ConnectionLost());
         } catch (IOException e) {
-            Log.e(TAG, "run() : IOException (" + e.toString() + ")");
+            LogUtil.log(LogUtil.LogLevel.ERROR,TAG, "run() : IOException (" + e.toString() + ")");
 
         } catch (Exception e) {
             notify(new WebSocketMessage.Error(e));
@@ -439,7 +440,7 @@ public class WebSocketWriter extends Thread {
             this.mHandler = new ThreadHandler(this);
 
             synchronized (this) {
-                Log.d(TAG, "WebSocker writer running.");
+                LogUtil.log(LogUtil.LogLevel.DEBUG,TAG, "WebSocker writer running.");
 
                 notifyAll();
             }

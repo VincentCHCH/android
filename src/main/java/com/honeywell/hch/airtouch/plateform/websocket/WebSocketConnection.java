@@ -18,7 +18,6 @@ package com.honeywell.hch.airtouch.plateform.websocket;
 
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 import com.honeywell.hch.airtouch.library.LibApplication;
 import com.honeywell.hch.airtouch.library.util.LogUtil;
@@ -123,7 +122,7 @@ public class WebSocketConnection implements WebSocket {
 
 
     private void failConnection(int code, String reason) {
-        Log.d(TAG, "fail connection [code = " + code + ", reason = " + reason);
+        LogUtil.log(LogUtil.LogLevel.INFO,TAG, "fail connection [code = " + code + ", reason = " + reason);
 
         try {
             if (mWebSocketReader != null) {
@@ -142,7 +141,7 @@ public class WebSocketConnection implements WebSocket {
                 }).start();
 
             } else {
-                Log.d(TAG, "mReader already NULL");
+                LogUtil.log(LogUtil.LogLevel.INFO,TAG, "mReader already NULL");
             }
 
             if (mWebSocketWriter != null) {
@@ -171,12 +170,12 @@ public class WebSocketConnection implements WebSocket {
                 }).start();
 
             } else {
-                Log.d(TAG, "mWriter already NULL");
+                LogUtil.log(LogUtil.LogLevel.INFO,TAG, "mWriter already NULL");
             }
 
-            Log.d(TAG, "worker threads stopped");
+            LogUtil.log(LogUtil.LogLevel.INFO,TAG, "worker threads stopped");
         } catch (Exception e) {
-            Log.e(TAG, "failConnection Exception ==" + e.toString());
+            LogUtil.log(LogUtil.LogLevel.ERROR,TAG, "failConnection Exception ==" + e.toString());
         } finally {
             onClose(code, reason);
         }
@@ -236,7 +235,7 @@ public class WebSocketConnection implements WebSocket {
         if (mWebSocketWriter != null && mWebSocketWriter.isAlive()) {
             mWebSocketWriter.forward(new WebSocketMessage.Close());
         } else {
-            Log.d(TAG, "Could not send WebSocket Close .. writer already null");
+            LogUtil.log(LogUtil.LogLevel.INFO,TAG, "Could not send WebSocket Close .. writer already null");
         }
 
         this.mPreviousConnection = false;
@@ -257,7 +256,7 @@ public class WebSocketConnection implements WebSocket {
                 urlStrings.addAll(UserInfoSharePreference.getWsUrl());
                 index = (index + 1) % urlStrings.size();
                 mWebSocketURI = new URI(urlStrings.get(index));
-                Log.i(TAG, urlStrings.get(index));
+                LogUtil.log(LogUtil.LogLevel.INFO,TAG, urlStrings.get(index));
             } catch (Exception e) {
 
             }
@@ -329,7 +328,7 @@ public class WebSocketConnection implements WebSocket {
             concurrentLinkedQueue.add(new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    Log.e(TAG, "WebSocket reconnecting...");
+                    LogUtil.log(LogUtil.LogLevel.ERROR,TAG, "WebSocket reconnecting...");
                     try {
                         Thread.sleep(interval);
                     } catch (Exception e) {
@@ -339,7 +338,7 @@ public class WebSocketConnection implements WebSocket {
                 }
             }));
 
-            Log.d(TAG, "WebSocket reconnection scheduled");
+            LogUtil.log(LogUtil.LogLevel.DEBUG,TAG, "WebSocket reconnection scheduled");
 
         }
     }
@@ -352,7 +351,7 @@ public class WebSocketConnection implements WebSocket {
                     while (mConsumeThreadRunning) {
                         try {
                             if (!concurrentLinkedQueue.isEmpty()) {
-                                Log.e(TAG, "WebSocket consumeLinkedQueue...");
+                                LogUtil.log(LogUtil.LogLevel.ERROR,TAG, "WebSocket consumeLinkedQueue...");
 
                                 Thread thread = (Thread) concurrentLinkedQueue.poll();
                                 thread.start();
@@ -379,7 +378,7 @@ public class WebSocketConnection implements WebSocket {
      * @param reason Close reason (human-readable).
      */
     private void onClose(int code, String reason) {
-        Log.e(TAG, "WebSocketCloseNotification code = " + code);
+        LogUtil.log(LogUtil.LogLevel.ERROR,TAG, "WebSocketCloseNotification code = " + code);
         if (dontReconnectCode != null && !dontReconnectCode.contains(code)) {
             scheduleReconnect();
         }
@@ -392,7 +391,7 @@ public class WebSocketConnection implements WebSocket {
                 LogUtil.error(TAG, "onClose", e);
             }
         } else {
-            Log.d(TAG, "WebSocketObserver null");
+            LogUtil.log(LogUtil.LogLevel.ERROR,TAG, "WebSocketObserver null");
         }
     }
 
@@ -441,7 +440,7 @@ public class WebSocketConnection implements WebSocket {
             if (webSocketObserver != null) {
                 webSocketObserver.onTextMessage(textMessage.mPayload);
             } else {
-                Log.d(TAG, "could not call onTextMessage() .. handler already NULL");
+                LogUtil.log(LogUtil.LogLevel.INFO,TAG, "could not call onTextMessage() .. handler already NULL");
             }
 
         } else if (message.obj instanceof WebSocketMessage.RawTextMessage) {
@@ -450,7 +449,7 @@ public class WebSocketConnection implements WebSocket {
             if (webSocketObserver != null) {
                 webSocketObserver.onRawTextMessage(rawTextMessage.mPayload);
             } else {
-                Log.d(TAG, "could not call onRawTextMessage() .. handler already NULL");
+                LogUtil.log(LogUtil.LogLevel.INFO,TAG, "could not call onRawTextMessage() .. handler already NULL");
             }
 
         } else if (message.obj instanceof WebSocketMessage.BinaryMessage) {
@@ -459,12 +458,12 @@ public class WebSocketConnection implements WebSocket {
             if (webSocketObserver != null) {
                 webSocketObserver.onBinaryMessage(binaryMessage.mPayload);
             } else {
-                Log.d(TAG, "could not call onBinaryMessage() .. handler already NULL");
+                LogUtil.log(LogUtil.LogLevel.INFO,TAG, "could not call onBinaryMessage() .. handler already NULL");
             }
 
         } else if (message.obj instanceof WebSocketMessage.Ping) {
             WebSocketMessage.Ping ping = (WebSocketMessage.Ping) message.obj;
-            Log.d(TAG, "WebSockets Ping received");
+            LogUtil.log(LogUtil.LogLevel.INFO,TAG, "WebSockets Ping received");
 
             WebSocketMessage.Pong pong = new WebSocketMessage.Pong();
             pong.mPayload = ping.mPayload;
@@ -473,25 +472,25 @@ public class WebSocketConnection implements WebSocket {
         } else if (message.obj instanceof WebSocketMessage.Pong) {
             WebSocketMessage.Pong pong = (WebSocketMessage.Pong) message.obj;
 
-            Log.d(TAG, "WebSockets Pong received" + pong.mPayload);
+            LogUtil.log(LogUtil.LogLevel.INFO,TAG, "WebSockets Pong received" + pong.mPayload);
 
         } else if (message.obj instanceof WebSocketMessage.Close) {
             WebSocketMessage.Close close = (WebSocketMessage.Close) message.obj;
 
-            Log.d(TAG, "WebSockets Close received (" + close.getCode() + " - " + close.getReason() + ")");
+            LogUtil.log(LogUtil.LogLevel.INFO,TAG, "WebSockets Close received (" + close.getCode() + " - " + close.getReason() + ")");
 
             mWebSocketWriter.forward(new WebSocketMessage.Close(WebSocketMessage.WebSocketCloseCode.NORMAL));
 
         } else if (message.obj instanceof WebSocketMessage.ServerHandshake) {
             WebSocketMessage.ServerHandshake serverHandshake = (WebSocketMessage.ServerHandshake) message.obj;
 
-            Log.d(TAG, "opening handshake received");
+            LogUtil.log(LogUtil.LogLevel.INFO,TAG, "opening handshake received");
 
             if (serverHandshake.mSuccess) {
                 if (webSocketObserver != null) {
                     webSocketObserver.onOpen();
                 } else {
-                    Log.d(TAG, "could not call onOpen() .. handler already NULL");
+                    LogUtil.log(LogUtil.LogLevel.INFO,TAG, "could not call onOpen() .. handler already NULL");
                 }
                 mPreviousConnection = true;
             }
@@ -552,7 +551,6 @@ public class WebSocketConnection implements WebSocket {
                 if (mWebSocketURI.getScheme().equalsIgnoreCase(WSS_URI_SCHEME)) {
                     String cerFileName = mWebSocketURI.toString().contains("wss://homecloud.honeywell.com.cn") ? "GeoTrust_Global_CA.PEM" : "qa.cer";
                     factory = getProductCertificatesFactory(cerFileName);
-                    Log.e("haha", "factory === " + factory);
                     if (factory == null) {
                         SSLContext sc = SSLContext.getInstance("TLSv1.2");
                         sc.init(null, null, null);
