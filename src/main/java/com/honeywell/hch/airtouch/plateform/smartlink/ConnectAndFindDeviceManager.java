@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import com.broadcom.cooee.Cooee;
 import com.honeywell.hch.airtouch.library.util.ByteUtil;
 import com.honeywell.hch.airtouch.library.util.LogUtil;
 import com.honeywell.hch.airtouch.library.util.NetWorkUtil;
@@ -200,7 +199,7 @@ public class ConnectAndFindDeviceManager {
                     while (!mSendCooeeThreadDone) {
 
                         String mac = MAC_HAADER_COOEE + mDeviceMacWithNocolon;
-                        Cooee.send(ssid, password, mLocalIp, mac);
+//                        Cooee.send(ssid, password, mLocalIp, mac);
 
                         try {
                             Thread.sleep(500);
