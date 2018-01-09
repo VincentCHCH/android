@@ -1,17 +1,19 @@
 package com.honeywell.hch.airtouch.plateform.database.manager;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
 
 import com.honeywell.hch.airtouch.library.LibApplication;
-import com.honeywell.hch.airtouch.library.util.LogUtil;
 import com.honeywell.hch.airtouch.plateform.R;
 import com.honeywell.hch.airtouch.plateform.appmanager.AppManager;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,14 +24,14 @@ import java.util.List;
  * Created by nan.liu on 2/2/15.
  */
 public class DBService {
-
     public static final String DB_PATH = "/data"
             + Environment.getDataDirectory().getAbsolutePath() + "/"
-            + LibApplication.getContext().getPackageName();
+            + LibApplication.getContext().getPackageName() + "/databases";
+
 
     public static final String DB_NAME = "hplus.db";
-
     private static int BUFFER_SIZE = 512;
+
 
     public DBService(Context context) {
     }
@@ -38,6 +40,7 @@ public class DBService {
         SQLiteDatabase sqLiteDatabase = openDatabase(DB_PATH + "/" + DB_NAME);
         return sqLiteDatabase;
     }
+
 
 
     public void insertOrUpdate(String tableName, String[] volumn,
@@ -154,8 +157,42 @@ public class DBService {
     }
 
 
+//    public SQLiteDatabase openDatabase(String path) {
+//        return SQLiteDatabase.openOrCreateDatabase(path, null);
+//    }
+
     public SQLiteDatabase openDatabase(String path) {
-        return SQLiteDatabase.openOrCreateDatabase(path, null);
+
+        try {
+            if (!(new File(path).exists())) {
+                InputStream is = AppManager.getInstance().getApplication().getApplicationContext().getResources().openRawResource(R.raw.hplus);//导入数据库
+                FileOutputStream fos = new FileOutputStream(path);
+                byte[] buffer = new byte[BUFFER_SIZE];
+                int count = 0;
+
+                while ((count = is.read(buffer)) > 0) {
+                    fos.write(buffer, 0, count);
+                }
+                fos.close();
+                is.close();
+
+            }
+            SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(path, null);
+            return db;
+
+        } catch (Resources.NotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+
+        return null;
     }
 
 }
