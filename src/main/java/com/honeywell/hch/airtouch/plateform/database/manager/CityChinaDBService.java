@@ -5,6 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.honeywell.hch.airtouch.library.util.StringUtil;
+import com.honeywell.hch.airtouch.plateform.R;
+import com.honeywell.hch.airtouch.plateform.appmanager.AppManager;
 import com.honeywell.hch.airtouch.plateform.config.AppConfig;
 import com.honeywell.hch.airtouch.plateform.database.model.City;
 import com.honeywell.hch.airtouch.plateform.database.model.PickerViewData;
@@ -139,7 +142,11 @@ public class CityChinaDBService extends DBService {
                                 + " COLLATE NOCASE", null);
 
                         while (cursor_d.moveToNext()) {
-                            districtList.add(cursor_d.getString(0));
+                            if (StringUtil.isEmpty(cursor_d.getString(0))) {
+                                districtList.add(AppManager.getInstance().getApplication().getString(R.string.select));
+                            } else {
+                                districtList.add(cursor_d.getString(0));
+                            }
                         }
                         cursor_d.close();
 
@@ -150,7 +157,11 @@ public class CityChinaDBService extends DBService {
                                 + " AND " + CITY_NAME_EN + " = '" + city + "'"
                                 + " COLLATE NOCASE", null);
                         while (cursor_d.moveToNext()) {
-                            districtList.add(cursor_d.getString(0));
+                            if (StringUtil.isEmpty(cursor_d.getString(0))) {
+                                districtList.add(AppManager.getInstance().getApplication().getString(R.string.select));
+                            } else {
+                                districtList.add(cursor_d.getString(0));
+                            }
                         }
                         cursor_d.close();
                     }

@@ -150,6 +150,7 @@
         <item quantity="other">上次更新： %1$s天前</item>
     </plurals>
 
+    <string name="select">请选择</string>
     <string name="elevator">电梯</string>
 
 </resources>
