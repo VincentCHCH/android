@@ -86,7 +86,7 @@ public class GpsUtil {
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }
-                if (mLongitude.equals("-1") && mLatitude.equals("-1")) {
+                if (("-1").equals(mLongitude) && ("-1").equals(mLatitude)) {
                     LocationManager.getInstance().unRegisterGPSLocationListener(mMessageHandler);
                     LogUtil.log(LogUtil.LogLevel.ERROR, TAG, "GPS locating timeout");
                     processLocation(null, whereFrom);
