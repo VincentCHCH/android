@@ -235,9 +235,9 @@ public class AppConfig {
     public City getCityFromDatabase(String cityCode) {
 
         City city = getCityChinaDBService().getCityByCode(cityCode);
-        if (city.getId() == null) {
-            city = getCityIndiaDBService().getCityByCode(cityCode);
-        }
+//        if (city.getId() == null) {
+//            city = getCityIndiaDBService().getCityByCode(cityCode);
+//        }
 
         return city;
     }
