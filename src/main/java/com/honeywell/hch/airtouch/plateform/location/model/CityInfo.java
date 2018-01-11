@@ -24,7 +24,7 @@ public class CityInfo implements Serializable {
     private String mStreetNumber;// 街道号码
 
     @SerializedName("street")
-    private String mStreet;// 街道
+    private String mStreet = "";// 街道
 
     @SerializedName("lat")
     private double mLatitude = -1;
