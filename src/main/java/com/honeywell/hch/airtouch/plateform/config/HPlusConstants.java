@@ -223,8 +223,8 @@ public class HPlusConstants {
     /**
      * user manual new
      */
-    public static final String WEB_URL_USERMANUAL = "https://acscloud.honeywell.com.cn/hplus/user_manual/home/Usermanual.htm?deviceType=%1$s&userType=%2$s&country=%3$s&language=%4$s&version=%5$s";
-    public static final String WEB_URL_USERMANUAL_QA = "https://acscloud.honeywell.com.cn/hplus/qa/user_manual_qa/home/Usermanual.htm?deviceType=%1$s&userType=%2$s&country=%3$s&language=%4$s&version=%5$s";
+    public static final String WEB_URL_USERMANUAL = "https://acscloud.honeywell.com.cn/hplus/user_manual/home/Usermanual.htm?deviceType=%1$s&userType=%2$s&country=%3$s&language=%4$s&version=%5$s&time=%6$s";
+    public static final String WEB_URL_USERMANUAL_QA = "https://acscloud.honeywell.com.cn/hplus/qa/user_manual_qa/home/Usermanual.htm?deviceType=%1$s&userType=%2$s&country=%3$s&language=%4$s&version=%5$s&time=%6$s";
 
     /**
      * URL for EULA
