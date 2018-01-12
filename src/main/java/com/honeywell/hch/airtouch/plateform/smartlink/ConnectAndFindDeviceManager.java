@@ -196,8 +196,6 @@ public class ConnectAndFindDeviceManager {
             mSendCooeeThread = new Thread() {
                 public void run() {
                     while (!mSendCooeeThreadDone) {
-
-                        String mac = MAC_HAADER_COOEE + mDeviceMacWithNocolon;
 //                        Cooee.send(ssid, password, mLocalIp, mac);
 
                         try {

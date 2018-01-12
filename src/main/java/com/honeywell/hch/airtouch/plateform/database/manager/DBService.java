@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
 
 import com.honeywell.hch.airtouch.library.LibApplication;
+import com.honeywell.hch.airtouch.library.util.LogUtil;
 import com.honeywell.hch.airtouch.plateform.R;
 import com.honeywell.hch.airtouch.plateform.appmanager.AppManager;
 
@@ -168,7 +169,7 @@ public class DBService {
                 InputStream is = AppManager.getInstance().getApplication().getApplicationContext().getResources().openRawResource(R.raw.hplus);//导入数据库
                 FileOutputStream fos = new FileOutputStream(path);
                 byte[] buffer = new byte[BUFFER_SIZE];
-                int count = 0;
+                int count;
 
                 while ((count = is.read(buffer)) > 0) {
                     fos.write(buffer, 0, count);
@@ -182,13 +183,13 @@ public class DBService {
 
         } catch (Resources.NotFoundException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            LogUtil.error("DBService", "Resources.NotFoundException", e);
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            LogUtil.error("DBService", "FileNotFoundException", e);
         } catch (IOException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            LogUtil.error("DBService", "IOException", e);
         }
 
 
