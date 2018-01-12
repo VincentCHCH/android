@@ -32,14 +32,14 @@ public class GPSClient extends HTTPClient {
      * @return
      */
     public String getAddressFromBaiduUrl(String lag_lon) {
-        return String.format("http://api.map.baidu.com/geocoder/v2/?" +
+        return String.format("https://api.map.baidu.com/geocoder/v2/?" +
                         "ak=v2Q0c6xdWD4qPuL09jPz9mu9&location=%s&output=json&pois=0", lag_lon);
 //        return String.format("http://maps.google.com/maps/api/geocode/json?" +
 //                "latlng=%s&language=en&sensor=true&result_type=country", lag_lon);
     }
 
     public String getAddressFromGoogleUrl(String lag_lon) {
-        return String.format("http://maps.google.com/maps/api/geocode/json?" +
+        return String.format("https://maps.google.com/maps/api/geocode/json?" +
                         "latlng=%s&language=en&sensor=true&component=country", lag_lon);
     }
 
