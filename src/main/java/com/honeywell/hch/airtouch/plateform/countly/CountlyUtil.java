@@ -74,7 +74,7 @@ public class CountlyUtil {
                 apiKey = metaData.getString(metaKey);
             }
         } catch (PackageManager.NameNotFoundException e) {
-            LogUtil.log(LogUtil.LogLevel.ERROR, "CountlyUtil", e.toString());
+            LogUtil.error(TAG, "getMetaValue", e);
         }
         return apiKey;
     }

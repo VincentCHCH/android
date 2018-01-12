@@ -110,7 +110,7 @@ public class ShareUtility {
                 url = null;
             }
         } catch (Exception e) {
-            LogUtil.log(LogUtil.LogLevel.ERROR,TAG, "Failed to insert image");
+            LogUtil.error(TAG, "Failed to insert image", e);
             if (url != null) {
                 cr.delete(url, null, null);
                 url = null;
