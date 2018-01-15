@@ -72,8 +72,8 @@ public class HPlusConstants {
 
     public static final String TUNA_TYPE = "2162689";
     public static final String TUNA_TYPE2 = "2162690";
-    public static final String TUNA_TYPE3 = "2162691";
-    public static final String TUNA_TYPE4 = "2162692";
+    public static final String TUNA_TYPE3 = "2162693";
+    public static final String TUNA_TYPE4 = "2162694";
 
     public static final String MAD_AIR_TYPE = "1000000";
     public static final String MAD_AIR_AUTH = "1000001";
