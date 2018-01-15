@@ -57,7 +57,7 @@ public class WebSocketMessage {
         private final URI mURI;
         private final URI mOrigin;
         private final String[] mSubprotocols;
-        public List<BasicNameValuePair> mHeaderList = null;
+        private List<BasicNameValuePair> mHeaderList = null;
 
 
         ClientHandshake(URI uri) {
@@ -84,14 +84,26 @@ public class WebSocketMessage {
         public String[] getSubprotocols() {
             return mSubprotocols;
         }
+
+        public List<BasicNameValuePair> getHeaderList(){
+            return mHeaderList;
+        }
+
+        public void setHeaderList(List<BasicNameValuePair> homeList){
+            mHeaderList = homeList;
+        }
     }
 
     /// Initial WebSockets handshake (server response).
     public static class ServerHandshake extends Message {
-        public boolean mSuccess;
+        private boolean mSuccess;
 
         public ServerHandshake(boolean success) {
             mSuccess = success;
+        }
+
+        public boolean isSuccess() {
+            return mSuccess;
         }
     }
 
@@ -100,63 +112,90 @@ public class WebSocketMessage {
     }
 
     public static class ServerError extends Message {
-        public int mStatusCode;
-        public String mStatusMessage;
+        private int mStatusCode;
+        private String mStatusMessage;
 
         public ServerError(int statusCode, String statusMessage) {
             mStatusCode = statusCode;
             mStatusMessage = statusMessage;
         }
 
+        public int getStatusCode() {
+            return mStatusCode;
+        }
+
+        public String getStatusMessage() {
+            return mStatusMessage;
+        }
     }
 
     /// WebSockets reader detected WS protocol violation.
     public static class ProtocolViolation extends Message {
 
-        public WebSocketException mException;
+        private WebSocketException mException;
 
         public ProtocolViolation(WebSocketException e) {
             mException = e;
+        }
+
+        public WebSocketException getException() {
+            return mException;
         }
     }
 
     /// An exception occured in the WS reader or WS writer.
     public static class Error extends Message {
 
-        public Exception mException;
+        private Exception mException;
 
         public Error(Exception e) {
             mException = e;
+        }
+
+        public Exception getException() {
+            return mException;
         }
     }
 
     /// WebSockets text message to send or received.
     public static class TextMessage extends Message {
 
-        public String mPayload;
+        private String mPayload;
 
         TextMessage(String payload) {
             mPayload = payload;
+        }
+
+        public String getPayload() {
+            return mPayload;
         }
     }
 
     /// WebSockets raw (UTF-8) text message to send or received.
     public static class RawTextMessage extends Message {
 
-        public byte[] mPayload;
+        private byte[] mPayload;
 
         RawTextMessage(byte[] payload) {
             mPayload = payload;
+        }
+
+        public byte[] getPayload() {
+            return mPayload;
         }
     }
 
     /// WebSockets binary message to send or received.
     public static class BinaryMessage extends Message {
 
-        public byte[] mPayload;
+        private byte[] mPayload;
 
         BinaryMessage(byte[] payload) {
             mPayload = payload;
+        }
+
+        public byte[] getPayload() {
+            return mPayload;
         }
     }
 
@@ -194,7 +233,7 @@ public class WebSocketMessage {
     /// WebSockets ping to send or received.
     public static class Ping extends Message {
 
-        public byte[] mPayload;
+        private byte[] mPayload;
 
         Ping() {
             mPayload = null;
@@ -203,18 +242,30 @@ public class WebSocketMessage {
         Ping(byte[] payload) {
             mPayload = payload;
         }
+
+        public byte[] getPayload() {
+            return mPayload;
+        }
     }
 
     /// WebSockets pong to send or received.
     public static class Pong extends Message {
 
-        public byte[] mPayload;
+        private byte[] mPayload;
 
         Pong() {
             mPayload = null;
         }
 
         Pong(byte[] payload) {
+            mPayload = payload;
+        }
+
+        public byte[] getPayload() {
+            return mPayload;
+        }
+
+        public void setPayload(byte[] payload) {
             mPayload = payload;
         }
     }

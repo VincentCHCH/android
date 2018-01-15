@@ -286,7 +286,7 @@ public class WebSocketConnection implements WebSocket {
                 createWriter();
 
                 WebSocketMessage.ClientHandshake clientHandshake = new WebSocketMessage.ClientHandshake(mWebSocketURI, null, mWebSocketSubprotocols);
-                clientHandshake.mHeaderList = mWsHeaders;
+                clientHandshake.setHeaderList(mWsHeaders);
                 mWebSocketWriter.forward(clientHandshake);
             } catch (Exception e) {
                 onClose(ConnectionHandler.WebSocketCloseNotification.INTERNAL_ERROR.ordinal(), e.getLocalizedMessage());
@@ -438,7 +438,7 @@ public class WebSocketConnection implements WebSocket {
             WebSocketMessage.TextMessage textMessage = (WebSocketMessage.TextMessage) message.obj;
 
             if (webSocketObserver != null) {
-                webSocketObserver.onTextMessage(textMessage.mPayload);
+                webSocketObserver.onTextMessage(textMessage.getPayload());
             } else {
                 LogUtil.log(LogUtil.LogLevel.INFO,TAG, "could not call onTextMessage() .. handler already NULL");
             }
@@ -447,7 +447,7 @@ public class WebSocketConnection implements WebSocket {
             WebSocketMessage.RawTextMessage rawTextMessage = (WebSocketMessage.RawTextMessage) message.obj;
 
             if (webSocketObserver != null) {
-                webSocketObserver.onRawTextMessage(rawTextMessage.mPayload);
+                webSocketObserver.onRawTextMessage(rawTextMessage.getPayload());
             } else {
                 LogUtil.log(LogUtil.LogLevel.INFO,TAG, "could not call onRawTextMessage() .. handler already NULL");
             }
@@ -456,7 +456,7 @@ public class WebSocketConnection implements WebSocket {
             WebSocketMessage.BinaryMessage binaryMessage = (WebSocketMessage.BinaryMessage) message.obj;
 
             if (webSocketObserver != null) {
-                webSocketObserver.onBinaryMessage(binaryMessage.mPayload);
+                webSocketObserver.onBinaryMessage(binaryMessage.getPayload());
             } else {
                 LogUtil.log(LogUtil.LogLevel.INFO,TAG, "could not call onBinaryMessage() .. handler already NULL");
             }
@@ -466,13 +466,13 @@ public class WebSocketConnection implements WebSocket {
             LogUtil.log(LogUtil.LogLevel.INFO,TAG, "WebSockets Ping received");
 
             WebSocketMessage.Pong pong = new WebSocketMessage.Pong();
-            pong.mPayload = ping.mPayload;
+            pong.setPayload(ping.getPayload());
             mWebSocketWriter.forward(pong);
 
         } else if (message.obj instanceof WebSocketMessage.Pong) {
             WebSocketMessage.Pong pong = (WebSocketMessage.Pong) message.obj;
 
-            LogUtil.log(LogUtil.LogLevel.INFO,TAG, "WebSockets Pong received" + pong.mPayload);
+            LogUtil.log(LogUtil.LogLevel.INFO,TAG, "WebSockets Pong received" + pong.getPayload());
 
         } else if (message.obj instanceof WebSocketMessage.Close) {
             WebSocketMessage.Close close = (WebSocketMessage.Close) message.obj;
@@ -486,7 +486,7 @@ public class WebSocketConnection implements WebSocket {
 
             LogUtil.log(LogUtil.LogLevel.INFO,TAG, "opening handshake received");
 
-            if (serverHandshake.mSuccess) {
+            if (serverHandshake.isSuccess()) {
                 if (webSocketObserver != null) {
                     webSocketObserver.onOpen();
                 } else {
@@ -501,15 +501,15 @@ public class WebSocketConnection implements WebSocket {
 
         } else if (message.obj instanceof WebSocketMessage.ProtocolViolation) {
             //			WebSocketMessage.ProtocolViolation protocolViolation = (WebSocketMessage.ProtocolViolation) message.obj;
-            failConnection(((WebSocketMessage.ProtocolViolation) message.obj).mException.getErrorCode(), "WebSockets protocol violation");
+            failConnection(((WebSocketMessage.ProtocolViolation) message.obj).getException().getErrorCode(), "WebSockets protocol violation");
 
         } else if (message.obj instanceof WebSocketMessage.Error) {
             WebSocketMessage.Error error = (WebSocketMessage.Error) message.obj;
-            failConnection(ConnectionHandler.WebSocketCloseNotification.INTERNAL_ERROR.ordinal(), "WebSockets internal error (" + error.mException.toString() + ")");
+            failConnection(ConnectionHandler.WebSocketCloseNotification.INTERNAL_ERROR.ordinal(), "WebSockets internal error (" + error.getException().toString() + ")");
 
         } else if (message.obj instanceof WebSocketMessage.ServerError) {
             WebSocketMessage.ServerError error = (WebSocketMessage.ServerError) message.obj;
-            failConnection(ConnectionHandler.WebSocketCloseNotification.SERVER_ERROR.ordinal(), "Server error " + error.mStatusCode + " (" + error.mStatusMessage + ")");
+            failConnection(ConnectionHandler.WebSocketCloseNotification.SERVER_ERROR.ordinal(), "Server error " + error.getStatusCode() + " (" + error.getStatusMessage() + ")");
 
         } else {
             processAppMessage(message.obj);
