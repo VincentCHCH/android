@@ -14,18 +14,18 @@ public class DIYInstallationState implements Serializable {
 
     private static volatile WAPIKeyResponse mWAPIKeyResponse;
     private static volatile WAPIDeviceResponse mWAPIDeviceResponse;
-    private static volatile  WAPIRouter mWAPIRouter;
-    private static volatile  String mDeviceName = "";
-    private static volatile  String mHomeName;
-    private static  volatile String mCityCode;
-    private static int errorCode;
-    private static volatile  String mHomeConnectedSsid;
-    private static boolean isDeviceAlreadyEnrolled = false;
-    private static boolean isUpdateWifi = false;
-    private static String mDeviceType = "";
-    private static volatile  String mSsid;
-    private static int mLocationId;
-    private static int mEnrollDeviceId;
+    private static volatile WAPIRouter mWAPIRouter;
+    private static volatile String mDeviceName = "";
+    private static volatile String mHomeName;
+    private static volatile String mCityCode;
+    private static volatile int errorCode;
+    private static volatile String mHomeConnectedSsid;
+    private static volatile boolean isDeviceAlreadyEnrolled = false;
+    private static volatile boolean isUpdateWifi = false;
+    private static volatile String mDeviceType = "";
+    private static volatile String mSsid;
+    private static volatile int mLocationId;
+    private static volatile int mEnrollDeviceId;
 
     public static String getmHomeConnectedSsid() {
         return mHomeConnectedSsid;
@@ -44,7 +44,7 @@ public class DIYInstallationState implements Serializable {
     }
 
     public static String getDeviceName() {
-        if (StringUtil.isEmpty(mDeviceName)){
+        if (StringUtil.isEmpty(mDeviceName)) {
             mDeviceName = "Tuna";
         }
         return mDeviceName;

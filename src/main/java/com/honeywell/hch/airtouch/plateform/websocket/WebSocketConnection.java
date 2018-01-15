@@ -73,12 +73,12 @@ public class WebSocketConnection implements WebSocket {
     private WebSocketOptions mWebSocketOptions;
     private boolean mPreviousConnection = false;
 
-    private List<BasicNameValuePair> mWsHeaders;
+    private ArrayList<BasicNameValuePair> mWsHeaders;
 
 
     private static int index = 0;
 
-    private List<Integer> dontReconnectCode = new ArrayList<>();
+    private ArrayList<Integer> dontReconnectCode = new ArrayList<>();
 
 
     public WebSocketConnection() {
@@ -90,7 +90,7 @@ public class WebSocketConnection implements WebSocket {
      *
      * @param dontReconnectCode
      */
-    public void setDontReconnectCode(List<Integer> dontReconnectCode) {
+    public void setDontReconnectCode(ArrayList<Integer> dontReconnectCode) {
         this.dontReconnectCode = dontReconnectCode;
     }
 
@@ -212,7 +212,7 @@ public class WebSocketConnection implements WebSocket {
         }
     }
 
-    public void connect(String wsUri, String[] wsSubprotocols, WebSocket.ConnectionHandler wsHandler, WebSocketOptions options, List<BasicNameValuePair> headers) throws WebSocketException {
+    public void connect(String wsUri, String[] wsSubprotocols, WebSocket.ConnectionHandler wsHandler, WebSocketOptions options, ArrayList<BasicNameValuePair> headers) throws WebSocketException {
         LogUtil.log(LogUtil.LogLevel.DEBUG,TAG,"wsUri:"+wsUri);
         try {
             index = 0;
