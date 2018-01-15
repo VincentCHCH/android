@@ -22,7 +22,7 @@ public class DIYInstallationState implements Serializable {
     private static volatile  String mHomeConnectedSsid;
     private static boolean isDeviceAlreadyEnrolled = false;
     private static boolean isUpdateWifi = false;
-    private static String mDeviceType;
+    private static String mDeviceType = "";
     private static volatile  String mSsid;
     private static int mLocationId;
     private static int mEnrollDeviceId;

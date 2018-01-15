@@ -29,7 +29,7 @@ import java.lang.ref.WeakReference;
 import java.net.Socket;
 import java.net.SocketException;
 import java.nio.ByteBuffer;
-import java.util.Random;
+import java.security.SecureRandom;
 
 import cz.msebera.android.httpclient.message.BasicNameValuePair;
 
@@ -48,7 +48,7 @@ public class WebSocketWriter extends Thread {
     private static final int WEB_SOCKETS_VERSION = 13;
     private static final String CRLF = "\r\n";
 
-    private final Random mRandom = new Random();
+    private final SecureRandom mRandom = new SecureRandom();
     private final Handler mWebSocketConnectionHandler;
     private final WebSocketOptions mWebSocketOptions;
     private final ByteBuffer mApplicationBuffer;
@@ -174,8 +174,8 @@ public class WebSocketWriter extends Thread {
             mApplicationBuffer.put((CRLF).getBytes());
         }
 
-        if (message.mHeaderList != null) {
-            for (BasicNameValuePair pair : message.mHeaderList) {
+        if (message.getHeaderList() != null) {
+            for (BasicNameValuePair pair : message.getHeaderList()) {
                 mApplicationBuffer.put((pair.getName() + ":" + pair.getValue() + CRLF).getBytes());
             }
         }
@@ -219,10 +219,10 @@ public class WebSocketWriter extends Thread {
      * Send WebSockets ping.
      */
     private void sendPing(WebSocketMessage.Ping message) throws IOException, WebSocketException {
-        if (message.mPayload != null && message.mPayload.length > 125) {
+        if (message.getPayload() != null && message.getPayload().length > 125) {
             throw new WebSocketException("ping payload exceeds 125 octets");
         }
-        sendFrame(9, true, message.mPayload);
+        sendFrame(9, true, message.getPayload());
     }
 
 
@@ -231,10 +231,10 @@ public class WebSocketWriter extends Thread {
      * but Pongs are only send in response to a Ping from the peer.
      */
     private void sendPong(WebSocketMessage.Pong message) throws IOException, WebSocketException {
-        if (message.mPayload != null && message.mPayload.length > 125) {
+        if (message.getPayload() != null && message.getPayload().length > 125) {
             throw new WebSocketException("pong payload exceeds 125 octets");
         }
-        sendFrame(10, true, message.mPayload);
+        sendFrame(10, true, message.getPayload());
     }
 
 
@@ -242,10 +242,10 @@ public class WebSocketWriter extends Thread {
      * Send WebSockets binary message.
      */
     private void sendBinaryMessage(WebSocketMessage.BinaryMessage message) throws IOException, WebSocketException {
-        if (message.mPayload.length > mWebSocketOptions.getMaxMessagePayloadSize()) {
+        if (message.getPayload().length > mWebSocketOptions.getMaxMessagePayloadSize()) {
             throw new WebSocketException("message payload exceeds payload limit");
         }
-        sendFrame(2, true, message.mPayload);
+        sendFrame(2, true, message.getPayload());
     }
 
 
@@ -253,7 +253,7 @@ public class WebSocketWriter extends Thread {
      * Send WebSockets text message.
      */
     private void sendTextMessage(WebSocketMessage.TextMessage message) throws IOException, WebSocketException {
-        byte[] payload = message.mPayload.getBytes(WebSocket.UTF8_ENCODING);
+        byte[] payload = message.getPayload().getBytes(WebSocket.UTF8_ENCODING);
         if (payload.length > mWebSocketOptions.getMaxMessagePayloadSize()) {
             throw new WebSocketException("message payload exceeds payload limit");
         }
@@ -265,10 +265,10 @@ public class WebSocketWriter extends Thread {
      * Send WebSockets binary message.
      */
     private void sendRawTextMessage(WebSocketMessage.RawTextMessage message) throws IOException, WebSocketException {
-        if (message.mPayload.length > mWebSocketOptions.getMaxMessagePayloadSize()) {
+        if (message.getPayload().length > mWebSocketOptions.getMaxMessagePayloadSize()) {
             throw new WebSocketException("message payload exceeds payload limit");
         }
-        sendFrame(1, true, message.mPayload);
+        sendFrame(1, true, message.getPayload());
     }
 
 

@@ -43,7 +43,6 @@ public class DBService {
     }
 
 
-
     public void insertOrUpdate(String tableName, String[] volumn,
                                List<HashMap<String, Object>> value) {
         StringBuilder volumnBuffer = new StringBuilder();
@@ -163,11 +162,11 @@ public class DBService {
 //    }
 
     public SQLiteDatabase openDatabase(String path) {
-
+        FileOutputStream fos = null;
         try {
             if (!(new File(path).exists())) {
                 InputStream is = AppManager.getInstance().getApplication().getApplicationContext().getResources().openRawResource(R.raw.hplus);//导入数据库
-                FileOutputStream fos = new FileOutputStream(path);
+                fos = new FileOutputStream(path);
                 byte[] buffer = new byte[BUFFER_SIZE];
                 int count;
 
@@ -190,9 +189,15 @@ public class DBService {
         } catch (IOException e) {
             // TODO Auto-generated catch block
             LogUtil.error("DBService", "IOException", e);
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    LogUtil.error("DBService", "IOException", e);
+                }
+            }
         }
-
-
         return null;
     }
 
