@@ -17,6 +17,8 @@
 package com.honeywell.hch.airtouch.plateform.websocket;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import cz.msebera.android.httpclient.message.BasicNameValuePair;
@@ -57,7 +59,7 @@ public class WebSocketMessage {
         private final URI mURI;
         private final URI mOrigin;
         private final String[] mSubprotocols;
-        private List<BasicNameValuePair> mHeaderList = null;
+        private ArrayList<BasicNameValuePair> mHeaderList = null;
 
 
         ClientHandshake(URI uri) {
@@ -85,12 +87,12 @@ public class WebSocketMessage {
             return mSubprotocols;
         }
 
-        public List<BasicNameValuePair> getHeaderList(){
-            return mHeaderList;
+        public List<BasicNameValuePair> getHeaderList() {
+            return (List<BasicNameValuePair>) mHeaderList.clone();
         }
 
-        public void setHeaderList(List<BasicNameValuePair> homeList){
-            mHeaderList = homeList;
+        public void setHeaderList(ArrayList<BasicNameValuePair> homeList) {
+            Collections.copy(mHeaderList, homeList);
         }
     }
 
@@ -177,11 +179,12 @@ public class WebSocketMessage {
         private byte[] mPayload;
 
         RawTextMessage(byte[] payload) {
-            mPayload = payload;
+            mPayload = new byte[payload.length];
+            System.arraycopy(mPayload,0,payload,0,payload.length);
         }
 
         public byte[] getPayload() {
-            return mPayload;
+            return mPayload.clone();
         }
     }
 
@@ -191,11 +194,12 @@ public class WebSocketMessage {
         private byte[] mPayload;
 
         BinaryMessage(byte[] payload) {
-            mPayload = payload;
+            mPayload = new byte[payload.length];
+            System.arraycopy(mPayload,0,payload,0,payload.length);
         }
 
         public byte[] getPayload() {
-            return mPayload;
+            return mPayload.clone();
         }
     }
 
@@ -240,11 +244,12 @@ public class WebSocketMessage {
         }
 
         Ping(byte[] payload) {
-            mPayload = payload;
+            mPayload = new byte[payload.length];
+            System.arraycopy(mPayload,0,payload,0,payload.length);
         }
 
         public byte[] getPayload() {
-            return mPayload;
+            return mPayload.clone();
         }
     }
 
@@ -258,15 +263,16 @@ public class WebSocketMessage {
         }
 
         Pong(byte[] payload) {
-            mPayload = payload;
+            mPayload = new byte[payload.length];
+            System.arraycopy(mPayload,0,payload,0,payload.length);
         }
 
         public byte[] getPayload() {
-            return mPayload;
+            return mPayload.clone();
         }
 
         public void setPayload(byte[] payload) {
-            mPayload = payload;
+            System.arraycopy(mPayload,0,payload,0,payload.length);
         }
     }
 
