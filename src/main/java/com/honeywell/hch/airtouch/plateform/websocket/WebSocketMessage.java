@@ -18,7 +18,6 @@ package com.honeywell.hch.airtouch.plateform.websocket;
 
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import cz.msebera.android.httpclient.message.BasicNameValuePair;
@@ -59,7 +58,7 @@ public class WebSocketMessage {
         private final URI mURI;
         private final URI mOrigin;
         private final String[] mSubprotocols;
-        private ArrayList<BasicNameValuePair> mHeaderList = null;
+        private ArrayList<BasicNameValuePair> mHeaderList = new ArrayList<>();
 
 
         ClientHandshake(URI uri) {
@@ -92,7 +91,10 @@ public class WebSocketMessage {
         }
 
         public void setHeaderList(ArrayList<BasicNameValuePair> homeList) {
-            Collections.copy(mHeaderList, homeList);
+            mHeaderList.clear();
+            if (homeList != null) {
+                mHeaderList.addAll(homeList);
+            }
         }
     }
 
@@ -180,11 +182,15 @@ public class WebSocketMessage {
 
         RawTextMessage(byte[] payload) {
             mPayload = new byte[payload.length];
-            System.arraycopy(mPayload,0,payload,0,payload.length);
+            System.arraycopy(mPayload, 0, payload, 0, payload.length);
         }
 
         public byte[] getPayload() {
-            return mPayload.clone();
+            if (mPayload != null) {
+                return mPayload.clone();
+            } else {
+                return null;
+            }
         }
     }
 
@@ -194,12 +200,18 @@ public class WebSocketMessage {
         private byte[] mPayload;
 
         BinaryMessage(byte[] payload) {
-            mPayload = new byte[payload.length];
-            System.arraycopy(mPayload,0,payload,0,payload.length);
+            if(payload != null) {
+                mPayload = new byte[payload.length];
+                System.arraycopy(mPayload, 0, payload, 0, payload.length);
+            }
         }
 
         public byte[] getPayload() {
-            return mPayload.clone();
+            if (mPayload != null) {
+                return mPayload.clone();
+            } else {
+                return null;
+            }
         }
     }
 
@@ -244,12 +256,18 @@ public class WebSocketMessage {
         }
 
         Ping(byte[] payload) {
-            mPayload = new byte[payload.length];
-            System.arraycopy(mPayload,0,payload,0,payload.length);
+            if(payload != null) {
+                mPayload = new byte[payload.length];
+                System.arraycopy(mPayload, 0, payload, 0, payload.length);
+            }
         }
 
         public byte[] getPayload() {
-            return mPayload.clone();
+            if (mPayload != null) {
+                return mPayload.clone();
+            } else {
+                return null;
+            }
         }
     }
 
@@ -263,16 +281,25 @@ public class WebSocketMessage {
         }
 
         Pong(byte[] payload) {
-            mPayload = new byte[payload.length];
-            System.arraycopy(mPayload,0,payload,0,payload.length);
+            if(payload != null) {
+                mPayload = new byte[payload.length];
+                System.arraycopy(mPayload, 0, payload, 0, payload.length);
+            }
         }
 
         public byte[] getPayload() {
-            return mPayload.clone();
+            if (mPayload != null) {
+                return mPayload.clone();
+            } else {
+                return null;
+            }
         }
 
         public void setPayload(byte[] payload) {
-            System.arraycopy(mPayload,0,payload,0,payload.length);
+            if(payload != null) {
+                mPayload = new byte[payload.length];
+                System.arraycopy(mPayload, 0, payload, 0, payload.length);
+            }
         }
     }
 
