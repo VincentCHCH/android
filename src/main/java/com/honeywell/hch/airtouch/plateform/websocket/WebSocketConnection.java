@@ -249,7 +249,7 @@ public class WebSocketConnection implements WebSocket {
      * @return true if reconnection performed
      */
     public boolean reconnect() {
-        if (!isConnected() && (mWebSocketURI != null)) {
+        if (!isConnected() && (mWebSocketURI != null) && UserInfoSharePreference.isUserAccountHasData()) {
 
             try {
                 List<String> urlStrings = new ArrayList<>();
@@ -379,7 +379,7 @@ public class WebSocketConnection implements WebSocket {
      */
     private void onClose(int code, String reason) {
         LogUtil.log(LogUtil.LogLevel.ERROR,TAG, "WebSocketCloseNotification code = " + code);
-        if (dontReconnectCode != null && !dontReconnectCode.contains(code)) {
+        if (dontReconnectCode != null && !dontReconnectCode.contains(code) && UserInfoSharePreference.isUserAccountHasData()) {
             scheduleReconnect();
         }
 
