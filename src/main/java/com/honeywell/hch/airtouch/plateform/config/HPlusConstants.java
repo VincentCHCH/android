@@ -136,7 +136,7 @@ public class HPlusConstants {
      * HTTP response bundle data key
      */
     public static final String COMM_TASK_BUNDLE_KEY = "taskId";
-    public static final String LOCATION_ID_BUNDLE_KEY = "locationId";
+    public static final String LOCATION_ID_BUNDLE_KEY = "id";
 
     public static final String DEVICE_CAPABILITY_KEY = "device_capability_key";
 
