@@ -1,5 +1,5 @@
 <resources>
-    <string name="hub">中控</string>
+    <string name="hub">网关</string>
 
     <!--Video Call-->
     <string name="video_call_lobby">大堂</string>
