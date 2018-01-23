@@ -1,6 +1,7 @@
 <resources>
     <string name="hub">网关</string>
     <string name="app_name">移动分机</string>
+    <string name="app_alias_name">移动分机</string>
 
     <!--Video Call-->
     <string name="video_call_lobby">大堂</string>
