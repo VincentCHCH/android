@@ -2,7 +2,7 @@
     <string name="app_name">Subphone</string>
     <string name="app_alias_name">Subphone</string>
 
-    <string name="hub">Hub</string>
+    <string name="hub">Gateway</string>
 
     <string name="video_call_lobby">Lobby</string>
     <string name="video_call_front_door">Front door</string>
