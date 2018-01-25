@@ -1,7 +1,6 @@
 package com.honeywell.hch.airtouch.plateform.config;
 
 
-import com.honeywell.hch.airtouch.library.util.StringUtil;
 import com.honeywell.hch.airtouch.plateform.ap.WAPIRouter;
 import com.honeywell.hch.airtouch.plateform.ap.model.WAPIDeviceResponse;
 import com.honeywell.hch.airtouch.plateform.ap.model.WAPIKeyResponse;
@@ -44,9 +43,6 @@ public class DIYInstallationState implements Serializable {
     }
 
     public static String getDeviceName() {
-        if (StringUtil.isEmpty(mDeviceName)) {
-            mDeviceName = "Tuna";
-        }
         return mDeviceName;
     }
 
