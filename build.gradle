@@ -70,6 +70,8 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     annotationProcessor 'org.greenrobot:eventbus-annotation-processor:3.0.1'
     compile 'ly.count.android:sdk:17.09'
+    compile 'io.fogcloud.sdk:mdns:0.0.3'
+
 }
 
 
