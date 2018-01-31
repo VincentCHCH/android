@@ -1,16 +1,11 @@
 package com.honeywell.hch.airtouch.plateform.smartlink;
 
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
 import com.honeywell.hch.airtouch.library.util.ByteUtil;
 import com.honeywell.hch.airtouch.library.util.LogUtil;
-import com.honeywell.hch.airtouch.library.util.NetWorkUtil;
-import com.honeywell.hch.airtouch.plateform.countly.CountlyUtil;
 import com.honeywell.hch.airtouch.plateform.enrollinterface.IConnectAndDeviceManager;
-import com.honeywell.hch.airtouch.plateform.eventbus.EventBusConstant;
-import com.honeywell.hch.airtouch.plateform.eventbus.EventBusUtil;
 import com.honeywell.hch.airtouch.plateform.smartlink.udpmode.UDPContentData;
 
 import java.net.DatagramPacket;
@@ -22,24 +17,16 @@ import java.net.SocketException;
 /**
  * Created by wuyuan on 11/24/15.
  */
-public class ConnectAndFindDeviceManager implements IConnectAndDeviceManager {
-
-    public static final String IS_CONNECT = "isconnecting";
+public class ConnectAndFindDeviceManager extends IConnectAndDeviceManager {
 
 
     private static final String TAG = "ConnectAndFindDeviceManager";
-
-    public static final int CONNECTING_TIMEOUT = 2000;
-    public static final int PROCESS_END = 2001;
-    public static final int WIFI_CONNECTED_CHECK_END = 2002;
-
-    public static final int THREAD_ERROR = 2003;
 
     private Thread mCountThread = null;
     private Thread mSendCooeeThread = null;
     private Thread mSendThread = null;
     private Thread mReceiveThread = null;
-    private Thread mCheckWifiConnectThread = null;
+
 
     boolean mSendCooeeThreadDone = false;
     boolean mCountThredThreadDone = false;
@@ -68,9 +55,6 @@ public class ConnectAndFindDeviceManager implements IConnectAndDeviceManager {
     private static final String MAC_STR_KEY = "mac";
     private static final String CODE_STR_KEY = "code";
 
-    private volatile String mDeviceMacWithcolon; //这个mac是扫二维码后得到的
-
-    private volatile String mDeviceMacWithNocolon;
 
     private static final String MAC_HAADER_COOEE = "0000";
 
@@ -88,7 +72,6 @@ public class ConnectAndFindDeviceManager implements IConnectAndDeviceManager {
 
     private FinishCallback mFinishCallback;
 
-    private Handler mActvitiyHandler;
 
     public interface FinishCallback {
         void onFinish();
@@ -105,42 +88,6 @@ public class ConnectAndFindDeviceManager implements IConnectAndDeviceManager {
         mActvitiyHandler = handler;
     }
 
-
-    Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-
-
-            switch (msg.what) {
-                case CONNECTING_TIMEOUT:
-                case THREAD_ERROR:
-                    endAllThread();
-
-                    CountlyUtil.enrollEvent(mDeviceMacWithNocolon, CountlyUtil.EnrollEventType.SMARTLINK_TIMEOUT, "");
-                    break;
-                case PROCESS_END:
-                    endAllThread();
-
-                    EventBusUtil.post(EventBusConstant.END_AP_FIND_DEVICE, null);
-                    break;
-                case WIFI_CONNECTED_CHECK_END:
-                    Bundle bundle = msg.getData();
-                    boolean isConnecting = bundle.getBoolean(IS_CONNECT);
-                    if (isConnecting) {
-                        restAllThread();
-                    }
-                    mCheckWifiConnectThread = null;
-                    break;
-
-            }
-            Message newMsg = Message.obtain();
-            newMsg.what = msg.what;
-            newMsg.obj = msg.obj;
-            newMsg.setData(msg.getData());
-            removeMessages(msg.what);
-            mActvitiyHandler.sendMessage(newMsg);
-        }
-    };
 
     private void startCountThread() {
 
@@ -476,8 +423,8 @@ public class ConnectAndFindDeviceManager implements IConnectAndDeviceManager {
         return false;
     }
 
-
-    private void endAllThread() {
+    @Override
+    protected void endAllThread() {
 
         if (receiveudpSocket != null && !receiveudpSocket.isClosed()) {
             receiveudpSocket.close();
@@ -497,7 +444,8 @@ public class ConnectAndFindDeviceManager implements IConnectAndDeviceManager {
         mReceiveThread = null;
     }
 
-    private void restAllThread() {
+    @Override
+    protected void restAllThread() {
         mSendThreadRun = true;
         mReceiveThreadRun = true;
         mSendCooeeThreadDone = false;
