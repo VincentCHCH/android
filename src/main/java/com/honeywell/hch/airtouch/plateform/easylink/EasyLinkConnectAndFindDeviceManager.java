@@ -38,19 +38,21 @@ public class EasyLinkConnectAndFindDeviceManager extends IConnectAndDeviceManage
     private Timer time = null;
     private TimerTask task = null;
     private final int TIMEOUT = 40000;
+    private EasyLinkCallBack mEasyLinkCallBack;
     //for test
-    private final String MACID = "04786300CCD3";
+    private final String MACID = "04786301A152";
 
     public EasyLinkConnectAndFindDeviceManager(Handler handler, String macId) {
-        mDeviceMacWithcolon = macId;
-//        mDeviceMacWithcolon = MACID;
+//        mDeviceMacWithcolon = macId;
+        mDeviceMacWithcolon = MACID;
         mActvitiyHandler = handler;
-        mEasyLink = new EasyLink(LibApplication.getContext());
-        mdns = new MDNS(LibApplication.getContext());
     }
 
     @Override
     public void startConnectingAndFinding(String ssidStr, String password, int mLocalIp) {
+
+        mEasyLink = new EasyLink(LibApplication.getContext());
+        mdns = new MDNS(LibApplication.getContext());
         //First step
         LogUtil.log(LogUtil.LogLevel.INFO, TAG, "mDeviceMacWithcolon: " + mDeviceMacWithcolon);
         String randomString = EasyLinkEncrptUtil.generateString(16);
@@ -72,7 +74,7 @@ public class EasyLinkConnectAndFindDeviceManager extends IConnectAndDeviceManage
         elp.userInfo = userInfo;
         elp.mIpAddress = mLocalIp;
 
-        mEasyLink.startEasyLink(elp, new EasyLinkCallBack() {
+        mEasyLinkCallBack = new EasyLinkCallBack() {
             @Override
             public void onSuccess(int code, String message) {
                 LogUtil.log(LogUtil.LogLevel.INFO, TAG, "success message: " + message);
@@ -85,7 +87,9 @@ public class EasyLinkConnectAndFindDeviceManager extends IConnectAndDeviceManage
                 LogUtil.log(LogUtil.LogLevel.INFO, TAG, "Failure message: " + message);
                 LogUtil.log(LogUtil.LogLevel.INFO, TAG, "Failure code: " + code);
             }
-        });
+        };
+        mEasyLink.startEasyLink(elp, mEasyLinkCallBack);
+
         //Second step
         startMdns();
 
@@ -227,8 +231,10 @@ public class EasyLinkConnectAndFindDeviceManager extends IConnectAndDeviceManage
                 LogUtil.log(LogUtil.LogLevel.INFO, TAG, message);
             }
         });
+        mEasyLink.stopEasyLink(mEasyLinkCallBack);
         mdns = null;
         mEasyLink = null;
+        mEasyLinkCallBack=null;
     }
 
 }
